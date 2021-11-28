@@ -1,8 +1,7 @@
-# [Use commitlint]
+# Use commitlint
 
 ## Context and Problem Statement
 
-[Describe the context and problem statement, e.g., in free form using two to three sentences. You may want to articulate the problem in form of a question.]
 We want to enforce standardized commit messages for this project for reasons outlined [here](https://www.conventionalcommits.org/en/v1.0.0-beta.2/#why-use-conventional-commits). How should we achieve this?
 
 ## Considered Options
