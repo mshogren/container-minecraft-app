@@ -1,0 +1,24 @@
+{
+  "name": "container-minecraft-app",
+  "version": "1.0.0",
+  "description": "An app to control containerized instances of Minecraft servers",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mshogren/container-minecraft-app.git"
+  },
+  "author": "mshogren",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mshogren/container-minecraft-app/issues"
+  },
+  "homepage": "https://github.com/mshogren/container-minecraft-app#readme",
+  "dependencies": {
+    "madr": "^2.1.2"
+  }
+}
