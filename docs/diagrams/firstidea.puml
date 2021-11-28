@@ -1,0 +1,30 @@
+@startuml firstidea
+
+:User:
+
+cloud internet {
+    interface HTTP
+    collections modpacks
+
+    modpacks - HTTP
+}
+
+node "Container service" {
+    interface "Container service API" as serverAPI
+    folder Containers {
+        interface graphql
+        component [API] 
+        component [App]
+        collections "Minecraft\nserver\ncontainers" as Minecraft
+    }
+    
+    [API] ..> HTTP : use
+    [API] .u.> serverAPI : use
+    [API] - graphql
+    [App] ..> graphql
+}
+
+User -> App
+User --> Minecraft 
+
+@enduml
