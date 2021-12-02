@@ -1,0 +1,29 @@
+baseURL = 'https://container-minecraft-app.pages.dev/'
+languageCode = 'en-us'
+title = 'Container Minecraft App'
+
+enableRobotsTXT = true
+googleAnalytics = 'G-1DRW60QS2W'
+
+[author]
+name = "Michael Shogren" 
+
+[menu]
+  [[menu.main]]
+    name = 'Blog'
+    url = '/blog'
+    weight = 1
+  [[menu.main]]
+    name = 'Github'
+    url = 'https://github.com/mshogren/container-minecraft-app'
+    weight = 2
+
+[module]
+  [[module.mounts]]
+    source = 'node_modules/purecss/build'
+    target = 'assets/css/purecss'
+
+[markup]
+  [markup.highlight]
+    style = 'solarized-dark'
+    tabWidth = 4

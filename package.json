@@ -23,5 +23,8 @@
     "@commitlint/config-conventional": "^15.0.0",
     "husky": "^7.0.4",
     "madr": "^2.1.2"
-  }
+  },
+  "workspaces": [
+    "docs"
+  ]
 }
