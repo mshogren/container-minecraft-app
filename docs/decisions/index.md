@@ -7,6 +7,16 @@ This log lists the architectural decisions for container-minecraft-app.
 * [ADR-0000](0000-use-markdown-architectural-decision-records.md) - Use Markdown Architectural Decision Records
 * [ADR-0001](0001-use-commitlint.md) - Use commitlint
 * [ADR-0002](0002-use-renovate-to-automate-dependency-updates.md) - Use renovate to automate dependency updates
+* [ADR-0003](0003-implement-a-graphql-endpoint.md) - Implement a GraphQL endpoint
+* [ADR-0004](0004-use-python-for-api.md) - Use python for API
+* [ADR-0005](0005-use-pipenv-to-manage-python-package-dependencies.md) - Use Pipenv to manage python package dependencies
+* [ADR-0006](0006-use-fastapi-as-framework-for-api.md) - Use FastAPI as framework for API
+* [ADR-0007](0007-use-uvicorn-as-web-server.md) - Use Uvicorn as web server
+* [ADR-0008](0008-use-strawberry-as-framework-for-graphql.md) - Use Strawberry as framework for GraphQL
+* [ADR-0009](0009-use-autopep8-as-python-code-formatter.md) - Use autopep8 as Python code formatter
+* [ADR-0010](0010-use-pylint-as-python-code-linter.md) - Use pylint as Python code linter
+* [ADR-0011](0011-use-pytest-as-python-test-framework.md) - Use pytest as Python test framework
+* [ADR-0012](0012-use-pydantic-for-python-application-configuration-management.md) - Use pydantic for python application configuration management
 
 <!-- adrlogstop -->
 

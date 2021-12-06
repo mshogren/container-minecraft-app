@@ -17,6 +17,6 @@ How should we achieve this?
 
 Chosen option: "renovate", because 
 * renovate is open source and available to run ourselves should we need to in the future
-* renovate is eaasy to integrate with our source repository (renovatebot creates a single pull request)
+* renovate is easy to integrate with our source repository (renovatebot creates a single pull request)
 * dependabot appears to only be available for use with github repositories, thereby limiting our future choices
 * snyk does not check golang dependencies at this time
