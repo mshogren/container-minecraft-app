@@ -1,0 +1,10 @@
+# Ignore everything
+**
+
+# ... except for dependencies and source
+!api/Pipfile
+!api/Pipfile.lock
+!api/*.py
+!api/*.yaml
+
+!app/*.html
