@@ -2,6 +2,19 @@
     "conventionalCommits.scopes": [
         "arch",
         "commitlint",
-        "site"
-    ]
+        "site",
+        "api"
+    ],
+    "python.analysis.extraPaths": [
+        "./api"
+    ],
+    "python.linting.pylintEnabled": true,
+    "python.linting.pylintArgs": [
+        "--rcfile=api/.pylintrc"
+    ],
+    "python.testing.pytestArgs": [
+        "api"
+    ],
+    "python.testing.unittestEnabled": false,
+    "python.testing.pytestEnabled": true
 }
