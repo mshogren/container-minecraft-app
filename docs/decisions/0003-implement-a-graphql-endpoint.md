@@ -1,72 +1,35 @@
 # Implement a GraphQL endpoint
 
-* Status: [proposed | rejected | accepted | deprecated | … | superseded by [ADR-0005](0005-example.md)] <!-- optional -->
-* Deciders: [list everyone involved in the decision] <!-- optional -->
-* Date: [YYYY-MM-DD when the decision was last updated] <!-- optional -->
-
-Technical Story: [description | ticket/issue URL] <!-- optional -->
-
 ## Context and Problem Statement
 
-[Describe the context and problem statement, e.g., in free form using two to three sentences. You may want to articulate the problem in form of a question.]
+We need to pick an architectural approach to communication between our app and its backend APIs
+* that provides us with an opportunity to learn new approaches and technologies
+* allows us to implement the technical requirements of the project
+* allows us to be productive
+Which one should we choose?
 
-## Decision Drivers <!-- optional -->
+## Decision Drivers
 
-* [driver 1, e.g., a force, facing concern, …]
-* [driver 2, e.g., a force, facing concern, …]
-* … <!-- numbers of drivers can vary -->
+* [Backends for Frontends](https://samnewman.io/patterns/architectural/bff/) - Following this principle has some benefits that we would like to learn more about.
+* [CQRS (Command Query Responsibility Segregation)](https://martinfowler.com/bliki/CQRS.html) - Following this principle has some benefits that we would like to learn more about.
+* Real-time subscriptions will provide a more responsive UI if available.
 
 ## Considered Options
 
-* [option 1]
-* [option 2]
-* [option 3]
-* … <!-- numbers of options can vary -->
+* [GraphQL](https://graphql.org/)
+* [REST](https://www.redhat.com/en/topics/api/what-is-a-rest-api)
+* [gRPC](https://grpc.io/)
+* [SOAP](https://en.wikipedia.org/wiki/SOAP)
 
 ## Decision Outcome
 
-Chosen option: "[option 1]", because [justification. e.g., only option, which meets k.o. criterion decision driver | which resolves force force | … | comes out best (see below)].
-
-### Positive Consequences <!-- optional -->
-
-* [e.g., improvement of quality attribute satisfaction, follow-up decisions required, …]
-* …
-
-### Negative Consequences <!-- optional -->
-
-* [e.g., compromising quality attribute, follow-up decisions required, …]
-* …
-
-## Pros and Cons of the Options <!-- optional -->
-
-### [option 1]
-
-[example | description | pointer to more information | …] <!-- optional -->
-
-* Good, because [argument a]
-* Good, because [argument b]
-* Bad, because [argument c]
-* … <!-- numbers of pros and cons can vary -->
-
-### [option 2]
-
-[example | description | pointer to more information | …] <!-- optional -->
-
-* Good, because [argument a]
-* Good, because [argument b]
-* Bad, because [argument c]
-* … <!-- numbers of pros and cons can vary -->
-
-### [option 3]
-
-[example | description | pointer to more information | …] <!-- optional -->
-
-* Good, because [argument a]
-* Good, because [argument b]
-* Bad, because [argument c]
-* … <!-- numbers of pros and cons can vary -->
-
-## Links <!-- optional -->
-
-* [Link type] [Link to ADR] <!-- example: Refined by [ADR-0005](0005-example.md) -->
-* … <!-- numbers of links can vary -->
+Chosen option: "GraphQL", because
+* GraphQL separates queries from mutations, helping to fulfil the CQRS design principle.
+* GraphQL provides for real-time subscriptions as part of the spec.
+* GraphQL provides mechanisms for continuous evolution of a schema.
+* REST is a set of constraints, rather than a standard, and implementations are often too vague and unopinionated to drive quick, consistent development progress.
+* Modeling non-CRUD operations on data in REST is clunky.
+* gRPC requires extra effort to keep the protocol between the services and their clients synchronized.
+* gRPCs benefits mostly concern performance, which is not a high priority for this project.
+* SOAP is considered a legacy technology and is very heavyweight for this project.
+* GraphQL is a more marketable skill than the others at this time.

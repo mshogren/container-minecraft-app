@@ -17,5 +17,6 @@ Chosen option: "Strawberry", because
 
 ## Links
 
+* [ADR-0003](0003-implement-a-graphql-endpoint.md)
 * [ADR-0004](0004-use-python-for-api.md)
 * [ADR-0006](0006-use-fastapi-as-framework-for-api.md)
