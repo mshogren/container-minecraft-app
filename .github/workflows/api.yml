@@ -1,0 +1,33 @@
+name: API CI
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./api
+
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-python@v2
+        with:
+          python-version: '3.9'
+
+      - name: install pipenv
+        run: pip install pipenv
+          
+      - name: install dependencies 
+        run: pipenv install
+        working-directory: ./api
+
+      - name: lint with pylint
+        run: pylint **/*.py
+        working-directory: ./api
