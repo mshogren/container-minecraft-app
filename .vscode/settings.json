@@ -4,7 +4,8 @@
         "commitlint",
         "site",
         "api",
-        "docker"
+        "docker",
+        "github"
     ],
     "python.analysis.extraPaths": [
         "./api"
@@ -26,5 +27,6 @@
         "itzg",
         "pydantic",
         "pyquery"
-    ]
+    ],
+    "python.formatting.provider": "autopep8"
 }

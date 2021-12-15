@@ -16,6 +16,7 @@ from server.volume import Volume
 
 @strawberry.type
 class Server:
+    # pylint: disable=too-few-public-methods
     id: strawberry.ID
     name: str
     image: Image
@@ -29,16 +30,19 @@ class Server:
 
 @strawberry.input
 class AddServerInput:
+    # pylint: disable=too-few-public-methods
     name: str
 
 
 @strawberry.type
 class AddServerSuccess:
+    # pylint: disable=too-few-public-methods
     server: Server
 
 
 @strawberry.type
 class AddServerError:
+    # pylint: disable=too-few-public-methods
     error: str
 
 
