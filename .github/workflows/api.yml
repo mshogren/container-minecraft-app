@@ -29,5 +29,5 @@ jobs:
         working-directory: ./api
 
       - name: lint with pylint
-        run: pylint **/*.py
+        run: pipenv run pylint **/*.py
         working-directory: ./api
