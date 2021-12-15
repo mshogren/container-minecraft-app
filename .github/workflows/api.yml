@@ -25,7 +25,7 @@ jobs:
         run: pip install pipenv
           
       - name: install dependencies 
-        run: pipenv install
+        run: pipenv install --dev
         working-directory: ./api
 
       - name: lint with pylint
