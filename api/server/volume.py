@@ -3,6 +3,7 @@ import strawberry
 
 @strawberry.type
 class Volume:
+    # pylint: disable=too-few-public-methods
     name: str
     source: str
 

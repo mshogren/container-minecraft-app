@@ -3,6 +3,7 @@ import strawberry
 
 @strawberry.type
 class Image:
+    # pylint: disable=too-few-public-methods
     name: str
     tag: str
 

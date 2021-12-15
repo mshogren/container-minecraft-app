@@ -1,4 +1,4 @@
-import typing
+from typing import List
 
 import strawberry
 from fastapi import FastAPI
@@ -7,13 +7,20 @@ from strawberry.fastapi import GraphQLRouter
 
 from modpack import Modpack, get_modpacks
 from server import (AddServerInput, AddServerResponse, Server, add_server,
-                    get_servers)
+                    get_server, get_servers)
+from version import Version, get_versions
 
 
 @strawberry.type
 class Query:
-    servers: typing.List[Server] = strawberry.field(resolver=get_servers)
-    modpacks: typing.List[Modpack] = strawberry.field(resolver=get_modpacks)
+    servers: List[Server] = strawberry.field(resolver=get_servers)
+    modpacks: List[Modpack] = strawberry.field(resolver=get_modpacks)
+    versions: List[Version] = strawberry.field(resolver=get_versions)
+
+
+    @strawberry.field
+    def server(self, server_id: strawberry.ID) -> Server:
+        return get_server(server_id)
 
 
 @strawberry.type

@@ -10,6 +10,7 @@ def parse_host_ports(host_ports) -> Optional[int]:
 
 @strawberry.type
 class Port:
+    # pylint: disable=too-few-public-methods
     port: str
     host_port: Optional[int]
 

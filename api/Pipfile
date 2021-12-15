@@ -14,6 +14,7 @@ python_version = "3.9"
 [packages]
 docker = "*"
 python-dateutil = "*"
+pyquery = "*"
 
 [packages.pydantic]
 extras = [ "dotenv",]
