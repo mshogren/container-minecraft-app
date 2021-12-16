@@ -3,12 +3,15 @@ import strawberry
 
 
 def parse_host_ports(host_ports) -> Optional[int]:
-    if isinstance(host_ports, list) and len(host_ports) > 0:
-        return host_ports[0].get("HostPort")
+    if isinstance(host_ports, list):
+        return next(
+            (x.get("HostPort") for x in host_ports
+             if not x.get("HostPort") is None),
+            None)
     return None
 
 
-@strawberry.type
+@ strawberry.type
 class Port:
     # pylint: disable=too-few-public-methods
     port: str
@@ -16,7 +19,4 @@ class Port:
 
     def __init__(self, port: str, host_ports):
         self.port = port
-        host_port = None
-        if isinstance(host_ports, list):
-            host_port = host_ports[0].get("HostPort")
-        self.host_port = host_port
+        self.host_port = parse_host_ports(host_ports)

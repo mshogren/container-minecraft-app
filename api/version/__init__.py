@@ -19,9 +19,8 @@ def is_version_relevant(version: dict) -> bool:
 
 
 def parse_versions(versions) -> List[Version]:
-    if isinstance(versions, list) and len(versions) > 0:
-        versions = filter(is_version_relevant, versions)
-        return map(lambda x: Version(x.get("id")), versions)
+    if isinstance(versions, list):
+        return [Version(x.get("id")) for x in versions if is_version_relevant(x)]
     return []
 
 
