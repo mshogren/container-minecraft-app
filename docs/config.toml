@@ -2,6 +2,7 @@ baseURL = 'https://container-minecraft-app.pages.dev/'
 languageCode = 'en-us'
 title = 'Container Minecraft App'
 
+disableKinds = ['taxonomy', 'term']
 enableRobotsTXT = true
 googleAnalytics = 'G-1DRW60QS2W'
 
