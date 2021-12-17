@@ -22,6 +22,15 @@
     "@commitlint/cli": "15.0.0",
     "@commitlint/config-conventional": "15.0.0",
     "husky": "7.0.4",
+    "lint-staged": "^12.1.2",
     "madr": "2.1.2"
+  },
+  "workspaces": [
+    "api",
+    "docs"
+  ],
+  "lint-staged": {
+    "api/**/*.py": "api/.venv/bin/autopep8 --experimental --in-place",
+    "api/**/*.py": "api/.venv/bin/pylint --rcfile=api/.pylintrc"
   }
 }

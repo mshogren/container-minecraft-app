@@ -2,7 +2,6 @@
   "name": "docs",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -10,9 +9,8 @@
     "type": "git",
     "url": "git+https://github.com/mshogren/container-minecraft-app.git"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "author": "mshogren",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/mshogren/container-minecraft-app/issues"
   },
