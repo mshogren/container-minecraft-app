@@ -16,6 +16,6 @@
   },
   "homepage": "https://github.com/mshogren/container-minecraft-app#readme",
   "dependencies": {
-    "purecss": "^2.0.6"
+    "purecss": "2.0.6"
   }
 }
