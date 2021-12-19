@@ -23,7 +23,7 @@ class TestParseVersions:
     @staticmethod
     def test_parse_versions_with_valid_versions():
         actual = parse_versions([{"type": "release", "id": "11"}])
-        assert list(actual) == [Version("11")]
+        assert actual == [Version("11")]
 
     @staticmethod
     def test_parse_versions_with_multiple_versions():
@@ -31,4 +31,4 @@ class TestParseVersions:
             [{"type": "release", "id": "11"},
              {"type": "snapshot", "id": "22"},
              {"type": "release", "id": "33"}])
-        assert list(actual) == [Version("11"), Version("33")]
+        assert actual == [Version("11"), Version("33")]

@@ -81,10 +81,11 @@ def get_server(container_id: strawberry.ID) -> Server:
 
 
 def get_servers() -> List[Server]:
+    default_image = Settings().default_image
     containers = client.containers.list(all=True)
-    containers = filter(lambda x: is_container_relevant(
-        x, Settings().default_image), containers)
-    return map(lambda x: get_server(x.id), containers)
+    container_ids = [x.id for x in containers
+                     if is_container_relevant(x, default_image)]
+    return [get_server(x) for x in container_ids]
 
 
 def add_server(server: AddServerInput) -> AddServerResponse:

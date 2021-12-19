@@ -8,7 +8,7 @@ import strawberry
 @strawberry.type
 class Version:
     # pylint: disable=too-few-public-methods
-    version: str
+    version: str = strawberry.field(description="A Minecraft game version")
 
 
 VERSIONS_URL = "https://launchermeta.mojang.com/mc/game/version_manifest.json"
