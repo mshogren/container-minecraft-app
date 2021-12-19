@@ -30,7 +30,7 @@
     "docs"
   ],
   "lint-staged": {
-    "api/**/*.py": "api/.venv/bin/autopep8 --experimental --in-place",
-    "api/**/*.py": "api/.venv/bin/pylint --rcfile=api/.pylintrc"
+    "**/*.py": "api/.venv/bin/autopep8 --experimental --in-place",
+    "**/*.py": "api/.venv/bin/pylint --rcfile=api/.pylintrc"
   }
 }
