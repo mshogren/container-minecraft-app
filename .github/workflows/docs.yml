@@ -1,0 +1,44 @@
+name: docs CI/CD
+
+on:
+  push:
+    branches: [ master ]
+    paths:
+      - 'docs/**'
+  pull_request:
+    branches: [ master ]
+    paths:
+      - 'docs/**'
+
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./docs
+
+    steps:
+      - uses: actions/checkout@v2
+      
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '16'
+          cache: 'npm'
+
+      - name: install dependencies
+        run: npm ci
+
+      - uses: peaceiris/actions-hugo@v2
+        with:
+          hugo-version: '0.89.4'
+          # extended: true
+
+      - name: run hugo
+        run: hugo
+
+      - name: deploy
+        uses: distributhor/workflow-webhook@v2
+        env:
+          webhook_url: ${{ secrets.DOCS_DEPLOY_WEBHOOK_URL }}
