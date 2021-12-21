@@ -1,5 +1,6 @@
 import logging
 from datetime import datetime
+from functools import cache
 from typing import Dict, List
 
 import docker
@@ -84,7 +85,10 @@ AddServerResponse = strawberry.union(
     types=[AddServerSuccess, AddServerError],
     description=labels.ADDSERVERRESPONSE_TYPE_DESCRIPTION)
 
-client = docker.from_env()
+
+@cache
+def get_client():
+    return docker.from_env()
 
 
 def is_container_relevant(container: Container, image_name: str) -> bool:
@@ -100,7 +104,7 @@ def parse_container_environment(environment: str) -> Dict[str, str]:
 
 
 def get_server(container_id: strawberry.ID) -> Server:
-    container_details = client.api.inspect_container(container_id)
+    container_details = get_client().api.inspect_container(container_id)
     container_environment = parse_container_environment(
         container_details["Config"]["Env"])
     return Server(
@@ -119,7 +123,7 @@ def get_server(container_id: strawberry.ID) -> Server:
 
 def get_servers() -> List[Server]:
     default_image = Settings().default_image
-    containers = client.containers.list(all=True)
+    containers = get_client().containers.list(all=True)
     container_ids = [x.id for x in containers
                      if is_container_relevant(x, default_image)]
     return [get_server(x) for x in container_ids]
@@ -128,7 +132,7 @@ def get_servers() -> List[Server]:
 def add_server(server: AddServerInput) -> AddServerResponse:
     logging.info('%s', server)
     try:
-        container = client.containers.run(
+        container = get_client().containers.run(
             name=server.name,
             image=Settings().default_image,
             detach=True,
