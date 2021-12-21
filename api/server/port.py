@@ -1,5 +1,7 @@
 from typing import Optional
+
 import strawberry
+from settings import SchemaLabels as labels
 
 
 def parse_host_ports(host_ports) -> Optional[int]:
@@ -11,11 +13,17 @@ def parse_host_ports(host_ports) -> Optional[int]:
     return None
 
 
-@ strawberry.type
+@ strawberry.type(
+    name=labels.PORT_TYPE_NAME,
+    description=labels.PORT_TYPE_DESCRIPTION)
 class Port:
     # pylint: disable=too-few-public-methods
-    port: str
-    host_port: Optional[int]
+    host_port: Optional[int] = strawberry.field(
+        name=labels.PORT_HOSTPORT_FIELD_NAME,
+        description=labels.PORT_HOSTPORT_FIELD_DESCRIPTION)
+    port: str = strawberry.field(
+        name=labels.PORT_PORT_FIELD_NAME,
+        description=labels.PORT_PORT_FIELD_DESCRIPTION)
 
     def __init__(self, port: str, host_ports):
         self.port = port

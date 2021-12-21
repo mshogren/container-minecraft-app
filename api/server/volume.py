@@ -1,11 +1,19 @@
 import strawberry
 
+from settings import SchemaLabels as labels
 
-@strawberry.type
+
+@strawberry.type(
+    name=labels.VOLUME_TYPE_NAME,
+    description=labels.VOLUME_TYPE_DESCRIPTION)
 class Volume:
     # pylint: disable=too-few-public-methods
-    name: str
-    source: str
+    name: str = strawberry.field(
+        name=labels.VOLUME_NAME_FIELD_NAME,
+        description=labels.VOLUME_NAME_FIELD_DESCRIPTION)
+    source: str = strawberry.field(
+        name=labels.VOLUME_SOURCE_FIELD_NAME,
+        description=labels.VOLUME_SOURCE_FIELD_DESCRIPTION)
 
     def __init__(self, volume):
         self.name = volume["Name"]

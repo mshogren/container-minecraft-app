@@ -3,12 +3,17 @@ from typing import List
 from urllib.request import urlopen
 
 import strawberry
+from settings import SchemaLabels as labels
 
 
-@strawberry.type
+@strawberry.type(
+    name=labels.VERSION_TYPE_NAME,
+    description=labels.VERSION_TYPE_DESCRIPTION)
 class Version:
     # pylint: disable=too-few-public-methods
-    version: str = strawberry.field(description="A Minecraft game version")
+    version: str = strawberry.field(
+        name=labels.VERSION_VERSION_FIELD_NAME,
+        description=labels.VERSION_VERSION_FIELD_DESCRIPTION)
 
 
 VERSIONS_URL = "https://launchermeta.mojang.com/mc/game/version_manifest.json"

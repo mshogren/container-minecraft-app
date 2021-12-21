@@ -1,11 +1,12 @@
 import logging
 from datetime import datetime
-from typing import Dict, List, Union
+from typing import Dict, List
 
 import docker
 import strawberry
 from dateutil import parser
 from docker.models.containers import Container
+from settings import SchemaLabels as labels
 from settings import Settings
 from version import Version
 
@@ -14,39 +15,75 @@ from server.port import Port
 from server.volume import Volume
 
 
-@strawberry.type
+@strawberry.type(
+    name=labels.SERVER_TYPE_NAME,
+    description=labels.SERVER_TYPE_DESCRIPTION)
 class Server:
     # pylint: disable=too-few-public-methods
-    id: strawberry.ID
-    name: str
-    image: Image
-    created: datetime
-    started: datetime
-    ports: List[Port]
-    status: str
-    volumes: List[Volume]
-    game_version: Version
+    created: datetime = strawberry.field(
+        name=labels.SERVER_CREATED_FIELD_NAME,
+        description=labels.SERVER_CREATED_FIELD_DESCRIPTION)
+    game_version: Version = strawberry.field(
+        name=labels.SERVER_GAMEVERSION_FIELD_NAME,
+        description=labels.SERVER_GAMEVERSION_FIELD_DESCRIPTION)
+    id: strawberry.ID = strawberry.field(
+        name=labels.SERVER_ID_FIELD_NAME,
+        description=labels.SERVER_ID_FIELD_DESCRIPTION)
+    image: Image = strawberry.field(
+        name=labels.SERVER_IMAGE_FIELD_NAME,
+        description=labels.SERVER_IMAGE_FIELD_DESCRIPTION)
+    name: str = strawberry.field(
+        name=labels.SERVER_NAME_FIELD_NAME,
+        description=labels.SERVER_NAME_FIELD_DESCRIPTION)
+    ports: List[Port] = strawberry.field(
+        name=labels.SERVER_PORTS_FIELD_NAME,
+        description=labels.SERVER_PORTS_FIELD_DESCRIPTION)
+    started: datetime = strawberry.field(
+        name=labels.SERVER_STARTED_FIELD_NAME,
+        description=labels.SERVER_STARTED_FIELD_DESCRIPTION)
+    status: str = strawberry.field(
+        name=labels.SERVER_STATUS_FIELD_NAME,
+        description=labels.SERVER_STATUS_FIELD_DESCRIPTION)
+    volumes: List[Volume] = strawberry.field(
+        name=labels.SERVER_VOLUMES_FIELD_NAME,
+        description=labels.SERVER_VOLUMES_FIELD_DESCRIPTION)
 
 
-@strawberry.input
+@strawberry.input(
+    name=labels.ADDSERVERINPUT_TYPE_NAME,
+    description=labels.ADDSERVERINPUT_TYPE_DESCRIPTION)
 class AddServerInput:
     # pylint: disable=too-few-public-methods
-    name: str
+    name: str = strawberry.field(
+        name=labels.ADDSERVERINPUT_NAME_FIELD_NAME,
+        description=labels.ADDSERVERINPUT_NAME_FIELD_DESCRIPTION)
 
 
-@strawberry.type
+@strawberry.type(
+    name=labels.ADDSERVERSUCCESS_TYPE_NAME,
+    description=labels.ADDSERVERSUCCESS_TYPE_DESCRIPTION)
 class AddServerSuccess:
     # pylint: disable=too-few-public-methods
-    server: Server
+    server: Server = strawberry.field(
+        name=labels.ADDSERVERSUCCESS_SERVER_FIELD_NAME,
+        description=labels.ADDSERVERSUCCESS_SERVER_FIELD_DESCRIPTION)
 
 
-@strawberry.type
+@strawberry.type(
+    name=labels.ADDSERVERERROR_TYPE_NAME,
+    description=labels.ADDSERVERERROR_TYPE_DESCRIPTION)
 class AddServerError:
     # pylint: disable=too-few-public-methods
-    error: str
+    error: str = strawberry.field(
+        name=labels.ADDSERVERERROR_ERROR_FIELD_NAME,
+        description=labels.ADDSERVERERROR_ERROR_FIELD_DESCRIPTION)
 
 
-AddServerResponse = Union[AddServerSuccess, AddServerError]
+AddServerResponse = strawberry.union(
+    name=labels.ADDSERVERRESPONSE_TYPE_NAME,
+    types=[AddServerSuccess, AddServerError],
+    description=labels.ADDSERVERRESPONSE_TYPE_DESCRIPTION)
+
 client = docker.from_env()
 
 
