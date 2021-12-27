@@ -9,7 +9,6 @@ from dateutil import parser
 from docker.models.containers import Container
 from settings import SchemaLabels as labels
 from settings import Settings
-from version import Version
 
 from server.image import Image
 from server.port import Port
@@ -24,7 +23,7 @@ class Server:
     created: datetime = strawberry.field(
         name=labels.SERVER_CREATED_FIELD_NAME,
         description=labels.SERVER_CREATED_FIELD_DESCRIPTION)
-    game_version: Version = strawberry.field(
+    game_version: str = strawberry.field(
         name=labels.SERVER_GAMEVERSION_FIELD_NAME,
         description=labels.SERVER_GAMEVERSION_FIELD_DESCRIPTION)
     id: strawberry.ID = strawberry.field(
@@ -118,7 +117,7 @@ def get_server(container_id: strawberry.ID) -> Server:
         created=parser.parse(container_details["Created"]),
         started=parser.parse(container_details["State"]["StartedAt"]),
         status=container_details["State"]["Status"],
-        game_version=Version(container_environment.get("VERSION", "latest")))
+        game_version=container_environment.get("VERSION", "latest"))
 
 
 def get_servers() -> List[Server]:

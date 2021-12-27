@@ -5,7 +5,6 @@ from urllib.request import urlopen
 
 import strawberry
 from settings import SchemaLabels as labels
-from version import Version
 
 
 @strawberry.type(
@@ -34,7 +33,7 @@ class Modpack:
     thumbnail_url: Optional[str] = strawberry.field(
         name=labels.MODPACK_THUMBNAILURL_FIELD_NAME,
         description=labels.MODPACK_THUMBNAILURL_FIELD_DESCRIPTION)
-    version: Version = strawberry.field(
+    version: str = strawberry.field(
         name=labels.MODPACK_VERSION_FIELD_NAME,
         description=labels.MODPACK_VERSION_FIELD_DESCRIPTION)
     website_url: str = strawberry.field(
@@ -60,10 +59,10 @@ def parse_categories(categories: str) -> List[str]:
     return []
 
 
-def parse_game_versions(versions: str) -> Version:
+def parse_game_versions(versions: str) -> str:
     if isinstance(versions, list):
         version_names = [x.get("gameVersion") for x in versions]
-        return next((Version(x) for x in version_names if not x is None), None)
+        return next((x for x in version_names if not x is None), None)
     return None
 
 

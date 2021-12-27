@@ -1,7 +1,5 @@
 import json
 
-from version import Version
-
 from modpack import (has_server_file, parse_attachments, parse_categories,
                      parse_game_versions)
 
@@ -50,13 +48,13 @@ class TestParseGameVersions:
     def test_parse_game_versions_with_valid_versions():
         actual = parse_game_versions(
             [{"Invalid": -1}, {"gameVersion": "testVersion"}])
-        assert actual == Version("testVersion")
+        assert actual == "testVersion"
 
     @staticmethod
     def test_parse_game_versions_with_multiple_valid_versions():
         actual = parse_game_versions(
             [{"gameVersion": "testVersion1"}, {"gameVersion": "testVersion2"}])
-        assert actual == Version("testVersion1")
+        assert actual == "testVersion1"
 
 
 class TestParseAttachments:

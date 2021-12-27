@@ -6,7 +6,7 @@ from typing_extensions import Annotated
 from modpack import Modpack, get_modpack, get_modpacks
 from server import Server, get_server, get_servers
 from settings import SchemaLabels as labels
-from version import Version, get_versions
+from version import get_versions
 
 
 @strawberry.type(
@@ -57,5 +57,5 @@ class Query:
         name=labels.QUERY_VERSIONS_FIELD_NAME,
         description=labels.QUERY_VERSIONS_FIELD_DESCRIPTION)
     @staticmethod
-    def versions() -> List[Version]:
+    def versions() -> List[str]:
         return get_versions()
