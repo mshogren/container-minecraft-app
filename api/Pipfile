@@ -12,15 +12,18 @@ pytest = "*"
 python_version = "3.9"
 
 [packages]
-docker = "*"
+docker = "==5.0.3"
 python-dateutil = "*"
-pyquery = "*"
+pyquery = "==1.4.3"
 
 [packages.pydantic]
 extras = [ "dotenv",]
+version = "==1.8.2"
 
 [packages.strawberry-graphql]
 extras = [ "fastapi",]
+version = "==0.93.13"
 
 [packages.uvicorn]
 extras = [ "standard",]
+version = "==0.16.0"
