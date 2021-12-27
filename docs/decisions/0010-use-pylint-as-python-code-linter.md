@@ -3,11 +3,12 @@
 ## Context and Problem Statement
 
 We need to pick a Python code linting tool.
+
 Which one should we choose?
 
 ## Considered Options
 
-* [pylint]](https://pylint.org/).
+* [pylint](https://pylint.org/).
 
 ## Decision Outcome
 

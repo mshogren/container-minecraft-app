@@ -3,6 +3,7 @@
 ## Context and Problem Statement
 
 We need to pick a Python web framework for building our APIs.
+
 Which one should we choose?
 
 ## Considered Options

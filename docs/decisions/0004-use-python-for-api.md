@@ -6,6 +6,7 @@ We need to pick a programming language and associated tools to use to implement 
 * that provides us with an opportunity to learn a new ecosystem
 * allows us to implement the technical requirements of the project
 * allows us to be productive
+
 Which one should we choose?
 
 ## Decision Drivers 
@@ -13,6 +14,7 @@ Which one should we choose?
   * docker
   * Kubernetes
   * Hashicorp Nomad
+  
   each provide officially supported client libraries for Go and Python.
 * Go and Python both have [library options for implementing a GraphQL API](https://graphql.org/code/#language-support).
 * Go and Python are both languages that it would be useful to learn more about in the context of professional development.

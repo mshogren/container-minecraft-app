@@ -5,6 +5,7 @@
 We want to have dependencies for this project kept up to date 
 * for security reasons
 * to maintain compatibility with latest runtime, tool and library versions
+
 How should we achieve this?
 
 ## Considered Options

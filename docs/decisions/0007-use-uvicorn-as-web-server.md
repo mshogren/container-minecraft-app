@@ -3,6 +3,7 @@
 ## Context and Problem Statement
 
 We need to pick a Python ASGI server to serve our APIs.
+
 Which one should we choose?
 
 ## Considered Options

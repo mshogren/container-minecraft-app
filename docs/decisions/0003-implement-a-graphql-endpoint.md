@@ -6,6 +6,7 @@ We need to pick an architectural approach to communication between our app and i
 * that provides us with an opportunity to learn new approaches and technologies
 * allows us to implement the technical requirements of the project
 * allows us to be productive
+
 Which one should we choose?
 
 ## Decision Drivers

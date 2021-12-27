@@ -2,7 +2,9 @@
 
 ## Context and Problem Statement
 
-We want to enforce standardized commit messages for this project for reasons outlined [here](https://www.conventionalcommits.org/en/v1.0.0-beta.2/#why-use-conventional-commits). How should we achieve this?
+We want to enforce standardized commit messages for this project for reasons outlined [here](https://www.conventionalcommits.org/en/v1.0.0-beta.2/#why-use-conventional-commits). 
+
+How should we achieve this?
 
 ## Considered Options
 

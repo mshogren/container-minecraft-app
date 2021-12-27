@@ -3,6 +3,7 @@
 ## Context and Problem Statement
 
 We need to pick a Python library to help us implement our GraphQL APIs.
+
 Which one should we choose?
 
 ## Considered Options
@@ -13,7 +14,8 @@ Which one should we choose?
 ## Decision Outcome
 
 Chosen option: "Strawberry", because 
-* Starwberry is recommended by [FastAPI](https://fastapi.tiangolo.com/advanced/graphql/).
+* Strawberry is recommended by [FastAPI](https://fastapi.tiangolo.com/advanced/graphql/).
+* Strawberry allows a [code-first](https://stackoverflow.com/questions/5446316/code-first-vs-model-database-first) approach which should make prototyping faster and easier than managing the API definition separately from the code that implements it.
 
 ## Links
 

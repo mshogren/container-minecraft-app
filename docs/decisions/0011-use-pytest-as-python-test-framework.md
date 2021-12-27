@@ -3,11 +3,12 @@
 ## Context and Problem Statement
 
 We need to pick a Python testing framework.
+
 Which one should we choose?
 
 ## Considered Options
 
-* [pytest]](https://pytest.org/).
+* [pytest](https://pytest.org/).
 
 ## Decision Outcome
 

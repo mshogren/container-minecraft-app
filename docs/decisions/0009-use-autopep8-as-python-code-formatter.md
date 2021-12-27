@@ -3,6 +3,7 @@
 ## Context and Problem Statement
 
 We need to pick a Python code formatting tool.
+
 Which one should we choose?
 
 ## Considered Options

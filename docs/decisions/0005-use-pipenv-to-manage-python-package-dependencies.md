@@ -3,6 +3,7 @@
 ## Context and Problem Statement
 
 We need to pick a package dependency management tool for our Python projects.
+
 Which one should we choose?
 
 ## Considered Options
