@@ -6,6 +6,9 @@
     "doc": "docs"
   },
   "scripts": {
+    "autopep8": "api/.venv/bin/autopep8 --experimental --in-place", 
+    "pylint": "api/.venv/bin/pylint --rcfile=api/.pylintrc",
+    "lint-graphql-schema": "cd api; .venv/bin/strawberry export-schema main | npx graphql-schema-linter -s -e relay-page-info-spec",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -21,6 +24,7 @@
   "devDependencies": {
     "@commitlint/cli": "16.0.0",
     "@commitlint/config-conventional": "16.0.0",
+    "graphql-schema-linter": "2.0.1",
     "husky": "7.0.4",
     "lint-staged": "12.1.4",
     "madr": "2.1.2"
@@ -30,7 +34,10 @@
     "docs"
   ],
   "lint-staged": {
-    "**/*.py": "api/.venv/bin/autopep8 --experimental --in-place",
-    "**/*.py": "api/.venv/bin/pylint --rcfile=api/.pylintrc"
+    "**/*.py": [
+      "npm run autopep8",
+      "npm run pylint",
+      "npm run lint-graphql-schema"
+    ]
   }
 }

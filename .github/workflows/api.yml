@@ -22,6 +22,14 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '16'
+          cache: 'npm'
+          
+      - name: install dependencies
+        run: npm ci
+      
       - name: install pipenv
         run: pip install pipenv
           
@@ -34,7 +42,10 @@ jobs:
         run: pipenv install --dev --deploy
 
       - name: lint with pylint
-        run: pipenv run pylint ../**/*.py
-      
+        run: pipenv run pylint *.py **/*.py
+        
+      - name: lint the graphql schema
+        run: pipenv run strawberry export-schema main | npx graphql-schema-linter -s -e relay-page-info-spec
+
       - name: test with pytest
         run: pipenv run pytest
