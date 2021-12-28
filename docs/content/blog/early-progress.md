@@ -1,7 +1,7 @@
 ---
 title: "Early Progress"
 date: 2021-12-27T12:33:18-07:00
-draft: true
+draft: false
 ---
 
 About one month has passed since the initial idea for this app came to me. I was able to write it down and create a repository for executing the idea fairly immediately.  Since then I have spent no time on a UI for the app but some time working on backend code and an API for the UI to call.  I have attempted to document some of my decisions because I know from experience, that when making infrequent visits to a code base, there is a fear of making changes when you can't remember why things were done a certain way.  The decisions I have documented are all available [in the repository](https://github.com/mshogren/container-minecraft-app/blob/master/docs/decisions/index.md).
