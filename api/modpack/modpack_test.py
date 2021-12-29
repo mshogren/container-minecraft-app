@@ -1,31 +1,48 @@
 import json
 
+import pytest
+
 from modpack import (has_server_file, parse_attachments, parse_categories,
                      parse_game_versions)
+from modpack.model import (AttachmentModel, CategoryModel,
+                           GameVersionLatestFileModel, LatestFileModel,
+                           ModpackModel)
+
+
+@pytest.fixture
+def modpack_model():
+    data = {
+        "attachments": [],
+        "categories": [],
+        "defaultFileId": "",
+        "downloadCount": 0,
+        "gameVersionLatestFiles": [],
+        "id": "",
+        "latestFiles": [],
+        "name": "",
+        "summary": "",
+        "websiteUrl": ""
+    }
+    return ModpackModel(**data)
 
 
 class TestHasServerFile:
+    # pylint: disable=redefined-outer-name
     @staticmethod
-    def test_has_server_file_with_no_latest_files():
-        assert not has_server_file({})
+    def test_has_server_file_with_empty_latest_files(modpack_model):
+        assert not has_server_file(modpack_model)
 
     @staticmethod
-    def test_has_server_file_with_empty_latest_files():
-        assert not has_server_file({"latestFiles": []})
+    def test_has_server_file_with_null_files_in_latest_files(modpack_model):
+        latest_file = json.loads('{"serverPackFileId": null}')
+        modpack_model.latestFiles.append(LatestFileModel(**latest_file))
+        assert not has_server_file(modpack_model)
 
     @staticmethod
-    def test_has_server_file_with_invalid_latest_files():
-        assert not has_server_file({"latestFiles": [{"Invalid": -1}]})
-
-    @staticmethod
-    def test_has_server_file_with_null_files_in_latest_files():
-        assert not has_server_file(json.loads(
-            '{"latestFiles": [{"Invalid": -1}, {"serverPackFileId": null}]}'))
-
-    @staticmethod
-    def test_has_server_file_with_valid_latest_files():
-        assert has_server_file(
-            {"latestFiles": [{"Invalid": -1}, {"serverPackFileId": 11}]})
+    def test_has_server_file_with_valid_latest_files(modpack_model):
+        latest_file = {"serverPackFileId": 11}
+        modpack_model.latestFiles.append(LatestFileModel(**latest_file))
+        assert has_server_file(modpack_model)
 
 
 class TestParseGameVersions:
@@ -41,19 +58,24 @@ class TestParseGameVersions:
 
     @staticmethod
     def test_parse_game_versions_with_invalid_versions():
-        actual = parse_game_versions([{"Invalid": -1}])
-        assert actual is None
+        with pytest.raises(Exception):
+            data = [{"Invalid": -1}]
+            models = [GameVersionLatestFileModel(**x) for x in data]
+            parse_game_versions(models)
 
     @staticmethod
     def test_parse_game_versions_with_valid_versions():
-        actual = parse_game_versions(
-            [{"Invalid": -1}, {"gameVersion": "testVersion"}])
+        data = [{"gameVersion": "testVersion"}]
+        models = [GameVersionLatestFileModel(**x) for x in data]
+        actual = parse_game_versions(models)
         assert actual == "testVersion"
 
     @staticmethod
     def test_parse_game_versions_with_multiple_valid_versions():
-        actual = parse_game_versions(
-            [{"gameVersion": "testVersion1"}, {"gameVersion": "testVersion2"}])
+        data = [{"gameVersion": "testVersion1"},
+                {"gameVersion": "testVersion2"}]
+        models = [GameVersionLatestFileModel(**x) for x in data]
+        actual = parse_game_versions(models)
         assert actual == "testVersion1"
 
 
@@ -70,47 +92,55 @@ class TestParseAttachments:
 
     @staticmethod
     def test_parse_attachments_with_invalid_attachments():
-        actual = parse_attachments([{"Invalid": -1}])
-        assert actual is None
+        with pytest.raises(Exception):
+            data = [{"Invalid": -1}]
+            models = [AttachmentModel(**x) for x in data]
+            parse_attachments(models)
 
     @staticmethod
     def test_parse_attachments_with_valid_attachments():
-        actual = parse_attachments(
-            [{"Invalid": -1}, {"thumbnailUrl": "testUrl"}])
+        data = [{"thumbnailUrl": "testUrl"}]
+        models = [AttachmentModel(**x) for x in data]
+        actual = parse_attachments(models)
         assert actual == "testUrl"
 
-    @staticmethod
+    @ staticmethod
     def test_parse_attachments_with_multiple_valid_attachments():
-        actual = parse_attachments(
-            [{"thumbnailUrl": "testUrl1"}, {"thumbnailUrl": "testUrl2"}])
+        data = [{"thumbnailUrl": "testUrl1"}, {"thumbnailUrl": "testUrl2"}]
+        models = [AttachmentModel(**x) for x in data]
+        actual = parse_attachments(models)
         assert actual == "testUrl1"
 
 
 class TestParseCategories:
-    @staticmethod
+    @ staticmethod
     def test_parse_categories_with_no_categories():
         actual = parse_categories(None)
         assert not list(actual)
 
-    @staticmethod
+    @ staticmethod
     def test_parse_categories_with_empty_categories():
         actual = parse_categories([])
         assert not list(actual)
 
-    @staticmethod
+    @ staticmethod
     def test_parse_categories_with_invalid_categories():
-        actual = parse_categories([{"Invalid": -1}])
-        assert not list(actual)
+        with pytest.raises(Exception):
+            data = [{"Invalid": -1}]
+            models = [CategoryModel(**x) for x in data]
+            parse_categories(models)
 
-    @staticmethod
+    @ staticmethod
     def test_parse_categories_with_valid_categories():
-        actual = parse_categories([{"Invalid": -1}, {"name": "testCategory"}])
+        data = [{"name": "testCategory"}]
+        models = [CategoryModel(**x) for x in data]
+        actual = parse_categories(models)
         assert actual == ["testCategory"]
 
-    @staticmethod
+    @ staticmethod
     def test_parse_categories_with_multiple_valid_categories():
-        actual = parse_categories(
-            [{"name": "testCategory1"},
-             {"Invalid": -1},
-             {"name": "testCategory2"}])
+        data = [{"name": "testCategory1"},
+                {"name": "testCategory2"}]
+        models = [CategoryModel(**x) for x in data]
+        actual = parse_categories(models)
         assert actual == ["testCategory1", "testCategory2"]
