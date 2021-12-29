@@ -17,6 +17,7 @@ This log lists the architectural decisions for container-minecraft-app.
 * [ADR-0010](0010-use-pylint-as-python-code-linter.md) - Use pylint as Python code linter
 * [ADR-0011](0011-use-pytest-as-python-test-framework.md) - Use pytest as Python test framework
 * [ADR-0012](0012-use-pydantic-for-python-application-configuration-management.md) - Use pydantic for python application configuration management
+* [ADR-0013](0013-use-github-actions-for-ci-cd.md) - Use Github Actions for CI/CD
 
 <!-- adrlogstop -->
 
