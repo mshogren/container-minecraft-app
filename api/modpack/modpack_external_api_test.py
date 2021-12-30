@@ -3,8 +3,7 @@ from urllib.request import urlopen
 
 import pytest
 
-from modpack import QUERY_STRING_BASE, has_server_file
-from modpack.modpackfile import API_BASE_URL
+from modpack import API_BASE_URL, QUERY_STRING_BASE, has_server_file
 
 
 @pytest.mark.skip
