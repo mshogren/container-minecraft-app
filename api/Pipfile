@@ -18,7 +18,7 @@ pyquery = "==1.4.3"
 
 [packages.pydantic]
 extras = [ "dotenv",]
-version = "==1.8.2"
+version = "==1.9.0"
 
 [packages.strawberry-graphql]
 extras = [ "fastapi",]
