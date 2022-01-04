@@ -1,4 +1,4 @@
-baseURL = 'https://container-minecraft-app.pages.dev/'
+baseURL = 'https://container-minecraft-app.pages.dev'
 languageCode = 'en-us'
 title = 'Container Minecraft App'
 
