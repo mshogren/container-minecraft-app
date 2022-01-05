@@ -1,4 +1,5 @@
 import strawberry
+from server.model import VolumeModel
 
 from settings import SchemaLabels as labels
 
@@ -15,6 +16,6 @@ class Volume:
         name=labels.VOLUME_SOURCE_FIELD_NAME,
         description=labels.VOLUME_SOURCE_FIELD_DESCRIPTION)
 
-    def __init__(self, volume):
-        self.name = volume["Name"]
-        self.source = volume["Source"]
+    def __init__(self, volume: VolumeModel):
+        self.name = volume.Name
+        self.source = volume.Source

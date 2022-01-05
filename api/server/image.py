@@ -14,5 +14,7 @@ class Image:
         description=labels.IMAGE_TAG_FIELD_DESCRIPTION)
 
     def __init__(self, image: str):
-        self.name = image
-        self.tag = "latest"
+        parts = image.split(":")
+        self.name = parts[0]
+        self.tag = (parts[1]
+                    if len(parts) > 1 and len(parts[1]) > 0 else "latest")
