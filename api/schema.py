@@ -4,7 +4,8 @@ import strawberry
 from typing_extensions import Annotated
 
 from modpack import Modpack, get_modpack, get_modpacks
-from server import Server, get_server, get_servers
+from server import (AddServerInput, AddServerResponse, Server, add_server,
+                    get_server, get_servers)
 from settings import SchemaLabels as labels
 from version import get_versions
 
@@ -59,3 +60,21 @@ class Query:
     @staticmethod
     def versions() -> List[str]:
         return get_versions()
+
+
+@strawberry.type(
+    name=labels.MUTATION_TYPE_NAME,
+    description=labels.MUTATION_TYPE_DESCRIPTION)
+class Mutation:
+    # pylint: disable=too-few-public-methods
+    @strawberry.mutation(
+        name=labels.MUTATION_ADDSERVER_FIELD_NAME,
+        description=labels.MUTATION_ADDSERVER_FIELD_DESCRIPTION)
+    @staticmethod
+    def add_server_or_fail(server: Annotated[AddServerInput, strawberry.argument(
+            name=labels.MUTATION_ADDSERVER_ARGUMENT_NAME,
+            description=labels.MUTATION_ADDSERVER_ARGUMENT_DESCRIPTION)]) -> AddServerResponse:
+        return add_server(server)
+
+
+schema = strawberry.Schema(Query, Mutation)
