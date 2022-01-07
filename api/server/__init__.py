@@ -5,18 +5,18 @@ from typing import List
 import docker
 import strawberry
 from docker.models.containers import Container
-from modpack import Modpack, ModpackError
 from packaging import version as version_parser
 from pydantic import BaseModel
+from modpack import Modpack, ModpackError
 from settings import Settings
 from version import Version
 
 from .image import Image
 from .model import ContainerDetailsModel, EnvironmentModel, TypeEnum
 from .port import Port
-from .schema import (
-    AddCurseforgeServerInput, AddServerError, AddServerResponse,
-    AddServerSuccess, AddVanillaServerInput, ServerSchemaType)
+from .schema import (AddCurseforgeServerInput, AddServerError,
+                     AddServerResponse, AddServerSuccess,
+                     AddVanillaServerInput, ServerSchemaType)
 from .volume import Volume
 
 
