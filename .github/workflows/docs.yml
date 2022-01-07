@@ -20,9 +20,9 @@ jobs:
         working-directory: ./docs
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@ec3a7ce113134d7a93b817d10a8272cb61118579 # renovate: tag=v2
       
-      - uses: actions/setup-node@v2
+      - uses: actions/setup-node@1f8c6b94b26d0feae1e387ca63ccbdc44d27b561 # renovate: tag=v2
         with:
           node-version: '16'
           cache: 'npm'
@@ -30,7 +30,7 @@ jobs:
       - name: install dependencies
         run: npm ci
 
-      - uses: peaceiris/actions-hugo@v2
+      - uses: peaceiris/actions-hugo@c03b5dbed22245418539b65eb9a3b1d5fdd9a0a6 # renovate: tag=v2
         with:
           hugo-version: '0.89.4'
           # extended: true
@@ -39,7 +39,7 @@ jobs:
         run: hugo
 
       - name: deploy
-        uses: distributhor/workflow-webhook@v2
+        uses: distributhor/workflow-webhook@6edfd7cdaf8e0551b717bab8912c8d910475b98f # renovate: tag=v2
         env:
           webhook_url: ${{ secrets.DOCS_DEPLOY_WEBHOOK_URL }}
           webhook_secret: ${{ secrets.DOCS_DEPLOY_WEBHOOK_URL }}
