@@ -5,6 +5,9 @@
 !api/Pipfile
 !api/Pipfile.lock
 !api/*.py
+!api/modpack/*.py
+!api/server/*.py
+!api/version/*.py
 !api/*.yaml
 
 !app/*.html
