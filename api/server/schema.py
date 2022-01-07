@@ -5,6 +5,7 @@ import strawberry
 from settings import SchemaLabels as labels
 
 from server.image import Image
+from server.model import TypeEnum
 from server.port import Port
 from server.volume import Volume
 
@@ -12,7 +13,7 @@ from server.volume import Volume
 @strawberry.type(
     name=labels.SERVER_TYPE_NAME,
     description=labels.SERVER_TYPE_DESCRIPTION)
-class Server:
+class ServerSchemaType:
     # pylint: disable=too-few-public-methods
     created: datetime = strawberry.field(
         name=labels.SERVER_CREATED_FIELD_NAME,
@@ -38,19 +39,40 @@ class Server:
     status: str = strawberry.field(
         name=labels.SERVER_STATUS_FIELD_NAME,
         description=labels.SERVER_STATUS_FIELD_DESCRIPTION)
+    type: strawberry.enum(
+        TypeEnum, name=labels.TYPE_ENUM_NAME,
+        description=labels.TYPE_ENUM_DESCRIPTION) = strawberry.field(
+        name=labels.SERVER_TYPE_FIELD_NAME,
+        description=labels.SERVER_TYPE_FIELD_DESCRIPTION)
     volumes: List[Volume] = strawberry.field(
         name=labels.SERVER_VOLUMES_FIELD_NAME,
         description=labels.SERVER_VOLUMES_FIELD_DESCRIPTION)
 
 
 @strawberry.input(
-    name=labels.ADDSERVERINPUT_TYPE_NAME,
-    description=labels.ADDSERVERINPUT_TYPE_DESCRIPTION)
-class AddServerInput:
+    name=labels.ADDVANILLASERVERINPUT_TYPE_NAME,
+    description=labels.ADDVANILLASERVERINPUT_TYPE_DESCRIPTION)
+class AddVanillaServerInput:
     # pylint: disable=too-few-public-methods
     name: str = strawberry.field(
-        name=labels.ADDSERVERINPUT_NAME_FIELD_NAME,
-        description=labels.ADDSERVERINPUT_NAME_FIELD_DESCRIPTION)
+        name=labels.ADDVANILLASERVERINPUT_NAME_FIELD_NAME,
+        description=labels.ADDVANILLASERVERINPUT_NAME_FIELD_DESCRIPTION)
+    version: str = strawberry.field(
+        name=labels.ADDVANILLASERVERINPUT_VERSION_FIELD_NAME,
+        description=labels.ADDVANILLASERVERINPUT_VERSION_FIELD_DESCRIPTION)
+
+
+@strawberry.input(
+    name=labels.ADDCURSEFORGESERVERINPUT_TYPE_NAME,
+    description=labels.ADDCURSEFORGESERVERINPUT_TYPE_DESCRIPTION)
+class AddCurseforgeServerInput:
+    # pylint: disable=too-few-public-methods
+    modpack_id: str = strawberry.field(
+        name=labels.ADDCURSEFORGESERVERINPUT_MODPACKID_FIELD_NAME,
+        description=labels.ADDCURSEFORGESERVERINPUT_MODPACKID_FIELD_DESCRIPTION)
+    name: str = strawberry.field(
+        name=labels.ADDCURSEFORGESERVERINPUT_NAME_FIELD_NAME,
+        description=labels.ADDCURSEFORGESERVERINPUT_NAME_FIELD_DESCRIPTION)
 
 
 @strawberry.type(
@@ -58,7 +80,7 @@ class AddServerInput:
     description=labels.ADDSERVERSUCCESS_TYPE_DESCRIPTION)
 class AddServerSuccess:
     # pylint: disable=too-few-public-methods
-    server: Server = strawberry.field(
+    server: ServerSchemaType = strawberry.field(
         name=labels.ADDSERVERSUCCESS_SERVER_FIELD_NAME,
         description=labels.ADDSERVERSUCCESS_SERVER_FIELD_DESCRIPTION)
 

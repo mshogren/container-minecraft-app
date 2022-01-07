@@ -3,11 +3,11 @@ from typing import List
 import strawberry
 from typing_extensions import Annotated
 
-from modpack import Modpack, get_modpack, get_modpacks
-from server import (AddServerInput, AddServerResponse, Server, add_server,
-                    get_server, get_servers)
+from modpack import Modpack, ModpackSchemaType
+from server import (AddServerResponse, AddCurseforgeServerInput,
+                    AddVanillaServerInput, Server, ServerSchemaType)
 from settings import SchemaLabels as labels
-from version import get_versions
+from version import Version
 
 
 @strawberry.type(
@@ -20,9 +20,9 @@ class Query:
     @staticmethod
     def modpack(
         modpack_id: Annotated[strawberry.ID, strawberry.argument(
-            name=labels.QUERY_MODPACK_MODPACKID_ARGUMENT_NAME,
-            description=labels.QUERY_MODPACK_MODPACKID_ARGUMENT_DESCRIPTION)]) -> Modpack:
-        return get_modpack(modpack_id)
+            name=labels.QUERY_MODPACK_MODPACKID_ARG_NAME,
+            description=labels.QUERY_MODPACK_MODPACKID_ARG_DESCRIPTION)]) -> ModpackSchemaType:
+        return Modpack.get_modpack(modpack_id)
 
     @strawberry.field(
         name=labels.QUERY_MODPACKS_FIELD_NAME,
@@ -30,12 +30,14 @@ class Query:
     @staticmethod
     def modpacks(
         page: Annotated[int, strawberry.argument(
-            name=labels.QUERY_MODPACKS_PAGE_ARGUMENT_NAME,
-            description=labels.QUERY_MODPACKS_PAGE_ARGUMENT_DESCRIPTION)] = 0,
+            name=labels.QUERY_MODPACKS_PAGE_ARG_NAME,
+            description=labels.QUERY_MODPACKS_PAGE_ARG_DESCRIPTION)]
+            = 0,
         search: Annotated[str, strawberry.argument(
-            name=labels.QUERY_MODPACKS_SEARCH_ARGUMENT_NAME,
-            description=labels.QUERY_MODPACKS_SEARCH_ARGUMENT_DESCRIPTION)] = "") -> List[Modpack]:
-        return get_modpacks(page, search)
+            name=labels.QUERY_MODPACKS_SEARCH_ARG_NAME,
+            description=labels.QUERY_MODPACKS_SEARCH_ARG_DESCRIPTION)]
+            = "") -> List[ModpackSchemaType]:
+        return Modpack.get_modpacks(page, search)
 
     @strawberry.field(
         name=labels.QUERY_SERVER_FIELD_NAME,
@@ -43,38 +45,46 @@ class Query:
     @staticmethod
     def server(
         server_id: Annotated[strawberry.ID, strawberry.argument(
-            name=labels.QUERY_SERVER_SERVERID_ARGUMENT_NAME,
-            description=labels.QUERY_SERVER_SERVERID_ARGUMENT_DESCRIPTION)]) -> Server:
-        return get_server(server_id)
+            name=labels.QUERY_SERVER_SERVERID_ARG_NAME,
+            description=labels.QUERY_SERVER_SERVERID_ARG_DESCRIPTION)]) -> ServerSchemaType:
+        return Server.get_server(server_id)
 
     @strawberry.field(
         name=labels.QUERY_SERVERS_FIELD_NAME,
         description=labels.QUERY_SERVERS_FIELD_DESCRIPTION)
     @staticmethod
-    def servers() -> List[Server]:
-        return get_servers()
+    def servers() -> List[ServerSchemaType]:
+        return Server.get_servers()
 
     @strawberry.field(
         name=labels.QUERY_VERSIONS_FIELD_NAME,
         description=labels.QUERY_VERSIONS_FIELD_DESCRIPTION)
     @staticmethod
     def versions() -> List[str]:
-        return get_versions()
+        return Version.get_versions()
 
 
 @strawberry.type(
     name=labels.MUTATION_TYPE_NAME,
     description=labels.MUTATION_TYPE_DESCRIPTION)
 class Mutation:
-    # pylint: disable=too-few-public-methods
     @strawberry.mutation(
-        name=labels.MUTATION_ADDSERVER_FIELD_NAME,
-        description=labels.MUTATION_ADDSERVER_FIELD_DESCRIPTION)
+        name=labels.MUTATION_ADDCURSEFORGESERVER_FIELD_NAME,
+        description=labels.MUTATION_ADDCURSEFORGESERVER_FIELD_DESCRIPTION)
     @staticmethod
-    def add_server_or_fail(server: Annotated[AddServerInput, strawberry.argument(
-            name=labels.MUTATION_ADDSERVER_ARGUMENT_NAME,
-            description=labels.MUTATION_ADDSERVER_ARGUMENT_DESCRIPTION)]) -> AddServerResponse:
-        return add_server(server)
+    def add_curseforge_server(server: Annotated[AddCurseforgeServerInput, strawberry.argument(
+            name=labels.MUTATION_ADDCURSEFORGESERVER_ARG_NAME,
+            description=labels.MUTATION_ADDCURSEFORGESERVER_ARG_DESCRIPTION)]) -> AddServerResponse:
+        return Server.add_curseforge_server(server)
+
+    @strawberry.mutation(
+        name=labels.MUTATION_ADDVANILLASERVER_FIELD_NAME,
+        description=labels.MUTATION_ADDVANILLASERVER_FIELD_DESCRIPTION)
+    @staticmethod
+    def add_vanilla_server(server: Annotated[AddVanillaServerInput, strawberry.argument(
+            name=labels.MUTATION_ADDVANILLASERVER_ARG_NAME,
+            description=labels.MUTATION_ADDVANILLASERVER_ARG_DESCRIPTION)]) -> AddServerResponse:
+        return Server.add_vanilla_server(server)
 
 
 schema = strawberry.Schema(Query, Mutation)

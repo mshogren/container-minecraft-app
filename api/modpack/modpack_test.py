@@ -14,7 +14,7 @@ def modpack_model():
     data = {
         "attachments": [],
         "categories": [],
-        "defaultFileId": "",
+        "defaultFileId": "fileId",
         "downloadCount": 0,
         "gameVersionLatestFiles": [],
         "id": "",
@@ -34,13 +34,19 @@ class TestHasServerFile:
 
     @staticmethod
     def test_has_server_file_with_null_files_in_latest_files(modpack_model):
-        latest_file = json.loads('{"serverPackFileId": null}')
+        latest_file = json.loads('{"id": "fileId", "serverPackFileId": null}')
         modpack_model.latestFiles.append(LatestFileModel(**latest_file))
         assert not has_server_file(modpack_model)
 
     @staticmethod
-    def test_has_server_file_with_valid_latest_files(modpack_model):
-        latest_file = {"serverPackFileId": 11}
+    def test_has_server_file_with_mismatched_file_ids(modpack_model):
+        latest_file = {"id": "", "serverPackFileId": 11}
+        modpack_model.latestFiles.append(LatestFileModel(**latest_file))
+        assert not has_server_file(modpack_model)
+
+    @staticmethod
+    def test_has_server_file_with_matching_file_ids(modpack_model):
+        latest_file = {"id": "fileId", "serverPackFileId": 11}
         modpack_model.latestFiles.append(LatestFileModel(**latest_file))
         assert has_server_file(modpack_model)
 

@@ -7,7 +7,7 @@ from settings import SchemaLabels as labels
 @strawberry.type(
     name=labels.MODPACK_TYPE_NAME,
     description=labels.MODPACK_TYPE_DESCRIPTION)
-class Modpack:
+class ModpackSchemaType:
     # pylint: disable=too-few-public-methods
     categories: List[str] = strawberry.field(
         name=labels.MODPACK_CATEGORIES_FIELD_NAME,

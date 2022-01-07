@@ -1,39 +1,40 @@
 from datetime import datetime
+from enum import Enum
 from typing import List
 
 from pydantic import BaseModel, Field
 
 
+class TypeEnum(str, Enum):
+    CURSEFORGE = "CURSEFORGE"
+    VANILLA = "VANILLA"
+
+
 class EnvironmentModel(BaseModel):
-    # pylint: disable=too-few-public-methods
-    version: str = "latest"
+    version: str = Field(default="latest", alias="VERSION")
+    type: TypeEnum = Field(alias="TYPE")
 
 
 class ConfigModel(BaseModel):
-    # pylint: disable=too-few-public-methods
     Image: str
     Env: List[str]
 
 
 class NetworkSettingsModel(BaseModel):
-    # pylint: disable=too-few-public-methods
     Ports: dict
 
 
 class StateModel(BaseModel):
-    # pylint: disable=too-few-public-methods
     StartedAt: datetime
     Status: str
 
 
 class VolumeModel(BaseModel):
-    # pylint: disable=too-few-public-methods
     Name: str
     Source: str
 
 
 class ContainerDetailsModel(BaseModel):
-    # pylint: disable=too-few-public-methods
     Created: datetime
     Configuration: ConfigModel = Field(alias="Config")
     Mounts: List[VolumeModel]
