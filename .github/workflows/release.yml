@@ -19,7 +19,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     permissions:
-      contents: read
+      contents: write
       packages: write
 
     steps:
@@ -40,7 +40,7 @@ jobs:
           github-token: ${{ secrets.github_token }}
           output-file: "false"
           skip-commit: "true"
-          config-file: "./changelog.config.js"
+          config-file-path: "./changelog.config.js"
 
       - name: Log in to the Container registry
         uses: docker/login-action@f054a8b539a109f9f41c372932f1ae047eff08c9
