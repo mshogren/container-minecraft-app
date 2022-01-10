@@ -1,13 +1,13 @@
 baseURL = 'https://container-minecraft-app.pages.dev'
 languageCode = 'en-us'
 title = 'Container Minecraft App'
-
+paginate = 10
 disableKinds = ['taxonomy', 'term']
 enableRobotsTXT = true
 googleAnalytics = 'G-1DRW60QS2W'
 
 [author]
-name = "Michael Shogren" 
+name = "Michael Shogren"
 
 [menu]
   [[menu.main]]
@@ -26,5 +26,6 @@ name = "Michael Shogren"
 
 [markup]
   [markup.highlight]
-    style = 'solarized-dark'
-    tabWidth = 4
+    noClasses = false
+    style = 'solarized-dark256'
+    tabWidth = 2

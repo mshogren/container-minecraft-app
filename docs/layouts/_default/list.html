@@ -1,10 +1,33 @@
 {{ define "main" }}
 <div class="content">
-    <h1>{{ .Site.Title }} Blog</h1>
-    {{ range .Pages.ByPublishDate.Reverse }}
-        <article key={node.id}>
-            <h2><a href="{{ .RelPermalink }}">{{ .Title }}</a></h2>
-          <p>{{ .Date.Format "January 2, 2006" }}</p>
-          {{ .Content }}
-    {{ end }}
+  <h1>{{ .Site.Title }} Blog</h1>
+  {{ range (.Paginate .Pages.ByPublishDate.Reverse 2).Pages }}
+  <article>
+    <h2><a href="{{ .RelPermalink }}">{{ .Title }}</a></h2>
+    <p>{{ .Date.Format "January 2, 2006" }}</p>
+    <div class="excerpt">{{ .Summary }}</div>
+    <a href="{{ .RelPermalink }}">Read more</a>
+  </article>
+  {{ end }}
+  {{ if (or .Paginator.HasNext .Paginator.HasPrev) }}
+  <nav>
+    <ul class="pager">
+      {{ if .Paginator.HasNext }}
+      <li class="next">
+        <a class="pure-button" href="{{ .Paginator.Next.URL }}">
+          <span aria-hidden="true">← </span>Older
+        </a>
+      </li>
+      {{ end }}
+      {{ if .Paginator.HasPrev }}
+      <li class="previous">
+        <a class="pure-button" href="{{ .Paginator.Prev.URL }}">
+          Newer<span aria-hidden="true"> →</span>
+        </a>
+      </li>
+      {{ end }}
+    </ul>
+  </nav>
+  {{ end }}
+</div>
 {{ end }}

@@ -29,9 +29,22 @@ a {
     text-decoration: none;
 }
 
-a:hover, 
+a:hover,
 a:focus {
     text-decoration: underline;
+}
+
+code {
+  margin-left: 10px;
+}
+
+pre {
+  overflow: auto;
+  padding: 10px;
+}
+
+pre code {
+  margin: 0;
 }
 
 .pure-img-responsive {
@@ -109,6 +122,7 @@ a.pure-button-primary {
 /* We want to give the content area some more padding */
 .content {
     position: absolute;
+    width: 100%;
     padding: 1em 1em 3em;
 }
 
@@ -179,7 +193,7 @@ footer {
     height: 50%;
     margin: auto;
     position: absolute;
-    top: 100px; left: 0; bottom: 0; right: 0;
+    top: -100px; left: 0; bottom: 0; right: 0;
     text-align: center;
 }
 
@@ -207,32 +221,125 @@ footer {
     text-decoration: underline;
 }
 
+.excerpt {
+  position: relative
+}
+
+.excerpt:after {
+  position: absolute;
+  bottom: 0;
+  height: 100%;
+  width: 100%;
+  content: "";
+  background: linear-gradient(to top,
+     rgba(255,255,255, 1) 1%,
+     rgba(255,255,255, 0) 4em
+  );
+  pointer-events: none;
+}
+
+.pager {
+  list-style: none;
+  padding-inline-start: 0;
+  margin: 40px 0;
+}
+
+.pager li {
+  display: inline;
+}
+
+.pager .next a {
+  float: left
+}
+
+.pager .previous a {
+  float: right
+}
+
+.pager:before, .pager:after {
+  content: " ";
+  display: table;
+}
+
+.pager.after {
+  clear: both;
+}
+
+#toggle {
+  visibility: hidden;
+  opacity: 0;
+}
+
+#toggle.hide {
+  visibility: hidden;
+  opacity: 0;
+  transition: visibility 1s, opacity 1s linear;
+}
+
+#toggle.show {
+  visibility: visible;
+  opacity: 1;
+}
+
+#codeBlock {
+  display: block;
+  text-align: left;
+  width: 120%;
+  height: 120px;
+  position: absolute;
+  padding: 10px 10px 10px 0px;
+  left: -10%;
+  border: black 1px solid;
+  color: black;
+  letter-spacing: normal;
+  background-color: #aaaaaa;
+}
+
+#codeBlock.copied {
+  text-align: center;
+}
+
+#codeBlock.copied code {
+  padding-left: 16px;
+}
+
+#codeBlock img {
+  width: 1.5em;
+  height: 1.5em;
+  vertical-align: bottom;
+  float: right;
+}
+
 @media (min-width: 48em) {
-    body {
-        font-size: 16px;
-    }
-    
-    .content {
-        left: 15%;
-        width: 70%;
-    }
+  body {
+    font-size: 16px;
+  }
 
-    .home-menu {
-        text-align: left;
-    }
+  .content {
+    left: 15%;
+    width: 70%;
+  }
 
-    .home-menu ul {
-            float: right;
-    }
+  .home-menu {
+    text-align: left;
+  }
 
-    .splash {
-        width: 50%;
-        height: 50%;
-    }
+  .home-menu ul {
+    float: right;
+  }
 
-    .splash-head {
-        font-size: 250%;
-    }
+  .splash {
+    width: 50%;
+    height: 50%;
+  }
+
+  .splash-head {
+    font-size: 250%;
+  }
+
+  #codeBlock {
+    height: 50px;
+  }
 }
 
 @media (min-width: 78em) {

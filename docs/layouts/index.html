@@ -1,16 +1,26 @@
 {{ define "main" }}
 <div class="splash-container">
-    <div class="splash">
-        <h1 class="splash-head">{{ .Site.Title }}</h1>
-        <p class="splash-subhead">
-            A containerized app that provides a nifty interface for managing your containerized Minecraft servers.
-        </p>
-        <p class="splash-subhead">
-            The app is currently in the early stages of development.  Follow the <a href="blog">blog</a> for updates.
-        </p>
-        <p class="splash-subhead">
-            The vision for this project is shared in the <a href="blog/first-post">first post</a>.
-        </p>
+  <div class="splash">
+    <h1 class="splash-head">{{ .Site.Title }}</h1>
+    <p class="splash-subhead">
+      A containerized app that provides a nifty interface for managing your containerized Minecraft servers.
+    </p>
+    <p class="splash-subhead">
+      The app is currently in the early stages of development. Follow the <a href="blog">blog</a> for updates.
+    </p>
+    <p class="splash-subhead">
+      The vision for this project is shared in the <a href="blog/first-post">first post</a>.
+    </p>
+    <p>
+      <a href="#" class="pure-button pure-button-primary" onclick="getStarted();">GET STARTED</a>
+    </p>
+    <div id="toggle" class="splash-subhead">
+      <div>Run this command:</div>
+      <div id="codeBlock">
+        <img src="/img/copy.svg" alt="Copy to clipboard" onclick="copyAndHide();" />
+        <code id="code"></code>
+      </div>
     </div>
+  </div>
 </div>
 {{ end }}
