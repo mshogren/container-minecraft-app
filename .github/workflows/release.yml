@@ -25,7 +25,7 @@ jobs:
     steps:
       - uses: actions/checkout@ec3a7ce113134d7a93b817d10a8272cb61118579 # renovate: tag=v2
 
-      - uses: actions/setup-node@f099707f6e7a91b89cdebdeca599fc76cc8bf088
+      - uses: actions/setup-node@f099707f6e7a91b89cdebdeca599fc76cc8bf088 # renovate: tag=v2
         with:
           node-version: '16'
           cache: 'npm'
@@ -43,7 +43,7 @@ jobs:
           config-file-path: "./changelog.config.js"
 
       - name: Log in to the Container registry
-        uses: docker/login-action@5fcefb941de79536616e9422226e33fd39f1706f
+        uses: docker/login-action@5fcefb941de79536616e9422226e33fd39f1706f # renovate: tag=v1
         with:
           registry: ${{ env.REGISTRY }}
           username: ${{ github.actor }}
@@ -51,7 +51,7 @@ jobs:
 
       - name: Extract metadata (tags, labels) for Docker
         id: meta
-        uses: docker/metadata-action@e5622373a38e60fb6d795a4421e56882f2d7a681
+        uses: docker/metadata-action@e5622373a38e60fb6d795a4421e56882f2d7a681 # renovate: tag=v3
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
           tags: |
