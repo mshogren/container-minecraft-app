@@ -3,3 +3,4 @@
   X-Frame-Options: DENY
   X-Content-Type-Options: nosniff
   Referrer-Policy: no-referrer-when-downgrade
+  Content-Security-Policy-Report-Only: default-src 'none'; form-action 'none'; frame-ancestors 'none'; report-uri https://7f09f54d0df988f016b704ac11797c45.report-uri.com/r/d/csp/wizard
