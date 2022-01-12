@@ -10,8 +10,6 @@
         {{ printf `<link rel="%s" type="%s" href="%s" title="%s" />` .Rel .MediaType.Type .Permalink $.Site.Title | safeHTML }}
     {{ end -}}
 
-    <link rel="icon" href="data:,">
-
     {{ template "_internal/google_analytics.html" . }}
 
     {{ $purecss := resources.Get "css/purecss/pure-min.css" }}

@@ -9,6 +9,11 @@ googleAnalytics = 'G-1DRW60QS2W'
 [author]
 name = "Michael Shogren"
 
+[privacy]
+  [privacy.googleAnalytics]
+    respectDoNotTrack = true
+    useSessionStorage = true
+
 [menu]
   [[menu.main]]
     name = 'Blog'

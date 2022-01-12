@@ -1,6 +1,8 @@
 const toggle = document.getElementById('toggle');
 const codeBlock = document.getElementById('codeBlock');
 const code = document.getElementById('code');
+const copyButton = document.getElementById('copy-img');
+const getStartedButton = document.getElementById('get-started-button')
 
 function getStarted() {
   codeBlock.classList.remove('copied');
@@ -19,3 +21,8 @@ function copyAndHide() {
   toggle.classList.remove('show');
   toggle.classList.add('hide');
 }
+
+document.addEventListener('DOMContentLoaded', function () {
+  if (copyButton) copyButton.addEventListener('click', copyAndHide);
+  if (getStartedButton) getStartedButton.addEventListener('click', getStarted);
+});
