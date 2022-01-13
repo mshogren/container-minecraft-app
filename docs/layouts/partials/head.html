@@ -20,11 +20,7 @@
   {{- end }}
 
   <style>
-    {
-        {
-        $css.Content | safeCSS
-      }
-    }
+  {{ $css.Content | safeCSS }}
   </style>
 
   <script async src="https://www.googletagmanager.com/gtag/js?id={{ .Site.GoogleAnalytics }}"></script>
