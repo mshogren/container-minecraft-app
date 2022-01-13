@@ -14,7 +14,7 @@
     content="default-src 'none'; connect-src 'self' www.google-analytics.com; require-trusted-types-for 'script'; script-src-elem 'self' www.googletagmanager.com; style-src-elem 'self' '{{ $css.Data.Integrity }}'; img-src 'self' www.plantuml.com">
   {{- end}}
   <title>{{ $title }}</title>
-  <link rel="sitemap" type="application/xml" href="{{ .Site.BaseURL }}/sitemap.xml" />
+  <link rel="sitemap" type="application/xml" href="{{ .Site.BaseURL }}sitemap.xml" />
   {{- range .AlternativeOutputFormats }}
   <link rel="{{ .Rel }}" type="{{ .MediaType.Type }}" href="{{ .Permalink }}" title="{{ $.Site.Title }}" />
   {{- end }}
@@ -24,5 +24,5 @@
   </style>
 
   <script async src="https://www.googletagmanager.com/gtag/js?id={{ .Site.GoogleAnalytics }}"></script>
-  <script src="{{ $js.Permalink }}" defer></script>
+  <script src="{{ $js.RelPermalink }}" defer></script>
 </head>
