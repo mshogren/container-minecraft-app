@@ -1,0 +1,6 @@
+{{ $pure := resources.Get "css/purecss/pure.css" }}
+{{ $grid := resources.Get "css/purecss/grids-responsive.css" }}
+{{ $site := resources.Get "css/style.css" }}
+{{ $syntax := resources.Get "css/syntax.css" }}
+{{ $css := slice $pure $grid $site $syntax | resources.Concat "css/bundle.css" | resources.PostCSS | minify | fingerprint }}
+{{ return $css }}

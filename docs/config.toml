@@ -9,6 +9,9 @@ googleAnalytics = 'G-1DRW60QS2W'
 [author]
 name = "Michael Shogren"
 
+[build]
+  writeStats = true
+
 [privacy]
   [privacy.googleAnalytics]
     respectDoNotTrack = true
@@ -26,8 +29,26 @@ name = "Michael Shogren"
 
 [module]
   [[module.mounts]]
+    source = 'assets'
+    target = 'assets'
+  [[module.mounts]]
     source = 'node_modules/purecss/build'
     target = 'assets/css/purecss'
+
+[mediaTypes]
+  [mediaTypes.'text/pages.dev']
+    delimiter = ''
+    suffixes = ''
+
+[outputFormats]
+  [outputFormats.HEADERS]
+    baseName = '_headers'
+    isPlainText = true
+    mediaType = 'text/pages.dev'
+    notAlternative = true
+
+[outputs]
+  home = ['HTML', 'RSS', 'HEADERS']
 
 [markup]
   [markup.highlight]

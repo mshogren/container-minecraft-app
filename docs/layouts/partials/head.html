@@ -1,23 +1,32 @@
+{{- $title := print .Site.Title " | " .Title }}
+{{- if .IsHome }}{{ $title = .Site.Title }}{{ end }}
+{{- $css := partial "style.html" . | resources.PostProcess }}
+{{- $jsTemplate := resources.Get "js/script.js" }}
+{{- $js := $jsTemplate | resources.ExecuteAsTemplate "/js/script.js" . }}
+
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="A containerized app that provides a nifty interface for managing your containerized Minecraft servers.">
-    {{ $title := print .Site.Title " | " .Title }}
-    {{ if .IsHome }}{{ $title = .Site.Title }}{{ end }}
-    <title>{{ $title }}</title>
-    {{ printf `<link rel="sitemap" type="application/xml" href="%ssitemap.xml" />` .Site.BaseURL | safeHTML }}
-    {{ range .AlternativeOutputFormats -}}
-        {{ printf `<link rel="%s" type="%s" href="%s" title="%s" />` .Rel .MediaType.Type .Permalink $.Site.Title | safeHTML }}
-    {{ end -}}
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description"
+    content="A containerized app that provides a nifty interface for managing your containerized Minecraft servers.">
+  {{- if not hugo.IsProduction }}
+  <meta http-equiv="Content-Security-Policy"
+    content="default-src 'none'; connect-src 'self' www.google-analytics.com; require-trusted-types-for 'script'; script-src-elem 'self' www.googletagmanager.com; style-src-elem 'self' '{{ $css.Data.Integrity }}'; img-src 'self' www.plantuml.com">
+  {{- end}}
+  <title>{{ $title }}</title>
+  <link rel="sitemap" type="application/xml" href="{{ .Site.BaseURL }}/sitemap.xml" />
+  {{- range .AlternativeOutputFormats }}
+  <link rel="{{ .Rel }}" type="{{ .MediaType.Type }}" href="{{ .Permalink }}" title="{{ $.Site.Title }}" />
+  {{- end }}
 
-    {{ template "_internal/google_analytics.html" . }}
+  <style>
+    {
+        {
+        $css.Content | safeCSS
+      }
+    }
+  </style>
 
-    {{ $purecss := resources.Get "css/purecss/pure-min.css" }}
-    <link rel="stylesheet" href="{{ $purecss.Permalink }}">
-    {{ $gridcss := resources.Get "css/purecss/grids-responsive-min.css" }}
-    <link rel="stylesheet" href="{{ $gridcss.Permalink }}">
-    <link rel="stylesheet" href="/css/style.css">
-    <link rel="stylesheet" href="/css/syntax.css">
-
-    <script src="/js/script.js" defer></script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id={{ .Site.GoogleAnalytics }}"></script>
+  <script src="{{ $js.Permalink }}" defer></script>
 </head>

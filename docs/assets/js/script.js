@@ -1,3 +1,12 @@
+var dnt = (navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack);
+var doNotTrack = (dnt == "1" || dnt == "yes");
+if (!doNotTrack) {
+	window.dataLayer = window.dataLayer || [];
+	function gtag(){dataLayer.push(arguments);}
+	gtag('js', new Date());
+	gtag('config', '{{ .Site.GoogleAnalytics }}', { 'anonymize_ip': false });
+}
+
 const toggle = document.getElementById('toggle');
 const codeBlock = document.getElementById('codeBlock');
 const code = document.getElementById('code');
