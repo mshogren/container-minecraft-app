@@ -19,7 +19,8 @@ This log lists the architectural decisions for container-minecraft-app.
 * [ADR-0012](0012-use-pydantic-for-python-application-configuration-management.md) - Use pydantic for python application configuration management
 * [ADR-0013](0013-use-github-actions-for-ci-cd.md) - Use Github Actions for CI/CD
 * [ADR-0014](0014-avoid-expensive-modpack-scraping.md) - Avoid expensive modpack scraping
-* [ADR-0015](0015-use-an-automated-software-release-pipeline.md) - Use TypeScript for UI components
+* [ADR-0015](0015-use-an-automated-software-release-pipeline.md) - Use an automated software release pipeline
+* [ADR-0016](0016-use-typescript-for-ui-components.md) - Use TypeScript for UI components
 
 <!-- adrlogstop -->
 
