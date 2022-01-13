@@ -19,9 +19,7 @@
   <link rel="{{ .Rel }}" type="{{ .MediaType.Type }}" href="{{ .Permalink }}" title="{{ $.Site.Title }}" />
   {{- end }}
 
-  <style>
-  {{ $css.Content | safeCSS }}
-  </style>
+  <style>{{ $css.Content | safeCSS }}</style>
 
   <script async src="https://www.googletagmanager.com/gtag/js?id={{ .Site.GoogleAnalytics }}"></script>
   <script src="{{ $js.RelPermalink }}" defer></script>
