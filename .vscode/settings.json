@@ -25,11 +25,14 @@
     "cSpell.words": [
         "dateutil",
         "itzg",
+        "Minecraft",
+        "modpack",
         "pipenv",
         "pydantic",
         "pylint",
         "pyquery",
         "pytest"
     ],
-    "python.formatting.provider": "autopep8"
+    "python.formatting.provider": "autopep8",
+    "html.format.contentUnformatted": "pre,code,textarea,style"
 }
