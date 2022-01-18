@@ -5,7 +5,9 @@
         "site",
         "api",
         "docker",
-        "github"
+        "github",
+        "app",
+        "deps"
     ],
     "python.analysis.extraPaths": [
         "./api"
