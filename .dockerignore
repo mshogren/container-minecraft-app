@@ -10,4 +10,5 @@
 !api/version/*.py
 !api/*.yaml
 
-!app/*.html
+!app/*
+!app/src

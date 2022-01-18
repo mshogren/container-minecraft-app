@@ -34,5 +34,6 @@
         "pytest"
     ],
     "python.formatting.provider": "autopep8",
-    "html.format.contentUnformatted": "pre,code,textarea,style"
+    "html.format.contentUnformatted": "pre,code,textarea,style",
+    "jest.jestCommandLine": "npx jest -c app/jest.config.ts app"
 }

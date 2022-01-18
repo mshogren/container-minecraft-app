@@ -8,8 +8,7 @@
   "scripts": {
     "autopep8": "api/.venv/bin/autopep8 --experimental --in-place",
     "pylint": "api/.venv/bin/pylint --rcfile=api/.pylintrc",
-    "lint-graphql-schema": "cd api; .venv/bin/strawberry export-schema main | npx graphql-schema-linter -s -e relay-page-info-spec,enum-values-have-descriptions",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "lint-graphql-schema": "cd api; .venv/bin/strawberry export-schema main | npx graphql-schema-linter -s -e relay-page-info-spec,enum-values-have-descriptions"
   },
   "repository": {
     "type": "git",
@@ -31,6 +30,7 @@
   },
   "workspaces": [
     "api",
+    "app",
     "docs"
   ],
   "lint-staged": {
@@ -38,6 +38,15 @@
       "npm run autopep8",
       "npm run pylint",
       "npm run lint-graphql-schema"
+    ],
+    "app/*": [
+      "prettier --ignore-unknown --write"
+    ],
+    "app/**/*.{js,jsx,ts,tsx}": [
+      "eslint"
+    ],
+    "**/*.{ts,tsx}": [
+      "tsc-files -p app/tsconfig.json --noEmit"
     ]
   }
 }

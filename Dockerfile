@@ -1,4 +1,4 @@
-FROM python:3.9-slim as base
+FROM python:3.9-slim AS base
 
 # Setup env
 ENV LANG C.UTF-8
@@ -18,6 +18,15 @@ COPY api/Pipfile.lock .
 RUN PIPENV_VENV_IN_PROJECT=1 pipenv install --deploy
 
 
+FROM node:16 AS node-deps
+
+WORKDIR /app
+COPY app/package*.json ./
+RUN npm install
+COPY app ./
+RUN npm run build
+
+
 FROM base AS runtime
 
 # Copy virtual env from python-deps stage
@@ -27,7 +36,7 @@ ENV PATH="/.venv/bin:$PATH"
 # Install application into container
 WORKDIR /project
 COPY api/ ./
-COPY app/ ../app/
+COPY --from=node-deps app/dist/ ../app/
 
 
 # Run the application
