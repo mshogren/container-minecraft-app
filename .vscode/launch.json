@@ -1,0 +1,46 @@
+{
+  // Use IntelliSense to learn about possible attributes.
+  // Hover to view descriptions of existing attributes.
+  // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Run App",
+      "request": "launch",
+      "runtimeArgs": [
+        "run",
+        "dev"
+      ],
+      "cwd": "${workspaceFolder}${pathSeparator}app",
+      "runtimeExecutable": "npm",
+      "console": "integratedTerminal",
+      "skipFiles": [
+        "<node_internals>/**"
+      ],
+      "type": "pwa-node"
+    },
+    {
+      "name": "Run API",
+      "type": "python",
+      "request": "launch",
+      "module": "uvicorn",
+      "args": [
+          "main:app",
+          "--reload",
+          "--log-config",
+          "logging.yaml"
+      ],
+      "cwd": "${workspaceFolder}${pathSeparator}api",
+      "env": {
+        "ALLOWED_ORIGIN": "http://localhost:3000"
+      },
+      "jinja": true
+    }
+  ],
+  "compounds": [
+    {
+      "name": "Run All",
+      "configurations": ["Run API", "Run App"]
+    }
+  ]
+}

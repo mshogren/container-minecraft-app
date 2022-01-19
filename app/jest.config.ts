@@ -8,4 +8,6 @@ export default {
   transform: {
     '^.+\\.tsx?$': 'ts-jest',
   },
+  transformIgnorePatterns: ['/node_modules', '/vite-plugin-singlefile'],
+  testPathIgnorePatterns: ['/node_modules', '/vite-plugin-singlefile'],
 };
