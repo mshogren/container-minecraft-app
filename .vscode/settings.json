@@ -26,16 +26,23 @@
     ],
     "cSpell.words": [
         "dateutil",
+        "fullhuman",
         "itzg",
         "Minecraft",
         "modpack",
         "pipenv",
+        "purgecss",
         "pydantic",
         "pylint",
         "pyquery",
-        "pytest"
+        "pytest",
+        "urql",
+        "vite",
+        "vitejs",
+        "wonka"
     ],
     "python.formatting.provider": "autopep8",
     "html.format.contentUnformatted": "pre,code,textarea,style",
+    "eslint.workingDirectories": [],
     "jest.jestCommandLine": "npx jest -c app/jest.config.ts app"
 }
