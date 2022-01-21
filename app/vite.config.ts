@@ -1,28 +1,40 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import checker from 'vite-plugin-checker';
+import purgecss from '@fullhuman/postcss-purgecss';
 import { viteSingleFile } from './vite-plugin-singlefile';
 
-// https://vitejs.dev/config/
-export default defineConfig({
-  plugins: [
-    react(),
-    checker({
-      typescript: true,
-      eslint: {
-        files: ['./src'],
-        extensions: ['.ts', '.tsx'],
+const purge = purgecss({
+  content: ['./index.html', './src/**/*.tsx'],
+});
+
+export default defineConfig(({ mode }) => {
+  return {
+    plugins: [
+      react(),
+      checker({
+        typescript: true,
+        eslint: {
+          files: ['./src'],
+          extensions: ['.ts', '.tsx'],
+        },
+      }),
+      viteSingleFile(),
+    ],
+    build: {
+      cssCodeSplit: false,
+      rollupOptions: {
+        output: {
+          manualChunks: () => 'everything.js',
+        },
       },
-    }),
-    viteSingleFile(),
-  ],
-  build: {
-    cssCodeSplit: false,
-    rollupOptions: {
-      output: {
-        manualChunks: () => 'everything.js',
+      sourcemap: true,
+    },
+    css: {
+      postcss: {
+        plugins: mode === 'production' ? [...[purge]] : [],
       },
     },
-    sourcemap: true,
-  },
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  } as any;
 });

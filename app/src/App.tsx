@@ -1,5 +1,6 @@
 import { Routes, Route, Outlet, Link } from 'react-router-dom';
 import './App.css';
+import Servers from './Servers';
 
 function Layout() {
   return (
@@ -9,6 +10,11 @@ function Layout() {
           <li className="pure-menu-item">
             <Link className="pure-menu-link" to="/">
               Home
+            </Link>
+          </li>
+          <li className="pure-menu-item">
+            <Link className="pure-menu-link" to="/servers">
+              Servers
             </Link>
           </li>
         </ul>
@@ -30,7 +36,15 @@ function Home() {
           containerized Minecraft servers.
         </p>
 
-        <p>Nothing here</p>
+        <p>
+          <Link
+            to="servers"
+            role="button"
+            className="pure-button pure-button-primary"
+          >
+            GET STARTED
+          </Link>
+        </p>
       </div>
     </div>
   );
@@ -44,6 +58,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<Home />} />
+          <Route path="servers/*" element={<Servers />} />
           <Route path="*" element={<Home />} />
         </Route>
       </Routes>
