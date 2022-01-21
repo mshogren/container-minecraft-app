@@ -9,12 +9,12 @@ We need to pick a programming language and associated tools to use to implement 
 
 Which one should we choose?
 
-## Decision Drivers 
+## Decision Drivers
 * The container run-times and orchestration technologies we have considered
   * docker
   * Kubernetes
   * Hashicorp Nomad
-  
+
   each provide officially supported client libraries for Go and Python.
 * Go and Python both have [library options for implementing a GraphQL API](https://graphql.org/code/#language-support).
 * Go and Python are both languages that it would be useful to learn more about in the context of professional development.
@@ -27,11 +27,11 @@ Which one should we choose?
 
 ## Decision Outcome
 
-Chosen option: "Python", because 
+Chosen option: "Python", because
 * Python is quicker to prototype with.
 * Python has a richer ecosystem.
 * Python is easy to find answers to questions about on [Stack Overflow](https://stackoverflow.com/).
 
 ## Links
 
-* [ADR-0003](0003-implement-a-graphql-endpoint.md)
+* [ADR-0003](0003-implement-a-graphql-endpoint.md) - Implement a GraphQL endpoint

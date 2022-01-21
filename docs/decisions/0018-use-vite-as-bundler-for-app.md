@@ -35,4 +35,4 @@ Chosen option: "Vite", because
 
 ## Links
 
-* [ADR-0017](0017-use-react-as-framework-for-app.md)
+* [ADR-0017](0017-use-react-as-framework-for-app.md) - Use React as UI framework for app

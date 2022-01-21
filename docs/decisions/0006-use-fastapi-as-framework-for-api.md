@@ -13,9 +13,9 @@ Which one should we choose?
 
 ## Decision Outcome
 
-Chosen option: "FastAPI", because 
+Chosen option: "FastAPI", because
 * FastAPI is modern and uses ASGI for asynchronous IO.
 
 ## Links
 
-* [ADR-0004](0004-use-python-for-api.md)
+* [ADR-0004](0004-use-python-for-api.md) - Use python for API

@@ -1,4 +1,4 @@
-# Use react as UI framework for app
+# Use React as UI framework for app
 
 ## Context and Problem Statement
 

@@ -12,10 +12,10 @@ Which one should we choose?
 
 ## Decision Outcome
 
-Chosen option: "Uvicorn", because 
+Chosen option: "Uvicorn", because
 * Uvicorn is recommended by default by [FastAPI](https://fastapi.tiangolo.com/).
 
 ## Links
 
-* [ADR-0004](0004-use-python-for-api.md)
-* [ADR-0006](0006-use-fastapi-as-framework-for-api.md)
+* [ADR-0004](0004-use-python-for-api.md) - Use python for API
+* [ADR-0006](0006-use-fastapi-as-framework-for-api.md) - Use FastAPI as framework for API

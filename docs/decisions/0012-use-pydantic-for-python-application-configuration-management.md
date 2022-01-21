@@ -12,7 +12,7 @@ Which one should we choose?
 
 ## Decision Outcome
 
-Chosen option: "pydantic", because 
+Chosen option: "pydantic", because
 * It is already installed by FastAPI
 * It is also useful for working with the external APIs because we can create a model for data returned by those APIs that allows us
     * to validate the data against the model
@@ -21,5 +21,5 @@ Chosen option: "pydantic", because
 
 ## Links
 
-* [ADR-0004](0004-use-python-for-api.md)
-* [ADR-0006](0006-use-fastapi-as-framework-for-api.md)
+* [ADR-0004](0004-use-python-for-api.md) - Use python for API
+* [ADR-0006](0006-use-fastapi-as-framework-for-api.md) - Use FastAPI as framework for API

@@ -12,9 +12,9 @@ Which one should we choose?
 
 ## Decision Outcome
 
-Chosen option: "pylint", because 
+Chosen option: "pylint", because
 * It was the first tool mentioned in the [VS Code Python docs](https://code.visualstudio.com/docs/python/linting)
 
 ## Links
 
-* [ADR-0004](0004-use-python-for-api.md)
+* [ADR-0004](0004-use-python-for-api.md) - Use python for API

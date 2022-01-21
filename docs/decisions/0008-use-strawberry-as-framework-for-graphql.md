@@ -13,12 +13,12 @@ Which one should we choose?
 
 ## Decision Outcome
 
-Chosen option: "Strawberry", because 
+Chosen option: "Strawberry", because
 * Strawberry is recommended by [FastAPI](https://fastapi.tiangolo.com/advanced/graphql/).
 * Strawberry allows a [code-first](https://stackoverflow.com/questions/5446316/code-first-vs-model-database-first) approach which should make prototyping faster and easier than managing the API definition separately from the code that implements it.
 
 ## Links
 
-* [ADR-0003](0003-implement-a-graphql-endpoint.md)
-* [ADR-0004](0004-use-python-for-api.md)
-* [ADR-0006](0006-use-fastapi-as-framework-for-api.md)
+* [ADR-0003](0003-implement-a-graphql-endpoint.md) - Implement a GraphQL endpoint
+* [ADR-0004](0004-use-python-for-api.md) - Use python for API
+* [ADR-0006](0006-use-fastapi-as-framework-for-api.md) - Use FastAPI as framework for API

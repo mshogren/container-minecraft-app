@@ -13,9 +13,9 @@ Which one should we choose?
 
 ## Decision Outcome
 
-Chosen option: "Pipenv", because 
+Chosen option: "Pipenv", because
 * a choice was made without much research.
 
 ## Links
 
-* [ADR-0004](0004-use-python-for-api.md)
+* [ADR-0004](0004-use-python-for-api.md) - Use python for API
