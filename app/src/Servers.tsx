@@ -84,7 +84,9 @@ function ServerList() {
         );
       })
     ) : (
-      <tr>Nothing here</tr>
+      <tr>
+        <td colSpan={3}>Nothing here</td>
+      </tr>
     );
 
   return (
