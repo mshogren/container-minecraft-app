@@ -6,7 +6,6 @@
 	"recommendations": [
     "vivaxy.vscode-conventional-commits",
     "dbaeumer.vscode-eslint",
-    "orta.vscode-jest",
     "esbenp.prettier-vscode",
     "ms-python.python",
     "ms-python.vscode-pylance"

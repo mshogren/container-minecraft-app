@@ -1,12 +1,12 @@
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { BrowserRouter } from 'react-router-dom';
-import { Provider } from 'urql';
+import { Client, Provider } from 'urql';
 import { never } from 'wonka';
 import App from './App';
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-function renderElement(mockClient: any) {
+function renderElement(mockClient: Client) {
   render(
     <BrowserRouter>
       <Provider value={mockClient}>
@@ -18,20 +18,20 @@ function renderElement(mockClient: any) {
 
 describe('The home page', () => {
   const mockClient = {
-    executeQuery: jest.fn(() => never),
-  };
+    executeQuery: vi.fn(() => never),
+  } as unknown as Client;
 
   beforeEach(() => {
     renderElement(mockClient);
   });
 
-  test('renders correctly', async () => {
+  it('renders correctly', async () => {
     const button = await screen.findByRole('button');
 
     expect(button.innerHTML).toBe('GET STARTED');
   });
 
-  test('navigates to servers', async () => {
+  it('navigates to servers', async () => {
     const button = await screen.findByRole('button');
 
     userEvent.click(button);

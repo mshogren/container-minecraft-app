@@ -1,4 +1,5 @@
-import { defineConfig } from 'vite';
+/// <reference types="vitest" />
+import { defineConfig, UserConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import checker from 'vite-plugin-checker';
 import purgecss from '@fullhuman/postcss-purgecss';
@@ -10,6 +11,10 @@ const purge = purgecss({
 
 export default defineConfig(({ mode }) => {
   return {
+    test: {
+      globals: true,
+      environment: 'jsdom',
+    },
     plugins: [
       react(),
       checker({
@@ -35,6 +40,5 @@ export default defineConfig(({ mode }) => {
         plugins: mode === 'production' ? [...[purge]] : [],
       },
     },
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  } as any;
+  } as UserConfig;
 });

@@ -1,11 +1,11 @@
-import { CombinedError, Provider } from 'urql';
-import { fromValue, never } from 'wonka';
+import { describe, expect, it, vi } from 'vitest';
 import { render, screen, waitFor } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
+import { Client, CombinedError, Provider } from 'urql';
+import { fromValue, never } from 'wonka';
 import Servers from './Servers';
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-function renderElement(mockClient: any) {
+function renderElement(mockClient: Client): void {
   render(
     <MemoryRouter>
       <Provider value={mockClient}>
@@ -16,75 +16,69 @@ function renderElement(mockClient: any) {
 }
 
 describe('The servers page', () => {
-  test('shows a loading message', async () => {
+  it('shows a loading message', async () => {
     const mockClient = {
       executeQuery: () => never,
-    };
+    } as unknown as Client;
 
     renderElement(mockClient);
 
-    await waitFor(() =>
-      expect(screen.queryByText(/Loading.../)).toBeInTheDocument()
-    );
+    await waitFor(() => expect(screen.queryByText(/Loading.../)).toBeTruthy());
   });
 
-  test('shows a network error message', async () => {
+  it('shows a network error message', async () => {
     const mockClient = {
-      executeQuery: jest.fn(() =>
+      executeQuery: vi.fn(() =>
         fromValue({
           error: new CombinedError({
             networkError: Error('network error'),
           }),
         })
       ),
-    };
+    } as unknown as Client;
 
     renderElement(mockClient);
 
-    await waitFor(() =>
-      expect(screen.queryByText(/Error/)).toBeInTheDocument()
-    );
+    await waitFor(() => expect(screen.queryByText(/Error/)).toBeTruthy());
   });
 
-  test('shows an application error message', async () => {
+  it('shows an application error message', async () => {
     const mockClient = {
-      executeQuery: jest.fn(() =>
+      executeQuery: vi.fn(() =>
         fromValue({
           error: new CombinedError({
             graphQLErrors: [Error('application error')],
           }),
         })
       ),
-    };
+    } as unknown as Client;
 
     renderElement(mockClient);
 
-    await waitFor(() =>
-      expect(screen.queryByText(/Error/)).toBeInTheDocument()
-    );
+    await waitFor(() => expect(screen.queryByText(/Error/)).toBeTruthy());
   });
 
-  test('renders with empty data', async () => {
+  it('renders with empty data', async () => {
     const mockClient = {
-      executeQuery: jest.fn(() =>
+      executeQuery: vi.fn(() =>
         fromValue({
           data: {
             servers: [],
           },
         })
       ),
-    };
+    } as unknown as Client;
 
     renderElement(mockClient);
 
     await waitFor(() =>
-      expect(screen.queryByText(/Nothing here/)).toBeInTheDocument()
+      expect(screen.queryByText(/Nothing here/)).toBeTruthy()
     );
   });
 
-  test('renders with data', async () => {
+  it('renders with data', async () => {
     const mockClient = {
-      executeQuery: jest.fn(() =>
+      executeQuery: vi.fn(() =>
         fromValue({
           data: {
             servers: [
@@ -104,13 +98,13 @@ describe('The servers page', () => {
           },
         })
       ),
-    };
+    } as unknown as Client;
 
     renderElement(mockClient);
 
     await waitFor(() => {
-      expect(screen.queryByText(/Server 1/)).toBeInTheDocument();
-      expect(screen.queryByText(/Server 2/)).toBeInTheDocument();
+      expect(screen.queryByText(/Server 1/)).toBeTruthy();
+      expect(screen.queryByText(/Server 2/)).toBeTruthy();
     });
   });
 });

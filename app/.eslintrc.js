@@ -2,7 +2,6 @@ module.exports = {
   env: {
     browser: true,
     es2021: true,
-    jest: true,
   },
   extends: [
     'plugin:react/recommended',
@@ -19,7 +18,7 @@ module.exports = {
     ecmaVersion: 13,
     sourceType: 'module',
   },
-  plugins: ['prettier', 'react', 'jest', '@typescript-eslint'],
+  plugins: ['prettier', 'react', '@typescript-eslint'],
   rules: {
     'react/jsx-filename-extension': [
       1,
