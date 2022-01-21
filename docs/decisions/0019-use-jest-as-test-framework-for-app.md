@@ -1,5 +1,7 @@
 # Use Jest as test framework for app
 
+* Status: superseded by [ADR-0021](0021-use-vitest-as-test-framework-for-app.md) - Use Vitest as test framework for app.
+
 ## Context and Problem Statement
 
 We need to pick a test framework for testing our app.
@@ -18,4 +20,4 @@ Chosen option: "Jest", because
 
 ## Links
 
-* [ADR-0017](0017-use-react-as-framework-for-app.md)
+* [ADR-0017](0017-use-react-as-framework-for-app.md) - Use React as UI framework for app

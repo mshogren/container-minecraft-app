@@ -21,9 +21,11 @@ This log lists the architectural decisions for container-minecraft-app.
 * [ADR-0014](0014-avoid-expensive-modpack-scraping.md) - Avoid expensive modpack scraping
 * [ADR-0015](0015-use-an-automated-software-release-pipeline.md) - Use an automated software release pipeline
 * [ADR-0016](0016-use-typescript-for-ui-components.md) - Use TypeScript for UI components
-* [ADR-0017](0017-use-react-as-framework-for-app.md) - Use react as UI framework for app
+* [ADR-0017](0017-use-react-as-framework-for-app.md) - Use React as UI framework for app
 * [ADR-0018](0018-use-vite-as-bundler-for-app.md) - Use Vite as bundler for app
 * [ADR-0019](0019-use-jest-as-test-framework-for-app.md) - Use Jest as test framework for app
+* [ADR-0020](0020-use-urql-as-graphql-client-library-for-app.md) - Use URQL as GraphQL client library for app
+* [ADR-0021](0021-use-vitest-as-test-framework-for-app.md) - Use Vitest as test framework for app
 
 <!-- adrlogstop -->
 
