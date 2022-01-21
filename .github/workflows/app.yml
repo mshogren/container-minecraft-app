@@ -30,11 +30,11 @@ jobs:
       - name: install dependencies
         run: npm ci
 
-      - name: lint with eslint
+      - name: lint
         run: npm run lint
 
-      - name: test with jest
-        run: npm run test
+      - name: test
+        run: npm run test -- run
 
       - name: compile
         run: npm run build

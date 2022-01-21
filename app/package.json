@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "scripts": {
     "dev": "vite",
-    "test": "jest",
+    "test": "vitest",
     "lint": "eslint src/",
     "build": "tsc && vite build",
     "preview": "vite preview"
