@@ -1,116 +1,74 @@
-import { Routes, Route, Outlet } from 'react-router-dom';
-import { gql, useQuery } from 'urql';
-
-export const GET_SERVERS = gql`
-  query GetServers {
-    servers {
-      created
-      gameVersion
-      id
-      image {
-        name
-        tag
-      }
-      name
-      ports {
-        hostPort
-        port
-      }
-      started
-      status
-      type
-      volumes {
-        name
-        source
-      }
-    }
-  }
-`;
-
-interface ImageData {
-  name: string;
-  tag: string;
-}
-
-interface PortData {
-  hostPort: number;
-  port: string;
-}
-
-interface VolumeData {
-  name: string;
-  source: string;
-}
-
-interface ServerData {
-  created: Date;
-  gameVersion: string;
-  id: string;
-  image: ImageData;
-  name: string;
-  ports: PortData[];
-  started: Date;
-  status: string;
-  type: string;
-  volume: VolumeData[];
-}
-
-interface ServerListData {
-  servers: ServerData[];
-}
+import { Routes, Route, Outlet, Link } from 'react-router-dom';
+import { useQuery } from 'urql';
+import ServerDetails from './ServerDetails';
+import {
+  QueryComponent,
+  formatDate,
+  GET_SERVERS,
+  ServerListData,
+} from './ServerQueries';
 
 function ServerList() {
-  const [{ data, fetching, error }] = useQuery<ServerListData>({
+  const response = useQuery<ServerListData>({
     query: GET_SERVERS,
     requestPolicy: 'network-only',
   });
 
-  if (fetching) return <p>Loading...</p>;
-  if (error || !data) return <p>Error :(</p>;
-
-  const servers =
-    data.servers.length > 0 ? (
-      data.servers.map((server) => {
-        const { id, name, status, created } = server;
-        const formattedCreated = new Date(
-          Date.parse(created.toString())
-        ).toLocaleString('en-CA');
-        return (
-          <tr key={id}>
-            <td>{name}</td>
-            <td>{status}</td>
-            <td>{formattedCreated}</td>
-          </tr>
-        );
-      })
-    ) : (
-      <tr>
-        <td colSpan={3}>Nothing here</td>
-      </tr>
+  const servers = (data: ServerListData) => {
+    return (
+      <div>
+        <table className="pure-table">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Status</th>
+              <th>Created</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {data.servers.length > 0 ? (
+              data.servers.map((server) => {
+                const { id, name, status, created } = server;
+                return (
+                  <tr key={id}>
+                    <td>{name}</td>
+                    <td>{status}</td>
+                    <td>{formatDate(created)}</td>
+                    <td>
+                      <Link to={id}>Details</Link>
+                    </td>
+                  </tr>
+                );
+              })
+            ) : (
+              <tr>
+                <td colSpan={3}>Nothing here</td>
+              </tr>
+            )}
+          </tbody>
+        </table>
+      </div>
     );
+  };
 
   return (
-    <div>
-      <table className="content pure-table">
-        <thead>
-          <tr>
-            <td>Name</td>
-            <td>Status</td>
-            <td>Created</td>
-          </tr>
-        </thead>
-        <tbody>{servers}</tbody>
-      </table>
+    <div className="content">
+      <QueryComponent<ServerListData, object>
+        response={response}
+        renderer={servers}
+      />
     </div>
   );
 }
 
 function Servers() {
   return (
-    <div className="content">
+    <div>
       <Routes>
         <Route path="/" element={<Outlet />}>
           <Route index element={<ServerList />} />
+          <Route path=":serverId" element={<ServerDetails />} />
         </Route>
       </Routes>
     </div>

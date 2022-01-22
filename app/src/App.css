@@ -113,6 +113,10 @@ a.pure-button-primary {
     padding: 1em 1em 3em;
 }
 
+.pure-table {
+  width: 100%;
+}
+
 .home-menu {
     padding: 0.5em;
     text-align: center;

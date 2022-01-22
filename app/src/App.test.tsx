@@ -1,4 +1,4 @@
-import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { beforeEach, describe, expect, it } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { BrowserRouter } from 'react-router-dom';
@@ -18,7 +18,7 @@ function renderElement(mockClient: Client) {
 
 describe('The home page', () => {
   const mockClient = {
-    executeQuery: vi.fn(() => never),
+    executeQuery: () => never,
   } as unknown as Client;
 
   beforeEach(() => {
