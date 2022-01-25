@@ -22,6 +22,7 @@ describe('The home page', () => {
   } as unknown as Client;
 
   beforeEach(() => {
+    window.history.replaceState({}, '', '/');
     renderElement(mockClient);
   });
 

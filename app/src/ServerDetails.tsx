@@ -1,16 +1,13 @@
 import { useParams } from 'react-router-dom';
 import { useQuery } from 'urql';
-import {
-  QueryComponent,
-  formatDate,
-  GET_SERVER_BY_ID,
-  ServerInstanceData,
-} from './ServerQueries';
+import { QueryComponent } from './GraphQLComponents';
+import { GET_SERVER_BY_ID, ServerInstanceData } from './ServerQueries';
+import { formatDate } from './utils';
 
 function ServerDetails() {
   const { serverId } = useParams();
 
-  const response = useQuery<ServerInstanceData>({
+  const [response] = useQuery<ServerInstanceData>({
     query: GET_SERVER_BY_ID,
     variables: { serverId },
     requestPolicy: 'network-only',
@@ -18,18 +15,26 @@ function ServerDetails() {
 
   const serverDetails = ({ server }: ServerInstanceData) => {
     return (
-      <table className="pure-table">
-        <tbody>
+      <table className="pure-table vertical-table">
+        <thead>
           <tr>
             <th>Name</th>
-            <td>{server.name}</td>
           </tr>
           <tr>
             <th>Status</th>
-            <td>{server.status}</td>
           </tr>
           <tr>
             <th>Created</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>{server.name}</td>
+          </tr>
+          <tr>
+            <td>{server.status}</td>
+          </tr>
+          <tr>
             <td>{formatDate(server.created)}</td>
           </tr>
         </tbody>

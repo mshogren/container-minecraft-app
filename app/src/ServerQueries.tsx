@@ -1,26 +1,4 @@
-import { gql, UseQueryResponse } from 'urql';
-
-interface RenderFunction<Data> {
-  // eslint-disable-next-line no-unused-vars, no-undef
-  (data: Data): JSX.Element;
-}
-
-interface UseQueryProps<Data, Variables> {
-  response: UseQueryResponse<Data, Variables>;
-  renderer: RenderFunction<Data>;
-}
-
-export function QueryComponent<Data, Variables>(
-  props: UseQueryProps<Data, Variables>
-) {
-  const { response, renderer } = props;
-  const [{ data, fetching, error }] = response;
-
-  if (fetching) return <p>Loading...</p>;
-  if (error) return <p>Error :(</p>;
-
-  return renderer(data as Data);
-}
+import { gql } from 'urql';
 
 export interface ImageData {
   name: string;
@@ -56,6 +34,32 @@ export interface ServerListData {
 
 export interface ServerInstanceData {
   server: ServerData;
+}
+
+export interface AddServerSuccess {
+  server: ServerData;
+}
+
+export interface AddServerError {
+  error: string;
+}
+
+export interface AddVanillaServer {
+  addVanillaServer: AddServerSuccess | AddServerError;
+}
+
+export interface AddVanillaServerInput {
+  name: string;
+  version: string;
+}
+
+export interface AddCurseforgeServer {
+  addCurseforgeServer: AddServerSuccess | AddServerError;
+}
+
+export interface AddCurseforgeServerInput {
+  name: string;
+  modpack: string;
 }
 
 export const GET_SERVERS = gql`
@@ -110,6 +114,32 @@ export const GET_SERVER_BY_ID = gql`
   }
 `;
 
-export function formatDate(date: Date) {
-  return new Date(Date.parse(date.toString())).toLocaleString('en-CA');
-}
+export const ADD_VANILLA_SERVER = gql`
+  mutation AddVanillaServer($name: String!, $version: String!) {
+    addVanillaServer(server: { name: $name, version: $version }) {
+      ... on AddServerSuccess {
+        server {
+          id
+        }
+      }
+      ... on AddServerError {
+        error
+      }
+    }
+  }
+`;
+
+export const ADD_CURSEFORGE_SERVER = gql`
+  mutation AddCurseforgeServer($name: String!, $modpack: String!) {
+    addCurseforgeServer(server: { modpackId: $modpack, name: $name }) {
+      ... on AddServerSuccess {
+        server {
+          id
+        }
+      }
+      ... on AddServerError {
+        error
+      }
+    }
+  }
+`;

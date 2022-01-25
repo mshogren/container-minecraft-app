@@ -1,15 +1,13 @@
 import { Routes, Route, Outlet, Link } from 'react-router-dom';
 import { useQuery } from 'urql';
+import { QueryComponent } from './GraphQLComponents';
+import ServerAdd from './ServerAdd';
 import ServerDetails from './ServerDetails';
-import {
-  QueryComponent,
-  formatDate,
-  GET_SERVERS,
-  ServerListData,
-} from './ServerQueries';
+import { GET_SERVERS, ServerListData } from './ServerQueries';
+import { formatDate } from './utils';
 
 function ServerList() {
-  const response = useQuery<ServerListData>({
+  const [response, reexecuteQuery] = useQuery<ServerListData>({
     query: GET_SERVERS,
     requestPolicy: 'network-only',
   });
@@ -17,6 +15,22 @@ function ServerList() {
   const servers = (data: ServerListData) => {
     return (
       <div>
+        <form className="pure-form">
+          <fieldset>
+            <Link to="add" role="button">
+              <button className="pure-button" type="button">
+                Add
+              </button>
+            </Link>
+            <button
+              className="pure-button"
+              type="button"
+              onClick={reexecuteQuery}
+            >
+              Refresh
+            </button>
+          </fieldset>
+        </form>
         <table className="pure-table">
           <thead>
             <tr>
@@ -68,6 +82,7 @@ function Servers() {
       <Routes>
         <Route path="/" element={<Outlet />}>
           <Route index element={<ServerList />} />
+          <Route path="add/*" element={<ServerAdd />} />
           <Route path=":serverId" element={<ServerDetails />} />
         </Route>
       </Routes>

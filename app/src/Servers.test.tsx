@@ -1,4 +1,4 @@
-import { describe, expect, it } from 'vitest';
+import { beforeEach, describe, expect, it } from 'vitest';
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { BrowserRouter } from 'react-router-dom';
@@ -6,6 +6,12 @@ import { Client, CombinedError, Provider, TypedDocumentNode } from 'urql';
 import { fromValue, never } from 'wonka';
 import Servers from './Servers';
 import { GET_SERVERS } from './ServerQueries';
+
+function createMockClient(executeQuery: CallableFunction): Client {
+  return {
+    executeQuery,
+  } as unknown as Client;
+}
 
 function renderElement(mockClient: Client): void {
   render(
@@ -38,9 +44,7 @@ describe('The servers page', () => {
   };
 
   it('shows a loading message', async () => {
-    const mockClient = {
-      executeQuery: () => never,
-    } as unknown as Client;
+    const mockClient = createMockClient(() => never);
 
     renderElement(mockClient);
 
@@ -48,15 +52,13 @@ describe('The servers page', () => {
   });
 
   it('shows a network error message', async () => {
-    const mockClient = {
-      executeQuery: () => {
-        return fromValue({
-          error: new CombinedError({
-            networkError: Error('network error'),
-          }),
-        });
-      },
-    } as unknown as Client;
+    const mockClient = createMockClient(() => {
+      return fromValue({
+        error: new CombinedError({
+          networkError: Error('network error'),
+        }),
+      });
+    });
 
     renderElement(mockClient);
 
@@ -64,15 +66,13 @@ describe('The servers page', () => {
   });
 
   it('shows an application error message', async () => {
-    const mockClient = {
-      executeQuery: () => {
-        return fromValue({
-          error: new CombinedError({
-            graphQLErrors: [Error('application error')],
-          }),
-        });
-      },
-    } as unknown as Client;
+    const mockClient = createMockClient(() => {
+      return fromValue({
+        error: new CombinedError({
+          graphQLErrors: [Error('application error')],
+        }),
+      });
+    });
 
     renderElement(mockClient);
 
@@ -80,15 +80,13 @@ describe('The servers page', () => {
   });
 
   it('renders with empty data', async () => {
-    const mockClient = {
-      executeQuery: () => {
-        return fromValue({
-          data: {
-            servers: [],
-          },
-        });
-      },
-    } as unknown as Client;
+    const mockClient = createMockClient(() => {
+      return fromValue({
+        data: {
+          servers: [],
+        },
+      });
+    });
 
     renderElement(mockClient);
 
@@ -98,9 +96,7 @@ describe('The servers page', () => {
   });
 
   it('renders with data', async () => {
-    const mockClient = {
-      executeQuery: () => fromValue(testData),
-    } as unknown as Client;
+    const mockClient = createMockClient(() => fromValue(testData));
 
     renderElement(mockClient);
 
@@ -110,24 +106,32 @@ describe('The servers page', () => {
     });
   });
 
-  it('navigates to the server by id', async () => {
-    const mockClient = {
-      executeQuery: ({ query }: { query: TypedDocumentNode }) => {
-        if (query === GET_SERVERS) {
-          return fromValue(testData);
+  describe('navigates', () => {
+    beforeEach(() => {
+      window.history.replaceState({}, '', '/');
+
+      const mockClient = createMockClient(
+        ({ query }: { query: TypedDocumentNode }) => {
+          if (query === GET_SERVERS) return fromValue(testData);
+          return never;
         }
-        return never;
-      },
-    } as unknown as Client;
+      );
 
-    renderElement(mockClient);
+      renderElement(mockClient);
+    });
 
-    const buttons = await screen.findAllByRole('link');
+    it('to the server by id', async () => {
+      const links = await screen.findAllByRole('link');
+      expect(links.length).toBe(2);
 
-    expect(buttons.length).toBe(2);
+      userEvent.click(links[1]);
+      expect(window.location.pathname).toBe('/Id2');
+    });
 
-    userEvent.click(buttons[1]);
-
-    expect(window.location.pathname).toBe('/Id2');
+    it('to the add server form', async () => {
+      const buttons = await screen.findAllByRole('button');
+      userEvent.click(buttons[0]);
+      expect(window.location.pathname).toBe('/add');
+    });
   });
 });

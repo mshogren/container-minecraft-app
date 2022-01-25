@@ -5,6 +5,12 @@ import { Client, CombinedError, Provider } from 'urql';
 import { fromValue, never } from 'wonka';
 import ServerDetails from './ServerDetails';
 
+function createMockClient(executeQuery: CallableFunction): Client {
+  return {
+    executeQuery,
+  } as unknown as Client;
+}
+
 function renderElement(mockClient: Client): void {
   render(
     <BrowserRouter>
@@ -28,9 +34,7 @@ describe('The server details page', () => {
   };
 
   it('shows a loading message', async () => {
-    const mockClient = {
-      executeQuery: () => never,
-    } as unknown as Client;
+    const mockClient = createMockClient(() => never);
 
     renderElement(mockClient);
 
@@ -38,15 +42,13 @@ describe('The server details page', () => {
   });
 
   it('shows a network error message', async () => {
-    const mockClient = {
-      executeQuery: () => {
-        return fromValue({
-          error: new CombinedError({
-            networkError: Error('network error'),
-          }),
-        });
-      },
-    } as unknown as Client;
+    const mockClient = createMockClient(() => {
+      return fromValue({
+        error: new CombinedError({
+          networkError: Error('network error'),
+        }),
+      });
+    });
 
     renderElement(mockClient);
 
@@ -54,15 +56,13 @@ describe('The server details page', () => {
   });
 
   it('shows an application error message', async () => {
-    const mockClient = {
-      executeQuery: () => {
-        return fromValue({
-          error: new CombinedError({
-            graphQLErrors: [Error('application error')],
-          }),
-        });
-      },
-    } as unknown as Client;
+    const mockClient = createMockClient(() => {
+      return fromValue({
+        error: new CombinedError({
+          graphQLErrors: [Error('application error')],
+        }),
+      });
+    });
 
     renderElement(mockClient);
 
@@ -70,9 +70,7 @@ describe('The server details page', () => {
   });
 
   it('renders correctly', async () => {
-    const mockClient = {
-      executeQuery: () => fromValue(testData),
-    } as unknown as Client;
+    const mockClient = createMockClient(() => fromValue(testData));
 
     renderElement(mockClient);
 
