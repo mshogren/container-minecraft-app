@@ -1,16 +1,15 @@
 import { Routes, Route, Outlet, Link } from 'react-router-dom';
-import { useQuery } from 'urql';
+import { UseQueryArgs } from 'urql';
 import { QueryComponent } from './GraphQLComponents';
 import ServerAdd from './ServerAdd';
 import ServerDetails from './ServerDetails';
-import { GET_SERVERS, ServerListData } from './ServerQueries';
+import { ServerListData, useGetServersQuery } from './ServerQueries';
 import { formatDate } from './utils';
 
 function ServerList() {
-  const [response, reexecuteQuery] = useQuery<ServerListData>({
-    query: GET_SERVERS,
+  const [response, reexecuteQuery] = useGetServersQuery({
     requestPolicy: 'network-only',
-  });
+  } as UseQueryArgs);
 
   const servers = (data: ServerListData) => {
     return (

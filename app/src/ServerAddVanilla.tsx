@@ -1,75 +1,30 @@
 import { ChangeEvent, FormEvent, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useMutation, useQuery } from 'urql';
-import {
-  AddServerError,
-  AddVanillaServer,
-  AddVanillaServerInput,
-  ADD_VANILLA_SERVER,
-} from './ServerQueries';
+import { MutationComponent } from './GraphQLComponents';
+import { useAddVanillaServerMutation } from './ServerQueries';
 import { ServerNameInput } from './utils';
-import { GET_VERSIONS, VersionListData } from './VersionQueries';
+import { useGetVersionsQuery, VersionListData } from './VersionQueries';
 
 function ServerAddVanilla() {
+  const [response] = useGetVersionsQuery();
+
+  const [mutationResult, addServer] = useAddVanillaServerMutation();
+
   const [name, setName] = useState('');
-  const [version, setVersion] = useState('');
-  const [err, setErr] = useState('');
-
-  const navigate = useNavigate();
-
-  const [{ data, fetching, error }] = useQuery<VersionListData>({
-    query: GET_VERSIONS,
-  });
-
-  const [mutationResult, addServer] = useMutation<
-    AddVanillaServer,
-    AddVanillaServerInput
-  >(ADD_VANILLA_SERVER);
-
-  const handleClick = () => {
-    navigate('/servers');
-  };
-
-  if (fetching || mutationResult.fetching) return <p>Loading...</p>;
-  if (err || error || mutationResult.error)
-    return (
-      <>
-        <p>Error :(</p>
-        <button type="button" className="pure-button" onClick={handleClick}>
-          OK
-        </button>
-      </>
-    );
-
-  const versions = (versionData: VersionListData) => {
-    return versionData.versions.map((v) => (
-      <option key={v} value={v}>
-        {v}
-      </option>
-    ));
-  };
-
-  const handleSubmit = (event: FormEvent) => {
-    event.preventDefault();
-    addServer({ name, version }).then((result) => {
-      if (result.error) setErr(result.error.message);
-      else if (result.data) {
-        const apiError = result.data.addVanillaServer as AddServerError;
-        if (apiError.error) setErr(apiError.error);
-        else navigate('/servers');
-      }
-    });
-  };
-
   const handleNameChange = (event: ChangeEvent<HTMLInputElement>) => {
     setName(event.target.value);
   };
 
+  const [version, setVersion] = useState('');
   const handleVersionChange = (event: ChangeEvent<HTMLSelectElement>) => {
     setVersion(event.target.value);
   };
 
-  return (
+  const handleSubmit = (event: FormEvent) => {
+    event.preventDefault();
+    addServer({ name, version });
+  };
+
+  const addServerForm = (data: VersionListData) => (
     <form className="pure-form" onSubmit={handleSubmit}>
       <p>Add a Vanilla server by specifying a name and version</p>
       <fieldset>
@@ -83,13 +38,25 @@ function ServerAddVanilla() {
           <option value="" disabled hidden>
             Choose a server version
           </option>
-          {versions(data as VersionListData)}
+          {data.versions.map((v) => (
+            <option key={v} value={v}>
+              {v}
+            </option>
+          ))}
         </select>
       </fieldset>
       <button className="pure-button pure-button-primary" type="submit">
         Add
       </button>
     </form>
+  );
+
+  return (
+    <MutationComponent<VersionListData, object>
+      response={response}
+      renderer={addServerForm}
+      mutationResult={mutationResult}
+    />
   );
 }
 

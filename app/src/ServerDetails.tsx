@@ -1,17 +1,16 @@
 import { useParams } from 'react-router-dom';
-import { useQuery } from 'urql';
+import { UseQueryArgs } from 'urql';
 import { QueryComponent } from './GraphQLComponents';
-import { GET_SERVER_BY_ID, ServerInstanceData } from './ServerQueries';
+import { ServerInstanceData, useGetServerByIdQuery } from './ServerQueries';
 import { formatDate } from './utils';
 
 function ServerDetails() {
   const { serverId } = useParams();
 
-  const [response] = useQuery<ServerInstanceData>({
-    query: GET_SERVER_BY_ID,
+  const [response] = useGetServerByIdQuery({
     variables: { serverId },
     requestPolicy: 'network-only',
-  });
+  } as UseQueryArgs);
 
   const serverDetails = ({ server }: ServerInstanceData) => {
     return (

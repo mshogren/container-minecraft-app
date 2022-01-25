@@ -1,4 +1,4 @@
-import { gql } from 'urql';
+import { gql, useQuery, UseQueryArgs } from 'urql';
 
 export interface ModpackData {
   id: string;
@@ -21,3 +21,10 @@ export const GET_MODPACKS = gql`
     }
   }
 `;
+
+export const useGetModpacksQuery = (args?: UseQueryArgs) => {
+  return useQuery<ModpackListData>({
+    ...args,
+    query: GET_MODPACKS,
+  });
+};

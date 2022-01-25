@@ -100,7 +100,7 @@ describe('Submitting the curseforge modpack server form', () => {
 
     await submitForm();
 
-    await waitFor(() => expect(screen.queryByText(/Loading.../)).toBeTruthy());
+    await waitFor(() => expect(screen.queryByText(/Adding.../)).toBeTruthy());
   });
 
   it('shows a network error message', async () => {
@@ -120,6 +120,9 @@ describe('Submitting the curseforge modpack server form', () => {
     await submitForm();
 
     await waitFor(() => expect(screen.queryByText(/Error/)).toBeTruthy());
+    await waitFor(() =>
+      expect(screen.queryByText(/network error/)).toBeTruthy()
+    );
   });
 
   it('shows an application error message', async () => {
@@ -139,5 +142,53 @@ describe('Submitting the curseforge modpack server form', () => {
     await submitForm();
 
     await waitFor(() => expect(screen.queryByText(/Error/)).toBeTruthy());
+    await waitFor(() =>
+      expect(screen.queryByText(/application error/)).toBeTruthy()
+    );
+  });
+
+  it('shows an api error message', async () => {
+    const mockClient = createMockClient(
+      () => fromValue(testData),
+      () => {
+        return fromValue({
+          data: {
+            addCurseforgeServer: {
+              error: 'api error',
+            },
+          },
+        });
+      }
+    );
+
+    renderElement(mockClient);
+
+    await submitForm();
+
+    await waitFor(() => expect(screen.queryByText(/Error/)).toBeTruthy());
+    await waitFor(() => expect(screen.queryByText(/api error/)).toBeTruthy());
+  });
+
+  it('shows a completion message', async () => {
+    const mockClient = createMockClient(
+      () => fromValue(testData),
+      () => {
+        return fromValue({
+          data: {
+            addCurseforgeServer: {
+              server: {
+                id: 'newId',
+              },
+            },
+          },
+        });
+      }
+    );
+
+    renderElement(mockClient);
+
+    await submitForm();
+
+    await waitFor(() => expect(screen.queryByText(/Added/)).toBeTruthy());
   });
 });

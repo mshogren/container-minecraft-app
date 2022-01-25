@@ -1,4 +1,4 @@
-import { gql } from 'urql';
+import { gql, useMutation, useQuery, UseQueryArgs } from 'urql';
 
 export interface ImageData {
   name: string;
@@ -88,6 +88,13 @@ export const GET_SERVERS = gql`
   }
 `;
 
+export const useGetServersQuery = (args?: UseQueryArgs) => {
+  return useQuery<ServerListData>({
+    ...args,
+    query: GET_SERVERS,
+  });
+};
+
 export const GET_SERVER_BY_ID = gql`
   query GetServerById($serverId: ID!) {
     server(serverId: $serverId) {
@@ -114,6 +121,13 @@ export const GET_SERVER_BY_ID = gql`
   }
 `;
 
+export const useGetServerByIdQuery = (args?: UseQueryArgs) => {
+  return useQuery<ServerInstanceData>({
+    ...args,
+    query: GET_SERVER_BY_ID,
+  });
+};
+
 export const ADD_VANILLA_SERVER = gql`
   mutation AddVanillaServer($name: String!, $version: String!) {
     addVanillaServer(server: { name: $name, version: $version }) {
@@ -129,6 +143,12 @@ export const ADD_VANILLA_SERVER = gql`
   }
 `;
 
+export const useAddVanillaServerMutation = () => {
+  return useMutation<AddVanillaServer, AddVanillaServerInput>(
+    ADD_VANILLA_SERVER
+  );
+};
+
 export const ADD_CURSEFORGE_SERVER = gql`
   mutation AddCurseforgeServer($name: String!, $modpack: String!) {
     addCurseforgeServer(server: { modpackId: $modpack, name: $name }) {
@@ -143,3 +163,9 @@ export const ADD_CURSEFORGE_SERVER = gql`
     }
   }
 `;
+
+export const useAddCurseServerMutation = () => {
+  return useMutation<AddCurseforgeServer, AddCurseforgeServerInput>(
+    ADD_CURSEFORGE_SERVER
+  );
+};
