@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "45fe2848ae438bd10bc50501fc9fb8850a6d3f35a68fde3b73a2935a59ab2137"
+            "sha256": "be423d90f51886cd606ad30f309680d357061f454a3915e4bb3b597ae32f6927"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -91,7 +91,7 @@
                 "sha256:62ec192150ccecd9a18cfb79e3e72eb7d1fd68fb594ef19c40099b6deec8ef0c",
                 "sha256:9b460f60320be01c7f3b1766cf3e406933003008055079b9d983b8f3988f4400"
             ],
-            "markers": "python_version >= '3.6' and python_version < '4'",
+            "markers": "python_version >= '3.6' and python_version < '4.0'",
             "version": "==3.1.7"
         },
         "h11": {
@@ -353,7 +353,7 @@
                 "sha256:bd8710dd26752039c668604f6be2aaf741b56f7811c5924a4dcdfd74359244f3",
                 "sha256:f28143aa4716dbc8f6193f5682176a3c33cd26aaae05d9ecf66c186a9887cc2d"
             ],
-            "markers": "python_version >= '3.6' and python_version < '4'",
+            "markers": "python_version >= '3.6' and python_version < '4.0'",
             "version": "==0.3.0"
         },
         "six": {
@@ -404,7 +404,7 @@
                 "sha256:000ca7f471a233c2251c6c7023ee85305721bfdf18621ebff4fd17a8653427ed",
                 "sha256:0e7c33d9a63e7ddfcb86780aac87befc2fbddf46c58dbb487e0855f7ceec283c"
             ],
-            "markers": "python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3, 3.4' and python_version < '4'",
+            "markers": "python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3, 3.4' and python_version < '4.0'",
             "version": "==1.26.8"
         },
         "uvicorn": {
@@ -412,11 +412,11 @@
                 "standard"
             ],
             "hashes": [
-                "sha256:0b89c91bb8fe84c4bded9996af13c4b8c0de799d29bffeaa0c8ad298f2be0934",
-                "sha256:192c2422b056a3beb512c6c260bf77a7a884204a4ae41856719c1913ead63bbb"
+                "sha256:60a149248181920a73b2e97aec1dacec5501618867f041a228b2519d91a62a91",
+                "sha256:fa166e6c3d58e23ff5a1a3543b079c7b28aa057ab1388201e4b34a49ec05da72"
             ],
             "index": "pypi",
-            "version": "==0.17.0"
+            "version": "==0.17.0.post1"
         },
         "uvloop": {
             "hashes": [
