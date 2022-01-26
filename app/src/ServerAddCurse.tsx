@@ -1,11 +1,12 @@
 import { ChangeEvent, FormEvent, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useAddCurseServerMutation } from './ServerQueries';
 import { ServerNameInput } from './utils';
 import { ModpackListData, useGetModpacksQuery } from './ModpackQueries';
-import { MutationComponent } from './GraphQLComponents';
+import { GraphQLComponent } from './GraphQLComponents';
 
 function ServerAddCurse() {
-  const [response] = useGetModpacksQuery();
+  const response = useGetModpacksQuery();
 
   const [mutationResult, addServer] = useAddCurseServerMutation();
 
@@ -23,6 +24,20 @@ function ServerAddCurse() {
     event.preventDefault();
     addServer({ name, modpack });
   };
+
+  const navigate = useNavigate();
+  const handleClick = () => {
+    navigate('/servers');
+  };
+
+  const success = () => (
+    <>
+      <p>Added :)</p>
+      <button type="button" className="pure-button" onClick={handleClick}>
+        OK
+      </button>
+    </>
+  );
 
   const addServerForm = (data: ModpackListData) => (
     <form className="pure-form" onSubmit={handleSubmit}>
@@ -54,10 +69,17 @@ function ServerAddCurse() {
   );
 
   return (
-    <MutationComponent<ModpackListData, object>
+    <GraphQLComponent<ModpackListData, object>
       response={response}
       renderer={addServerForm}
-      mutationResult={mutationResult}
+      mutations={[
+        {
+          result: mutationResult,
+          errorClickRoute: '.',
+          loadingMessage: 'Adding...',
+          successRenderer: success,
+        },
+      ]}
     />
   );
 }

@@ -178,4 +178,56 @@ describe('Submitting the vanilla server form', () => {
 
     await waitFor(() => expect(screen.queryByText(/Added/)).toBeTruthy());
   });
+
+  it.skip('navigates to the servers page when clicking OK on the error page', async () => {
+    window.history.replaceState({}, '', '/');
+
+    const mockClient = createMockClient(
+      () => fromValue(testData),
+      () => {
+        return fromValue({
+          data: {
+            addVanillaServer: {
+              error: 'api error',
+            },
+          },
+        });
+      }
+    );
+
+    renderElement(mockClient);
+
+    await submitForm();
+    const button = await screen.findByRole('button');
+    userEvent.click(button);
+
+    expect(window.location.pathname).toBe('/');
+  });
+
+  it('navigates to the servers page when clicking OK on the completion page', async () => {
+    window.history.replaceState({}, '', '/');
+
+    const mockClient = createMockClient(
+      () => fromValue(testData),
+      () => {
+        return fromValue({
+          data: {
+            addVanillaServer: {
+              server: {
+                id: 'newId',
+              },
+            },
+          },
+        });
+      }
+    );
+
+    renderElement(mockClient);
+
+    await submitForm();
+    const button = await screen.findByRole('button');
+    userEvent.click(button);
+
+    expect(window.location.pathname).toBe('/servers');
+  });
 });

@@ -1,15 +1,17 @@
 import { Routes, Route, Outlet, Link } from 'react-router-dom';
 import { UseQueryArgs } from 'urql';
-import { QueryComponent } from './GraphQLComponents';
+import { GraphQLComponent } from './GraphQLComponents';
 import ServerAdd from './ServerAdd';
 import ServerDetails from './ServerDetails';
 import { ServerListData, useGetServersQuery } from './ServerQueries';
 import { formatDate } from './utils';
 
 function ServerList() {
-  const [response, reexecuteQuery] = useGetServersQuery({
+  const response = useGetServersQuery({
     requestPolicy: 'network-only',
   } as UseQueryArgs);
+
+  const [, reexecuteQuery] = response;
 
   const servers = (data: ServerListData) => {
     return (
@@ -67,9 +69,10 @@ function ServerList() {
 
   return (
     <div className="content">
-      <QueryComponent<ServerListData, object>
+      <GraphQLComponent<ServerListData, object>
         response={response}
         renderer={servers}
+        mutations={[]}
       />
     </div>
   );

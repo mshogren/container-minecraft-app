@@ -4,7 +4,7 @@ import strawberry
 from typing_extensions import Annotated
 
 from modpack import Modpack, ModpackSchemaType
-from server import (AddServerResponse, AddCurseforgeServerInput,
+from server import (ServerResponse, AddCurseforgeServerInput,
                     AddVanillaServerInput, Server, ServerSchemaType)
 from settings import SchemaLabels as labels
 from version import Version
@@ -74,7 +74,7 @@ class Mutation:
     @staticmethod
     def add_curseforge_server(server: Annotated[AddCurseforgeServerInput, strawberry.argument(
             name=labels.MUTATION_ADDCURSEFORGESERVER_ARG_NAME,
-            description=labels.MUTATION_ADDCURSEFORGESERVER_ARG_DESCRIPTION)]) -> AddServerResponse:
+            description=labels.MUTATION_ADDCURSEFORGESERVER_ARG_DESCRIPTION)]) -> ServerResponse:
         return Server.add_curseforge_server(server)
 
     @strawberry.mutation(
@@ -83,8 +83,26 @@ class Mutation:
     @staticmethod
     def add_vanilla_server(server: Annotated[AddVanillaServerInput, strawberry.argument(
             name=labels.MUTATION_ADDVANILLASERVER_ARG_NAME,
-            description=labels.MUTATION_ADDVANILLASERVER_ARG_DESCRIPTION)]) -> AddServerResponse:
+            description=labels.MUTATION_ADDVANILLASERVER_ARG_DESCRIPTION)]) -> ServerResponse:
         return Server.add_vanilla_server(server)
+
+    @strawberry.mutation(
+        name=labels.MUTATION_STARTSERVER_FIELD_NAME,
+        description=labels.MUTATION_STARTSERVER_FIELD_DESCRIPTION)
+    @staticmethod
+    def start_server(server_id: Annotated[strawberry.ID, strawberry.argument(
+            name=labels.MUTATION_STARTSERVER_ARG_NAME,
+            description=labels.MUTATION_STARTSERVER_ARG_DESCRIPTION)]) -> ServerResponse:
+        return Server.start_server(server_id)
+
+    @strawberry.mutation(
+        name=labels.MUTATION_STOPSERVER_FIELD_NAME,
+        description=labels.MUTATION_STOPSERVER_FIELD_DESCRIPTION)
+    @staticmethod
+    def stop_server(server_id: Annotated[strawberry.ID, strawberry.argument(
+            name=labels.MUTATION_STOPSERVER_ARG_NAME,
+            description=labels.MUTATION_STOPSERVER_ARG_DESCRIPTION)]) -> ServerResponse:
+        return Server.stop_server(server_id)
 
 
 schema = strawberry.Schema(Query, Mutation)

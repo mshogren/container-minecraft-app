@@ -1,11 +1,12 @@
 import { ChangeEvent, FormEvent, useState } from 'react';
-import { MutationComponent } from './GraphQLComponents';
+import { useNavigate } from 'react-router-dom';
+import { GraphQLComponent } from './GraphQLComponents';
 import { useAddVanillaServerMutation } from './ServerQueries';
 import { ServerNameInput } from './utils';
 import { useGetVersionsQuery, VersionListData } from './VersionQueries';
 
 function ServerAddVanilla() {
-  const [response] = useGetVersionsQuery();
+  const response = useGetVersionsQuery();
 
   const [mutationResult, addServer] = useAddVanillaServerMutation();
 
@@ -23,6 +24,20 @@ function ServerAddVanilla() {
     event.preventDefault();
     addServer({ name, version });
   };
+
+  const navigate = useNavigate();
+  const handleClick = () => {
+    navigate('/servers');
+  };
+
+  const success = () => (
+    <>
+      <p>Added :)</p>
+      <button type="button" className="pure-button" onClick={handleClick}>
+        OK
+      </button>
+    </>
+  );
 
   const addServerForm = (data: VersionListData) => (
     <form className="pure-form" onSubmit={handleSubmit}>
@@ -52,10 +67,17 @@ function ServerAddVanilla() {
   );
 
   return (
-    <MutationComponent<VersionListData, object>
+    <GraphQLComponent<VersionListData, object>
       response={response}
       renderer={addServerForm}
-      mutationResult={mutationResult}
+      mutations={[
+        {
+          result: mutationResult,
+          errorClickRoute: '.',
+          loadingMessage: 'Adding...',
+          successRenderer: success,
+        },
+      ]}
     />
   );
 }

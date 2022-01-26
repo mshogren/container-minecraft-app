@@ -14,10 +14,14 @@ from version import Version
 from .image import Image
 from .model import ContainerDetailsModel, EnvironmentModel, TypeEnum
 from .port import Port
-from .schema import (AddCurseforgeServerInput, AddServerError,
-                     AddServerResponse, AddServerSuccess,
+from .schema import (AddCurseforgeServerInput, ServerError,
+                     ServerResponse, ServerSuccess,
                      AddVanillaServerInput, ServerSchemaType)
 from .volume import Volume
+
+
+class NonMinecraftServerError(Exception):
+    pass
 
 
 class DockerModel(BaseModel):
@@ -54,19 +58,30 @@ def get_image_tag_for_version(version: str) -> bool:
     return ""
 
 
-def add_server(model) -> AddServerResponse:
+def get_server_by_id(container_id) -> Container:
+    container = get_client().containers.get(container_id)
+    if not is_container_relevant(container, Settings().default_image):
+        raise NonMinecraftServerError(
+            "The container is not a Minecraft server")
+    return container
+
+
+def add_server(model) -> ServerResponse:
     try:
         container = get_client().containers.run(**model.dict())
         server = Server.get_server(container.id)
-        return AddServerSuccess(server)
+        return ServerSuccess(server)
+    except NonMinecraftServerError as ex:
+        return ServerError(error=str(ex))
     except docker.errors.APIError as ex:
-        return AddServerError(error=str(ex))
+        return ServerError(error=str(ex))
 
 
 class Server:
     @staticmethod
     def get_server(container_id: strawberry.ID) -> ServerSchemaType:
-        container_details = get_client().api.inspect_container(container_id)
+        container = get_server_by_id(container_id)
+        container_details = get_client().api.inspect_container(container.id)
         container_model = ContainerDetailsModel(**container_details)
         container_environment = parse_container_environment(
             container_model.Configuration.Env)
@@ -93,7 +108,8 @@ class Server:
         return [Server.get_server(x) for x in container_ids]
 
     @staticmethod
-    def add_vanilla_server(server: AddVanillaServerInput) -> AddServerResponse:
+    def add_vanilla_server(
+            server: AddVanillaServerInput) -> ServerResponse:
         logging.info('%s', server)
 
         name = server.name
@@ -101,7 +117,7 @@ class Server:
         version = server.version
 
         if version not in Version.get_versions():
-            return AddServerError("Version: {version} does not exist")
+            return ServerError("Version: {version} does not exist")
 
         model = DockerModel(**{
             "name": name,
@@ -116,7 +132,7 @@ class Server:
 
     @staticmethod
     def add_curseforge_server(
-            server: AddCurseforgeServerInput) -> AddServerResponse:
+            server: AddCurseforgeServerInput) -> ServerResponse:
         logging.info('%s', server)
 
         name = server.name
@@ -126,12 +142,12 @@ class Server:
             modpack = Modpack.get_modpack(server.modpack_id)
             modpack_file = Modpack.get_modpack_file(modpack)
         except ModpackError as error:
-            return AddServerError(error)
+            return ServerError(error)
 
         version = modpack.version
 
         if version not in Version.get_versions():
-            return AddServerError(f"Version: {version} does not exist")
+            return ServerError(f"Version: {version} does not exist")
 
         model = DockerModel(**{
             "name": name,
@@ -146,3 +162,27 @@ class Server:
             f"CF_SERVER_MOD={modpack_file}"])
 
         return add_server(model)
+
+    @staticmethod
+    def start_server(container_id: strawberry.ID):
+        try:
+            container = get_server_by_id(container_id)
+            container.start()
+            server = Server.get_server(container.id)
+            return ServerSuccess(server)
+        except NonMinecraftServerError as ex:
+            return ServerError(error=str(ex))
+        except docker.errors.APIError as ex:
+            return ServerError(error=str(ex))
+
+    @staticmethod
+    def stop_server(container_id: strawberry.ID):
+        try:
+            container = get_server_by_id(container_id)
+            container.stop()
+            server = Server.get_server(container.id)
+            return ServerSuccess(server)
+        except NonMinecraftServerError as ex:
+            return ServerError(error=str(ex))
+        except docker.errors.APIError as ex:
+            return ServerError(error=str(ex))

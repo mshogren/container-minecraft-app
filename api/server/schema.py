@@ -76,26 +76,26 @@ class AddCurseforgeServerInput:
 
 
 @strawberry.type(
-    name=labels.ADDSERVERSUCCESS_TYPE_NAME,
-    description=labels.ADDSERVERSUCCESS_TYPE_DESCRIPTION)
-class AddServerSuccess:
+    name=labels.SERVERSUCCESS_TYPE_NAME,
+    description=labels.SERVERSUCCESS_TYPE_DESCRIPTION)
+class ServerSuccess:
     # pylint: disable=too-few-public-methods
     server: ServerSchemaType = strawberry.field(
-        name=labels.ADDSERVERSUCCESS_SERVER_FIELD_NAME,
-        description=labels.ADDSERVERSUCCESS_SERVER_FIELD_DESCRIPTION)
+        name=labels.SERVERSUCCESS_SERVER_FIELD_NAME,
+        description=labels.SERVERSUCCESS_SERVER_FIELD_DESCRIPTION)
 
 
 @strawberry.type(
-    name=labels.ADDSERVERERROR_TYPE_NAME,
-    description=labels.ADDSERVERERROR_TYPE_DESCRIPTION)
-class AddServerError:
+    name=labels.SERVERERROR_TYPE_NAME,
+    description=labels.SERVERERROR_TYPE_DESCRIPTION)
+class ServerError:
     # pylint: disable=too-few-public-methods
     error: str = strawberry.field(
-        name=labels.ADDSERVERERROR_ERROR_FIELD_NAME,
-        description=labels.ADDSERVERERROR_ERROR_FIELD_DESCRIPTION)
+        name=labels.SERVERERROR_ERROR_FIELD_NAME,
+        description=labels.SERVERERROR_ERROR_FIELD_DESCRIPTION)
 
 
-AddServerResponse = strawberry.union(
-    name=labels.ADDSERVERRESPONSE_TYPE_NAME,
-    types=[AddServerSuccess, AddServerError],
-    description=labels.ADDSERVERRESPONSE_TYPE_DESCRIPTION)
+ServerResponse = strawberry.union(
+    name=labels.SERVERRESPONSE_TYPE_NAME,
+    types=[ServerSuccess, ServerError],
+    description=labels.SERVERRESPONSE_TYPE_DESCRIPTION)

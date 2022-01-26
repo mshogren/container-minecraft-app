@@ -36,16 +36,16 @@ export interface ServerInstanceData {
   server: ServerData;
 }
 
-export interface AddServerSuccess {
+export interface ServerSuccess {
   server: ServerData;
 }
 
-export interface AddServerError {
+export interface ServerError {
   error: string;
 }
 
 export interface AddVanillaServer {
-  addVanillaServer: AddServerSuccess | AddServerError;
+  addVanillaServer: ServerSuccess | ServerError;
 }
 
 export interface AddVanillaServerInput {
@@ -54,12 +54,24 @@ export interface AddVanillaServerInput {
 }
 
 export interface AddCurseforgeServer {
-  addCurseforgeServer: AddServerSuccess | AddServerError;
+  addCurseforgeServer: ServerSuccess | ServerError;
 }
 
 export interface AddCurseforgeServerInput {
   name: string;
   modpack: string;
+}
+
+export interface ServerIdInput {
+  serverId: string;
+}
+
+export interface StartServer {
+  startServer: ServerSuccess | ServerError;
+}
+
+export interface StopServer {
+  startServer: ServerSuccess | ServerError;
 }
 
 export const GET_SERVERS = gql`
@@ -131,12 +143,12 @@ export const useGetServerByIdQuery = (args?: UseQueryArgs) => {
 export const ADD_VANILLA_SERVER = gql`
   mutation AddVanillaServer($name: String!, $version: String!) {
     addVanillaServer(server: { name: $name, version: $version }) {
-      ... on AddServerSuccess {
+      ... on ServerSuccess {
         server {
           id
         }
       }
-      ... on AddServerError {
+      ... on ServerError {
         error
       }
     }
@@ -152,12 +164,12 @@ export const useAddVanillaServerMutation = () => {
 export const ADD_CURSEFORGE_SERVER = gql`
   mutation AddCurseforgeServer($name: String!, $modpack: String!) {
     addCurseforgeServer(server: { modpackId: $modpack, name: $name }) {
-      ... on AddServerSuccess {
+      ... on ServerSuccess {
         server {
           id
         }
       }
-      ... on AddServerError {
+      ... on ServerError {
         error
       }
     }
@@ -168,4 +180,42 @@ export const useAddCurseServerMutation = () => {
   return useMutation<AddCurseforgeServer, AddCurseforgeServerInput>(
     ADD_CURSEFORGE_SERVER
   );
+};
+
+export const START_SERVER = gql`
+  mutation StartServer($serverId: ID!) {
+    startServer(serverId: $serverId) {
+      ... on ServerSuccess {
+        server {
+          id
+        }
+      }
+      ... on ServerError {
+        error
+      }
+    }
+  }
+`;
+
+export const useStartServerMutation = () => {
+  return useMutation<StartServer, ServerIdInput>(START_SERVER);
+};
+
+export const STOP_SERVER = gql`
+  mutation StopServer($serverId: ID!) {
+    stopServer(serverId: $serverId) {
+      ... on ServerSuccess {
+        server {
+          id
+        }
+      }
+      ... on ServerError {
+        error
+      }
+    }
+  }
+`;
+
+export const useStopServerMutation = () => {
+  return useMutation<StopServer, ServerIdInput>(STOP_SERVER);
 };
