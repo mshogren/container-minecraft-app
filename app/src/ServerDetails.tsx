@@ -1,4 +1,4 @@
-import { Navigate, To, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { UseQueryArgs } from 'urql';
 import { GraphQLComponent } from './GraphQLComponents';
 import {
@@ -28,8 +28,6 @@ function ServerDetails() {
   const handleStopClick = () => {
     stopServer({ serverId } as ServerIdInput);
   };
-
-  const success = () => <Navigate to={0 as To} />;
 
   const serverDetails = ({ server }: ServerInstanceData) => {
     return (
@@ -89,12 +87,10 @@ function ServerDetails() {
           {
             result: startResult,
             errorClickRoute: '.',
-            successRenderer: success,
           },
           {
             result: stopResult,
             errorClickRoute: '.',
-            successRenderer: success,
           },
         ]}
       />

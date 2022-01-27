@@ -46,10 +46,10 @@ function ServerAddVanilla() {
       <form className="pure-form" onSubmit={handleSubmit}>
         <p>Add a Vanilla server by specifying a name and version</p>
         <fieldset>
-          <ServerNameInput onChange={handleNameChange} />
+          <ServerNameInput name={name} onChange={handleNameChange} />
           <select
             className="pure-input-1"
-            defaultValue=""
+            defaultValue={version}
             required
             onChange={handleVersionChange}
           >

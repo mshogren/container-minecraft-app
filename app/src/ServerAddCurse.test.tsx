@@ -84,11 +84,14 @@ describe('Submitting the curseforge modpack server form', () => {
     },
   };
 
+  const serverName = 'server1';
+  const modpackName = 'Modpack2';
+
   const submitForm = async () => {
     const textbox = await screen.findByRole('textbox');
-    userEvent.type(textbox, 'server1');
+    userEvent.type(textbox, serverName);
     const combobox = await screen.findAllByRole('combobox');
-    userEvent.selectOptions(combobox[1], 'Modpack2');
+    userEvent.selectOptions(combobox[1], modpackName);
     const button = await screen.findByRole('button');
     userEvent.click(button);
   };
@@ -192,7 +195,7 @@ describe('Submitting the curseforge modpack server form', () => {
     await waitFor(() => expect(screen.queryByText(/Added/)).toBeTruthy());
   });
 
-  it.skip('navigates to the servers page when clicking OK on the error page', async () => {
+  it('rerenders the page when clicking OK on the error page', async () => {
     window.history.replaceState({}, '', '/');
 
     const mockClient = createMockClient(
@@ -214,7 +217,13 @@ describe('Submitting the curseforge modpack server form', () => {
     const button = await screen.findByRole('button');
     userEvent.click(button);
 
-    expect(window.location.pathname).toBe('/');
+    const textbox = await screen.findByRole('textbox');
+    expect((textbox as HTMLInputElement).value).toBe(serverName);
+
+    const combobox = await screen.findAllByRole('combobox');
+    const options = Array.prototype.slice.call(combobox[1].children);
+    const selected = options.filter((o: HTMLOptionElement) => o.selected)[0];
+    expect(selected.text).toBe(modpackName);
   });
 
   it('navigates to the servers page when clicking OK on the completion page', async () => {

@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { CombinedError, UseMutationState, UseQueryResponse } from 'urql';
 import { ServerError } from './ServerQueries';
@@ -17,7 +18,7 @@ export interface MutationConfiguration {
   result: UseMutationState;
   loadingMessage?: string;
   errorClickRoute: string;
-  successRenderer: RenderFunction<never>;
+  successRenderer?: RenderFunction<never>;
 }
 
 export interface GraphQLComponentProps<Data, Variables> {
@@ -34,6 +35,20 @@ export function GraphQLComponent<Data, Variables>(
   const [{ data, fetching, error }] = response;
 
   const navigate = useNavigate();
+  const [, setRerender] = useState(false);
+
+  const resetMutations = (mutationCollection?: MutationConfiguration[]) => {
+    mutationCollection?.forEach((mutation) => {
+      const temp = mutation;
+      temp.result = {
+        data: undefined,
+        error: undefined,
+        fetching: mutation.result.fetching,
+        stale: false,
+      };
+    });
+    setRerender(true);
+  };
 
   let clickRoute = errorClickRoute ?? '/';
   let errorState = error;
@@ -53,7 +68,7 @@ export function GraphQLComponent<Data, Variables>(
 
   if (errorState) {
     const handleClick = () => {
-      if (clickRoute === '.') navigate(0);
+      if (clickRoute === '.') resetMutations(mutations);
       else navigate(clickRoute);
     };
 
@@ -69,7 +84,7 @@ export function GraphQLComponent<Data, Variables>(
   }
 
   let mutationData;
-  let successRenderer: RenderFunction<never> = () => <div />;
+  let successRenderer: RenderFunction<never> | undefined;
 
   mutations?.forEach((mutation) => {
     if (mutation.result.data) {
@@ -78,7 +93,8 @@ export function GraphQLComponent<Data, Variables>(
     }
   });
   if (mutationData) {
-    return successRenderer(mutationData);
+    if (!successRenderer) resetMutations(mutations);
+    else return successRenderer(mutationData);
   }
 
   let loading = '';

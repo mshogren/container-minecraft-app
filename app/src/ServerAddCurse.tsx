@@ -49,10 +49,10 @@ function ServerAddCurse() {
           modpack
         </p>
         <fieldset>
-          <ServerNameInput onChange={handleNameChange} />
+          <ServerNameInput name={name} onChange={handleNameChange} />
           <select
             className="pure-input-1"
-            defaultValue=""
+            defaultValue={modpack}
             required
             onChange={handleModpackChange}
           >

@@ -4,8 +4,11 @@ export function formatDate(date: Date) {
   return new Date(Date.parse(date.toString())).toLocaleString('en-CA');
 }
 
-export function ServerNameInput(props: { onChange: ChangeEventHandler }) {
-  const { onChange } = props;
+export function ServerNameInput(props: {
+  name: string;
+  onChange: ChangeEventHandler;
+}) {
+  const { name, onChange } = props;
   return (
     <input
       type="text"
@@ -14,6 +17,7 @@ export function ServerNameInput(props: { onChange: ChangeEventHandler }) {
       pattern="^[a-zA-Z0-9_][a-zA-Z0-9_\.-]{0,127}$"
       required
       onChange={onChange}
+      value={name ?? undefined}
     />
   );
 }
