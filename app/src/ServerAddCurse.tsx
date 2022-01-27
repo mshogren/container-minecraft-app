@@ -4,6 +4,7 @@ import { useAddCurseServerMutation } from './ServerQueries';
 import { ServerNameInput } from './utils';
 import { ModpackListData, useGetModpacksQuery } from './ModpackQueries';
 import { GraphQLComponent } from './GraphQLComponents';
+import { ServerTypeDropdown } from './ServerAdd';
 
 function ServerAddCurse() {
   const response = useGetModpacksQuery();
@@ -40,47 +41,53 @@ function ServerAddCurse() {
   );
 
   const addServerForm = (data: ModpackListData) => (
-    <form className="pure-form" onSubmit={handleSubmit}>
-      <p>
-        Add a server with a CurseForge Modpack by specifying a name and modpack
-      </p>
-      <fieldset>
-        <ServerNameInput onChange={handleNameChange} />
-        <select
-          className="pure-input-1"
-          defaultValue=""
-          required
-          onChange={handleModpackChange}
-        >
-          <option value="" disabled hidden>
-            Choose a modpack
-          </option>
-          {data.modpacks.map((m) => (
-            <option key={m.id} value={m.id}>
-              {m.name}
+    <>
+      <ServerTypeDropdown />
+      <form className="pure-form" onSubmit={handleSubmit}>
+        <p>
+          Add a server with a CurseForge Modpack by specifying a name and
+          modpack
+        </p>
+        <fieldset>
+          <ServerNameInput onChange={handleNameChange} />
+          <select
+            className="pure-input-1"
+            defaultValue=""
+            required
+            onChange={handleModpackChange}
+          >
+            <option value="" disabled hidden>
+              Choose a modpack
             </option>
-          ))}
-        </select>
-      </fieldset>
-      <button className="pure-button pure-button-primary" type="submit">
-        Add
-      </button>
-    </form>
+            {data.modpacks.map((m) => (
+              <option key={m.id} value={m.id}>
+                {m.name}
+              </option>
+            ))}
+          </select>
+        </fieldset>
+        <button className="pure-button pure-button-primary" type="submit">
+          Add
+        </button>
+      </form>
+    </>
   );
 
   return (
-    <GraphQLComponent<ModpackListData, object>
-      response={response}
-      renderer={addServerForm}
-      mutations={[
-        {
-          result: mutationResult,
-          errorClickRoute: '.',
-          loadingMessage: 'Adding...',
-          successRenderer: success,
-        },
-      ]}
-    />
+    <div className="content">
+      <GraphQLComponent<ModpackListData, object>
+        response={response}
+        renderer={addServerForm}
+        mutations={[
+          {
+            result: mutationResult,
+            errorClickRoute: '.',
+            loadingMessage: 'Adding...',
+            successRenderer: success,
+          },
+        ]}
+      />
+    </div>
   );
 }
 

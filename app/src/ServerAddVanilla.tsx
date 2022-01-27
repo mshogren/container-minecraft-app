@@ -1,6 +1,7 @@
 import { ChangeEvent, FormEvent, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { GraphQLComponent } from './GraphQLComponents';
+import { ServerTypeDropdown } from './ServerAdd';
 import { useAddVanillaServerMutation } from './ServerQueries';
 import { ServerNameInput } from './utils';
 import { useGetVersionsQuery, VersionListData } from './VersionQueries';
@@ -40,45 +41,50 @@ function ServerAddVanilla() {
   );
 
   const addServerForm = (data: VersionListData) => (
-    <form className="pure-form" onSubmit={handleSubmit}>
-      <p>Add a Vanilla server by specifying a name and version</p>
-      <fieldset>
-        <ServerNameInput onChange={handleNameChange} />
-        <select
-          className="pure-input-1"
-          defaultValue=""
-          required
-          onChange={handleVersionChange}
-        >
-          <option value="" disabled hidden>
-            Choose a server version
-          </option>
-          {data.versions.map((v) => (
-            <option key={v} value={v}>
-              {v}
+    <>
+      <ServerTypeDropdown />
+      <form className="pure-form" onSubmit={handleSubmit}>
+        <p>Add a Vanilla server by specifying a name and version</p>
+        <fieldset>
+          <ServerNameInput onChange={handleNameChange} />
+          <select
+            className="pure-input-1"
+            defaultValue=""
+            required
+            onChange={handleVersionChange}
+          >
+            <option value="" disabled hidden>
+              Choose a server version
             </option>
-          ))}
-        </select>
-      </fieldset>
-      <button className="pure-button pure-button-primary" type="submit">
-        Add
-      </button>
-    </form>
+            {data.versions.map((v) => (
+              <option key={v} value={v}>
+                {v}
+              </option>
+            ))}
+          </select>
+        </fieldset>
+        <button className="pure-button pure-button-primary" type="submit">
+          Add
+        </button>
+      </form>
+    </>
   );
 
   return (
-    <GraphQLComponent<VersionListData, object>
-      response={response}
-      renderer={addServerForm}
-      mutations={[
-        {
-          result: mutationResult,
-          errorClickRoute: '.',
-          loadingMessage: 'Adding...',
-          successRenderer: success,
-        },
-      ]}
-    />
+    <div className="content">
+      <GraphQLComponent<VersionListData, object>
+        response={response}
+        renderer={addServerForm}
+        mutations={[
+          {
+            result: mutationResult,
+            errorClickRoute: '.',
+            loadingMessage: 'Adding...',
+            successRenderer: success,
+          },
+        ]}
+      />
+    </div>
   );
 }
 

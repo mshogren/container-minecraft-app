@@ -24,7 +24,7 @@ export interface GraphQLComponentProps<Data, Variables> {
   response: UseQueryResponse<Data, Variables>;
   errorClickRoute?: string;
   renderer: RenderFunction<Data>;
-  mutations: MutationConfiguration[];
+  mutations?: MutationConfiguration[];
 }
 
 export function GraphQLComponent<Data, Variables>(
@@ -37,7 +37,7 @@ export function GraphQLComponent<Data, Variables>(
 
   let clickRoute = errorClickRoute ?? '/';
   let errorState = error;
-  mutations.forEach((mutation) => {
+  mutations?.forEach((mutation) => {
     if (!errorState) {
       errorState = errorState || mutation.result.error;
       if (errorState) clickRoute = mutation.errorClickRoute;
@@ -69,22 +69,9 @@ export function GraphQLComponent<Data, Variables>(
   }
 
   let mutationData;
-  let successRenderer: RenderFunction<never> = () => {
-    const handleClick = () => {
-      navigate('/');
-    };
+  let successRenderer: RenderFunction<never> = () => <div />;
 
-    return (
-      <>
-        <p>Added :)</p>
-        <button type="button" className="pure-button" onClick={handleClick}>
-          OK
-        </button>
-      </>
-    );
-  };
-
-  mutations.forEach((mutation) => {
+  mutations?.forEach((mutation) => {
     if (mutation.result.data) {
       mutationData = mutation.result.data;
       successRenderer = mutation.successRenderer;
@@ -96,7 +83,7 @@ export function GraphQLComponent<Data, Variables>(
 
   let loading = '';
   if (fetching) loading = 'Loading...';
-  mutations.forEach((mutation) => {
+  mutations?.forEach((mutation) => {
     if (loading === '' && mutation.result.fetching)
       loading = mutation.loadingMessage ?? 'Loading...';
   });

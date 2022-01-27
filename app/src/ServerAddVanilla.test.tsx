@@ -74,8 +74,8 @@ describe('Submitting the vanilla server form', () => {
   const submitForm = async () => {
     const textbox = await screen.findByRole('textbox');
     userEvent.type(textbox, 'server1');
-    const combobox = await screen.findByRole('combobox');
-    userEvent.selectOptions(combobox, 'v2');
+    const combobox = await screen.findAllByRole('combobox');
+    userEvent.selectOptions(combobox[1], 'v2');
     const button = await screen.findByRole('button');
     userEvent.click(button);
   };

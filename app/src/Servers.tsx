@@ -2,6 +2,8 @@ import { Routes, Route, Outlet, Link } from 'react-router-dom';
 import { UseQueryArgs } from 'urql';
 import { GraphQLComponent } from './GraphQLComponents';
 import ServerAdd from './ServerAdd';
+import ServerAddCurse from './ServerAddCurse';
+import ServerAddVanilla from './ServerAddVanilla';
 import ServerDetails from './ServerDetails';
 import { ServerListData, useGetServersQuery } from './ServerQueries';
 import { formatDate } from './utils';
@@ -72,7 +74,6 @@ function ServerList() {
       <GraphQLComponent<ServerListData, object>
         response={response}
         renderer={servers}
-        mutations={[]}
       />
     </div>
   );
@@ -85,6 +86,8 @@ function Servers() {
         <Route path="/" element={<Outlet />}>
           <Route index element={<ServerList />} />
           <Route path="add/*" element={<ServerAdd />} />
+          <Route path="add/vanilla/*" element={<ServerAddVanilla />} />
+          <Route path="add/curse/*" element={<ServerAddCurse />} />
           <Route path=":serverId" element={<ServerDetails />} />
         </Route>
       </Routes>
