@@ -35,7 +35,7 @@ export function GraphQLComponent<Data, Variables>(
   const [{ data, fetching, error }] = response;
 
   const navigate = useNavigate();
-  const [, setRerender] = useState(false);
+  const [rerender, setRerender] = useState(false);
 
   const resetMutations = (mutationCollection?: MutationConfiguration[]) => {
     mutationCollection?.forEach((mutation) => {
@@ -47,7 +47,7 @@ export function GraphQLComponent<Data, Variables>(
         stale: false,
       };
     });
-    setRerender(true);
+    setRerender(!rerender);
   };
 
   let clickRoute = errorClickRoute ?? '/';
