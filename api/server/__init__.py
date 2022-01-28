@@ -136,11 +136,10 @@ class Server:
         logging.info('%s', server)
 
         name = server.name
-        server_type = TypeEnum.CURSEFORGE
 
         try:
             modpack = Modpack.get_modpack(server.modpack_id)
-            modpack_file = Modpack.get_modpack_file(modpack)
+            modpack_info = Modpack.get_modpack_info(modpack)
         except ModpackError as error:
             return ServerError(error)
 
@@ -148,6 +147,10 @@ class Server:
 
         if version not in Version.get_versions():
             return ServerError(f"Version: {version} does not exist")
+
+        server_type = TypeEnum.FORGE
+        if modpack_info.modloader == 'fabric':
+            server_type = TypeEnum.FABRIC
 
         model = DockerModel(**{
             "name": name,
@@ -159,7 +162,12 @@ class Server:
         model.environment.extend([
             f"TYPE={server_type}",
             f"VERSION={version}",
-            f"CF_SERVER_MOD={modpack_file}"])
+            f"GENERIC_PACK={modpack_info.url}"])
+
+        if modpack_info.modloader == 'forge' and not modpack_info.modloader_version is None:
+            model.environment.extend([
+                f"FORGEVERSION={modpack_info.modloader_version}"
+            ])
 
         return add_server(model)
 

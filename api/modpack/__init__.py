@@ -1,7 +1,11 @@
+from dataclasses import dataclass
 import json
 import logging
-from typing import List
+import tempfile
+import zipfile
+from typing import List, Optional
 from urllib.error import HTTPError
+from urllib.parse import quote
 from urllib.request import urlopen
 
 import strawberry
@@ -20,6 +24,14 @@ QUERY_STRING_BASE = "gameId=432&categoryId=0&sectionId=4471"
 
 class ModpackError(Exception):
     pass
+
+
+@dataclass
+class ModpackInfo:
+    # pylint: disable=too-few-public-methods
+    url: str
+    modloader: Optional[str]
+    modloader_version: Optional[str]
 
 
 def parse_attachments(attachments: List[model.AttachmentModel]) -> str:
@@ -65,7 +77,8 @@ def has_server_file(modpack_model: model.ModpackModel) -> bool:
     return len(server_files) > 0
 
 
-def get_modpack_file_model(modpack_id: str, default_file_id: str):
+def get_modpack_file_model(
+        modpack_id: str, default_file_id: str) -> model.ModpackFileModel:
     url = f"{API_BASE_URL}{modpack_id}/file/{default_file_id}"
     with urlopen(url) as response:
         data = json.loads(response.read())
@@ -77,7 +90,20 @@ def get_modpack_filename(website_url) -> str:
     html = PyQuery(url=files_url)
     filename = html("h2:contains('Additional Files')").next().find(
         "span:contains('Filename')").next().text()
-    return filename
+    return quote(filename)
+
+
+def get_modpack_loader(file_model: model.ModpackFileModel) -> str:
+    file_name = file_model.fileName
+    download_url = file_model.downloadUrl.replace(
+        file_name, quote(file_name))
+    with tempfile.TemporaryFile() as modpack_file, urlopen(download_url) as response:
+        modpack_file.write(response.read())
+        with zipfile.ZipFile(modpack_file) as zipped_modpack:
+            with zipped_modpack.open("manifest.json") as manifest:
+                data = json.loads(manifest.read())
+    manifest_model = model.ModpackManifestModel(**data)
+    return next((x.id for x in manifest_model.minecraft.modLoaders), None)
 
 
 class Modpack:
@@ -118,13 +144,16 @@ class Modpack:
         return [parse_modpack(x) for x in modpack_models]
 
     @staticmethod
-    def get_modpack_file(modpack: ModpackSchemaType) -> str:
+    def get_modpack_info(modpack: ModpackSchemaType) -> ModpackInfo:
         error_base = f"The modpack file for modpack id: {modpack.id}"
         try:
             filename = get_modpack_filename(modpack.website_url)
             file_model = get_modpack_file_model(
                 modpack.id, modpack.default_file_id)
             server_file_id = file_model.serverPackFileId
+            modloader_string = get_modpack_loader(file_model)
+            if not modloader_string is None:
+                modloader, modloader_version = modloader_string.split("-")
         except HTTPError as error:
             message = f"{error_base} could not be retrieved"
             raise ModpackError(message) from error
@@ -134,4 +163,7 @@ class Modpack:
         if filename is None or filename == "":
             message = f"{error_base} could not be retrieved"
             raise ModpackError(message)
-        return f"{DOWNLOADS_BASE_URL}{server_file_id[:4]}/{server_file_id[4:]}/{filename}"
+        return ModpackInfo(
+            url=f"{DOWNLOADS_BASE_URL}{server_file_id[:4]}/{server_file_id[4:]}/{filename}",
+            modloader=modloader,
+            modloader_version=modloader_version)

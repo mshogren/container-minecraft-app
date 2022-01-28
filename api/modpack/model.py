@@ -4,8 +4,8 @@ from pydantic import BaseModel
 
 
 class ModpackFileModel(BaseModel):
-    # pylint: disable=too-few-public-methods
     downloadUrl: str
+    fileName: str
     gameVersion: List[str]
     id: str
     serverPackFileId: str
@@ -39,3 +39,16 @@ class ModpackModel(BaseModel):
     name: str
     summary: str
     websiteUrl: str
+
+
+class ModpackManifestModloaderModel(BaseModel):
+    id: str
+
+
+class ModpackManifestMinecraftModel(BaseModel):
+    version: str
+    modLoaders: List[ModpackManifestModloaderModel]
+
+
+class ModpackManifestModel(BaseModel):
+    minecraft: ModpackManifestMinecraftModel

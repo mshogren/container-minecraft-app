@@ -7,6 +7,8 @@ from pydantic import BaseModel, Field
 
 class TypeEnum(str, Enum):
     CURSEFORGE = "CURSEFORGE"
+    FABRIC = "FABRIC"
+    FORGE = "FORGE"
     VANILLA = "VANILLA"
 
 
