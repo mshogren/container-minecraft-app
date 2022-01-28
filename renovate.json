@@ -2,5 +2,21 @@
   "extends": [
     "config:base",
     "helpers:pinGitHubActionDigests"
-  ]
+  ],
+  "packageRules": [
+    {
+      "matchLanguages": ["python"],
+      "matchUpdateTypes": ["minor", "patch"],
+      "schedule": ["before 6am"],
+      "automerge": true
+    },
+    {
+      "matchLanguages": ["javascript"],
+      "matchDepTypes": ["dependencies", "devDependencies"],
+      "matchUpdateTypes": ["minor", "patch"],
+      "schedule": ["before 6am"],
+      "automerge": true
+    }
+  ],
+  "platformAutomerge": true
 }
