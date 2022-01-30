@@ -5,13 +5,13 @@
   ],
   "packageRules": [
     {
-      "matchLanguages": ["python"],
+      "matchManagers": ["pipenv"],
       "matchUpdateTypes": ["minor", "patch"],
       "schedule": ["before 6am"],
       "automerge": true
     },
     {
-      "matchLanguages": ["javascript"],
+      "matchManagers": ["npm"],
       "matchDepTypes": ["dependencies", "devDependencies"],
       "matchUpdateTypes": ["minor", "patch"],
       "schedule": ["before 6am"],
