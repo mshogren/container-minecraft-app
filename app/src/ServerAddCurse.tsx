@@ -1,15 +1,17 @@
 import { ChangeEvent, FormEvent, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { UseMutationState } from 'urql';
 import { useAddCurseServerMutation } from './ServerQueries';
 import { ServerNameInput } from './utils';
 import { ModpackListData, useGetModpacksQuery } from './ModpackQueries';
-import { GraphQLComponent } from './GraphQLComponents';
+import { EmptyMutationState, GraphQLComponent } from './GraphQLComponents';
 import { ServerTypeDropdown } from './ServerAdd';
 
 function ServerAddCurse() {
   const response = useGetModpacksQuery();
 
-  const [mutationResult, addServer] = useAddCurseServerMutation();
+  const [mutationResult, setMutationResult] = useState(EmptyMutationState);
+  const [, addServer] = useAddCurseServerMutation();
 
   const [name, setName] = useState('');
   const handleNameChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -23,7 +25,10 @@ function ServerAddCurse() {
 
   const handleSubmit = (event: FormEvent) => {
     event.preventDefault();
-    addServer({ name, modpack });
+    setMutationResult({ ...mutationResult, fetching: true });
+    addServer({ name, modpack }).then((result) =>
+      setMutationResult(result as UseMutationState)
+    );
   };
 
   const navigate = useNavigate();
@@ -76,12 +81,13 @@ function ServerAddCurse() {
   return (
     <div className="content">
       <GraphQLComponent<ModpackListData, object>
-        response={response}
-        renderer={addServerForm}
+        query={{ response, successRenderer: addServerForm }}
         mutations={[
           {
             result: mutationResult,
-            errorClickRoute: '.',
+            onErrorClick: () => {
+              setMutationResult(EmptyMutationState);
+            },
             loadingMessage: 'Adding...',
             successRenderer: success,
           },

@@ -1,6 +1,7 @@
+import { useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { UseQueryArgs } from 'urql';
-import { GraphQLComponent } from './GraphQLComponents';
+import { UseMutationState, UseQueryArgs } from 'urql';
+import { EmptyMutationState, GraphQLComponent } from './GraphQLComponents';
 import {
   ServerIdInput,
   ServerInstanceData,
@@ -18,15 +19,23 @@ function ServerDetails() {
     requestPolicy: 'network-only',
   } as UseQueryArgs);
 
-  const [startResult, startServer] = useStartServerMutation();
-  const [stopResult, stopServer] = useStopServerMutation();
+  const [startResult, setStartResult] = useState(EmptyMutationState);
+  const [, startServer] = useStartServerMutation();
+  const [stopResult, setStopResult] = useState(EmptyMutationState);
+  const [, stopServer] = useStopServerMutation();
 
   const handleStartClick = () => {
-    startServer({ serverId } as ServerIdInput);
+    setStartResult({ ...startResult, fetching: true });
+    startServer({ serverId } as ServerIdInput).then((result) =>
+      setStartResult(result as UseMutationState)
+    );
   };
 
   const handleStopClick = () => {
-    stopServer({ serverId } as ServerIdInput);
+    setStopResult({ ...stopResult, fetching: true });
+    stopServer({ serverId } as ServerIdInput).then((result) =>
+      setStopResult(result as UseMutationState)
+    );
   };
 
   const serverDetails = ({ server }: ServerInstanceData) => {
@@ -59,6 +68,7 @@ function ServerDetails() {
         <form className="pure-form">
           <fieldset>
             <button
+              title="start"
               className="pure-button"
               type="button"
               onClick={handleStartClick}
@@ -66,6 +76,7 @@ function ServerDetails() {
               Start
             </button>
             <button
+              title="stop"
               className="pure-button"
               type="button"
               onClick={handleStopClick}
@@ -81,16 +92,19 @@ function ServerDetails() {
   return (
     <div className="content">
       <GraphQLComponent<ServerInstanceData, object>
-        response={response}
-        renderer={serverDetails}
+        query={{ response, successRenderer: serverDetails }}
         mutations={[
           {
             result: startResult,
-            errorClickRoute: '.',
+            onErrorClick: () => {
+              setStartResult(EmptyMutationState);
+            },
           },
           {
             result: stopResult,
-            errorClickRoute: '.',
+            onErrorClick: () => {
+              setStopResult(EmptyMutationState);
+            },
           },
         ]}
       />

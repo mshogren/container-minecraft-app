@@ -109,10 +109,10 @@ describe('Submitting the vanilla server form', () => {
 
     await submitForm();
 
-    await waitFor(() => expect(screen.queryByText(/Error/)).toBeTruthy());
-    await waitFor(() =>
-      expect(screen.queryByText(/network error/)).toBeTruthy()
-    );
+    await waitFor(() => {
+      expect(screen.queryByText(/Error/)).toBeTruthy();
+      expect(screen.queryByText(/network error/)).toBeTruthy();
+    });
   });
 
   it('shows an application error message', async () => {
@@ -131,10 +131,10 @@ describe('Submitting the vanilla server form', () => {
 
     await submitForm();
 
-    await waitFor(() => expect(screen.queryByText(/Error/)).toBeTruthy());
-    await waitFor(() =>
-      expect(screen.queryByText(/application error/)).toBeTruthy()
-    );
+    await waitFor(() => {
+      expect(screen.queryByText(/Error/)).toBeTruthy();
+      expect(screen.queryByText(/application error/)).toBeTruthy();
+    });
   });
 
   it('shows an api error message', async () => {
@@ -155,8 +155,10 @@ describe('Submitting the vanilla server form', () => {
 
     await submitForm();
 
-    await waitFor(() => expect(screen.queryByText(/Error/)).toBeTruthy());
-    await waitFor(() => expect(screen.queryByText(/api error/)).toBeTruthy());
+    await waitFor(() => {
+      expect(screen.queryByText(/Error/)).toBeTruthy();
+      expect(screen.queryByText(/api error/)).toBeTruthy();
+    });
   });
 
   it('shows a completion message', async () => {

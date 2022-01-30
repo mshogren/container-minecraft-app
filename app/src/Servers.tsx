@@ -21,11 +21,12 @@ function ServerList() {
         <form className="pure-form">
           <fieldset>
             <Link to="add" role="button">
-              <button className="pure-button" type="button">
+              <button title="add" className="pure-button" type="button">
                 Add
               </button>
             </Link>
             <button
+              title="refresh"
               className="pure-button"
               type="button"
               onClick={reexecuteQuery}
@@ -72,8 +73,7 @@ function ServerList() {
   return (
     <div className="content">
       <GraphQLComponent<ServerListData, object>
-        response={response}
-        renderer={servers}
+        query={{ response, successRenderer: servers }}
       />
     </div>
   );

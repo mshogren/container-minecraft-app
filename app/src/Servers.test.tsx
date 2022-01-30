@@ -6,6 +6,7 @@ import { Client, CombinedError, Provider, TypedDocumentNode } from 'urql';
 import { fromValue, never } from 'wonka';
 import Servers from './Servers';
 import { GET_SERVERS } from './ServerQueries';
+import App from './App';
 
 function createMockClient(executeQuery: CallableFunction): Client {
   return {
@@ -79,6 +80,33 @@ describe('The servers page', () => {
     await waitFor(() => expect(screen.queryByText(/Error/)).toBeTruthy());
   });
 
+  ['servers', 'servers/serverid'].forEach((path) => {
+    it('navigates to the root when clicking OK on the error page', async () => {
+      window.history.replaceState({}, '', `/${path}`);
+
+      const mockClient = createMockClient(() => {
+        return fromValue({
+          error: new CombinedError({
+            graphQLErrors: [Error('application error')],
+          }),
+        });
+      });
+
+      render(
+        <BrowserRouter>
+          <Provider value={mockClient}>
+            <App />
+          </Provider>
+        </BrowserRouter>
+      );
+
+      const button = await screen.findByRole('button');
+      userEvent.click(button);
+
+      expect(window.location.pathname).toBe('/');
+    });
+  });
+
   it('renders with empty data', async () => {
     const mockClient = createMockClient(() => {
       return fromValue({
@@ -90,9 +118,11 @@ describe('The servers page', () => {
 
     renderElement(mockClient);
 
-    await waitFor(() =>
-      expect(screen.queryByText(/Nothing here/)).toBeTruthy()
-    );
+    await waitFor(() => {
+      expect(screen.queryByText(/Nothing here/)).toBeTruthy();
+      expect(screen.queryByTitle(/add/)).toBeTruthy();
+      expect(screen.queryByTitle(/refresh/)).toBeTruthy();
+    });
   });
 
   it('renders with data', async () => {
@@ -103,6 +133,8 @@ describe('The servers page', () => {
     await waitFor(() => {
       expect(screen.queryByText(/Server 1/)).toBeTruthy();
       expect(screen.queryByText(/Server 2/)).toBeTruthy();
+      expect(screen.queryByTitle(/add/)).toBeTruthy();
+      expect(screen.queryByTitle(/refresh/)).toBeTruthy();
     });
   });
 
@@ -129,8 +161,8 @@ describe('The servers page', () => {
     });
 
     it('to the add server form', async () => {
-      const buttons = await screen.findAllByRole('button');
-      userEvent.click(buttons[0]);
+      const button = await screen.findByTitle('add');
+      userEvent.click(button);
       expect(window.location.pathname).toBe('/add');
     });
   });

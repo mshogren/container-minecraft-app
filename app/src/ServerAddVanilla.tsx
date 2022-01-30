@@ -1,6 +1,7 @@
 import { ChangeEvent, FormEvent, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { GraphQLComponent } from './GraphQLComponents';
+import { UseMutationState } from 'urql';
+import { EmptyMutationState, GraphQLComponent } from './GraphQLComponents';
 import { ServerTypeDropdown } from './ServerAdd';
 import { useAddVanillaServerMutation } from './ServerQueries';
 import { ServerNameInput } from './utils';
@@ -9,7 +10,8 @@ import { useGetVersionsQuery, VersionListData } from './VersionQueries';
 function ServerAddVanilla() {
   const response = useGetVersionsQuery();
 
-  const [mutationResult, addServer] = useAddVanillaServerMutation();
+  const [mutationResult, setMutationResult] = useState(EmptyMutationState);
+  const [, addServer] = useAddVanillaServerMutation();
 
   const [name, setName] = useState('');
   const handleNameChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -23,7 +25,10 @@ function ServerAddVanilla() {
 
   const handleSubmit = (event: FormEvent) => {
     event.preventDefault();
-    addServer({ name, version });
+    setMutationResult({ ...mutationResult, fetching: true });
+    addServer({ name, version }).then((result) =>
+      setMutationResult(result as UseMutationState)
+    );
   };
 
   const navigate = useNavigate();
@@ -73,12 +78,13 @@ function ServerAddVanilla() {
   return (
     <div className="content">
       <GraphQLComponent<VersionListData, object>
-        response={response}
-        renderer={addServerForm}
+        query={{ response, successRenderer: addServerForm }}
         mutations={[
           {
             result: mutationResult,
-            errorClickRoute: '.',
+            onErrorClick: () => {
+              setMutationResult(EmptyMutationState);
+            },
             loadingMessage: 'Adding...',
             successRenderer: success,
           },

@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { CombinedError, UseMutationState, UseQueryResponse } from 'urql';
 import { ServerError } from './ServerQueries';
@@ -8,68 +7,69 @@ interface RenderFunction<Data> {
   (data: Data): JSX.Element;
 }
 
-export interface QueryConfiguration<Data, Variables> {
-  response: UseQueryResponse<Data, Variables>;
-  errorClickRoute?: string;
-  renderer: RenderFunction<Data>;
+interface HandlerFunction {
+  (): void;
 }
 
-export interface MutationConfiguration {
-  result: UseMutationState;
+interface GraphQLHookConfiguration<Data> {
   loadingMessage?: string;
-  errorClickRoute: string;
+  onErrorClick?: HandlerFunction;
+  successRenderer?: RenderFunction<Data>;
+}
+
+export interface QueryConfiguration<Data, Variables>
+  extends GraphQLHookConfiguration<Data> {
+  response: UseQueryResponse<Data, Variables>;
+  successRenderer: RenderFunction<Data>;
+}
+
+export interface MutationConfiguration extends GraphQLHookConfiguration<never> {
+  result: UseMutationState;
+  onErrorClick: HandlerFunction;
   successRenderer?: RenderFunction<never>;
 }
 
 export interface GraphQLComponentProps<Data, Variables> {
-  response: UseQueryResponse<Data, Variables>;
-  errorClickRoute?: string;
-  renderer: RenderFunction<Data>;
+  query: QueryConfiguration<Data, Variables>;
   mutations?: MutationConfiguration[];
 }
+
+export const EmptyMutationState = {
+  data: undefined,
+  error: undefined,
+  fetching: false,
+  stale: false,
+} as UseMutationState;
 
 export function GraphQLComponent<Data, Variables>(
   props: GraphQLComponentProps<Data, Variables>
 ) {
-  const { response, errorClickRoute, mutations, renderer } = props;
+  const { query, mutations } = props;
+  const { response, onErrorClick, successRenderer } = query;
   const [{ data, fetching, error }] = response;
 
   const navigate = useNavigate();
-  const [rerender, setRerender] = useState(false);
 
-  const resetMutations = (mutationCollection?: MutationConfiguration[]) => {
-    mutationCollection?.forEach((mutation) => {
-      const temp = mutation;
-      temp.result = {
-        data: undefined,
-        error: undefined,
-        fetching: mutation.result.fetching,
-        stale: false,
-      };
-    });
-    setRerender(!rerender);
-  };
-
-  let clickRoute = errorClickRoute ?? '/';
+  let clickHandler = onErrorClick;
   let errorState = error;
   mutations?.forEach((mutation) => {
     if (!errorState) {
       errorState = errorState || mutation.result.error;
-      if (errorState) clickRoute = mutation.errorClickRoute;
+      if (errorState) clickHandler = mutation.onErrorClick;
     }
     if (!errorState && mutation.result.data) {
       const apiError = Object.values(mutation.result.data)[0] as ServerError;
       if (apiError.error) {
         errorState = new CombinedError({ graphQLErrors: [apiError.error] });
-        clickRoute = mutation.errorClickRoute;
+        clickHandler = mutation.onErrorClick;
       }
     }
   });
 
   if (errorState) {
     const handleClick = () => {
-      if (clickRoute === '.') resetMutations(mutations);
-      else navigate(clickRoute);
+      if (clickHandler) clickHandler();
+      else navigate('/');
     };
 
     return (
@@ -84,17 +84,16 @@ export function GraphQLComponent<Data, Variables>(
   }
 
   let mutationData;
-  let successRenderer: RenderFunction<never> | undefined;
+  let mutationRenderer: RenderFunction<never> | undefined;
 
   mutations?.forEach((mutation) => {
     if (mutation.result.data) {
       mutationData = mutation.result.data;
-      successRenderer = mutation.successRenderer;
+      mutationRenderer = mutation.successRenderer;
     }
   });
-  if (mutationData) {
-    if (!successRenderer) resetMutations(mutations);
-    else return successRenderer(mutationData);
+  if (mutationData && mutationRenderer) {
+    return mutationRenderer(mutationData);
   }
 
   let loading = '';
@@ -106,5 +105,5 @@ export function GraphQLComponent<Data, Variables>(
 
   if (loading !== '') return <div className="loader">{loading}</div>;
 
-  return renderer(data as Data);
+  return successRenderer(data as Data);
 }
