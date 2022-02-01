@@ -88,11 +88,11 @@ describe('Submitting the curseforge modpack server form', () => {
   const modpackName = 'Modpack2';
 
   const submitForm = async () => {
-    const textbox = await screen.findByRole('textbox');
+    const textbox = await screen.findByTitle(/A name must be valid ASCII/);
     userEvent.type(textbox, serverName);
-    const combobox = await screen.findAllByRole('combobox');
-    userEvent.selectOptions(combobox[1], modpackName);
-    const button = await screen.findByRole('button');
+    const option = await screen.findByText(modpackName);
+    userEvent.click(option);
+    const button = await screen.findByText('Add');
     userEvent.click(button);
   };
 
@@ -219,13 +219,10 @@ describe('Submitting the curseforge modpack server form', () => {
     const button = await screen.findByRole('button');
     userEvent.click(button);
 
-    const textbox = await screen.findByRole('textbox');
+    const textbox = await screen.findByTitle(/A name must be valid ASCII/);
     expect((textbox as HTMLInputElement).value).toBe(serverName);
-
-    const combobox = await screen.findAllByRole('combobox');
-    const options = Array.prototype.slice.call(combobox[1].children);
-    const selected = options.filter((o: HTMLOptionElement) => o.selected)[0];
-    expect(selected.text).toBe(modpackName);
+    const hidden = await screen.findByTitle(/hidden/);
+    expect((hidden as HTMLInputElement).value).toBe('Id2');
   });
 
   it('navigates to the servers page when clicking OK on the completion page', async () => {

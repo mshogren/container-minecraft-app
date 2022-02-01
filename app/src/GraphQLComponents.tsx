@@ -34,12 +34,14 @@ export interface GraphQLComponentProps<Data, Variables> {
   mutations?: MutationConfiguration[];
 }
 
-export const EmptyMutationState = {
-  data: undefined,
-  error: undefined,
-  fetching: false,
-  stale: false,
-} as UseMutationState;
+export function EmptyMutationState<Data, Variables>() {
+  return {
+    data: undefined,
+    error: undefined,
+    fetching: false,
+    stale: false,
+  } as UseMutationState<Data, Variables>;
+}
 
 export function GraphQLComponent<Data, Variables>(
   props: GraphQLComponentProps<Data, Variables>

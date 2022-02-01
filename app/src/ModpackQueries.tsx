@@ -1,8 +1,12 @@
 import { gql, useQuery, UseQueryArgs } from 'urql';
 
 export interface ModpackData {
+  categories: string[];
+  downloadCount: number;
   id: string;
   name: string;
+  summary: string;
+  thumbnailUrl: string;
 }
 
 export interface ModpackListData {
@@ -16,8 +20,12 @@ export interface ModpackInstanceData {
 export const GET_MODPACKS = gql`
   query GetModpacks {
     modpacks {
+      categories
+      downloadCount
       id
       name
+      summary
+      thumbnailUrl
     }
   }
 `;

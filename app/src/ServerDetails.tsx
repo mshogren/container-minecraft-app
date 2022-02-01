@@ -5,6 +5,8 @@ import { EmptyMutationState, GraphQLComponent } from './GraphQLComponents';
 import {
   ServerIdInput,
   ServerInstanceData,
+  StartServer,
+  StopServer,
   useGetServerByIdQuery,
   useStartServerMutation,
   useStopServerMutation,
@@ -19,28 +21,48 @@ function ServerDetails() {
     requestPolicy: 'network-only',
   } as UseQueryArgs);
 
-  const [startResult, setStartResult] = useState(EmptyMutationState);
-  const [, startServer] = useStartServerMutation();
-  const [stopResult, setStopResult] = useState(EmptyMutationState);
-  const [, stopServer] = useStopServerMutation();
+  const [initialStartResult, startServer] = useStartServerMutation();
+  const [startResult, setStartResult] = useState(initialStartResult);
+  const [initialStopResult, stopServer] = useStopServerMutation();
+  const [stopResult, setStopResult] = useState(initialStopResult);
 
   const handleStartClick = () => {
     setStartResult({ ...startResult, fetching: true });
     startServer({ serverId } as ServerIdInput).then((result) =>
-      setStartResult(result as UseMutationState)
+      setStartResult(result as UseMutationState<StartServer, ServerIdInput>)
     );
   };
 
   const handleStopClick = () => {
     setStopResult({ ...stopResult, fetching: true });
     stopServer({ serverId } as ServerIdInput).then((result) =>
-      setStopResult(result as UseMutationState)
+      setStopResult(result as UseMutationState<StopServer, ServerIdInput>)
     );
   };
 
   const serverDetails = ({ server }: ServerInstanceData) => {
     return (
       <div>
+        <form className="pure-form">
+          <fieldset>
+            <button
+              title="start"
+              className="pure-button"
+              type="button"
+              onClick={handleStartClick}
+            >
+              Start
+            </button>
+            <button
+              title="stop"
+              className="pure-button"
+              type="button"
+              onClick={handleStopClick}
+            >
+              Stop
+            </button>
+          </fieldset>
+        </form>
         <table className="pure-table vertical-table">
           <thead>
             <tr>
@@ -65,26 +87,6 @@ function ServerDetails() {
             </tr>
           </tbody>
         </table>
-        <form className="pure-form">
-          <fieldset>
-            <button
-              title="start"
-              className="pure-button"
-              type="button"
-              onClick={handleStartClick}
-            >
-              Start
-            </button>
-            <button
-              title="stop"
-              className="pure-button"
-              type="button"
-              onClick={handleStopClick}
-            >
-              Stop
-            </button>
-          </fieldset>
-        </form>
       </div>
     );
   };

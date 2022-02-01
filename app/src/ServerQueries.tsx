@@ -59,7 +59,7 @@ export interface AddCurseforgeServer {
 
 export interface AddCurseforgeServerInput {
   name: string;
-  modpack: string;
+  modpackId: string;
 }
 
 export interface ServerIdInput {
@@ -71,7 +71,7 @@ export interface StartServer {
 }
 
 export interface StopServer {
-  startServer: ServerSuccess | ServerError;
+  stopServer: ServerSuccess | ServerError;
 }
 
 export const GET_SERVERS = gql`
@@ -162,8 +162,8 @@ export const useAddVanillaServerMutation = () => {
 };
 
 export const ADD_CURSEFORGE_SERVER = gql`
-  mutation AddCurseforgeServer($name: String!, $modpack: String!) {
-    addCurseforgeServer(server: { modpackId: $modpack, name: $name }) {
+  mutation AddCurseforgeServer($name: String!, $modpackId: String!) {
+    addCurseforgeServer(server: { modpackId: $modpackId, name: $name }) {
       ... on ServerSuccess {
         server {
           id

@@ -74,6 +74,10 @@ a:focus {
     margin-bottom: 1em;
 }
 
+.pure-form select {
+  height: 2.5em;
+}
+
 /*
  * -- PURE BUTTON STYLES --
  * I want my pure-button elements to look a little different
@@ -99,7 +103,7 @@ a.pure-button-primary {
  .content-wrapper {
     /* These styles are required for the "scroll-over" effect */
     position: absolute;
-    top: 13%;
+    top: 6%;
     width: 100%;
     min-height: 12%;
     z-index: 2;
@@ -246,9 +250,76 @@ footer {
   }
 }
 
+.input-container {
+  display: flex;
+  flex-direction: row;
+  border: 2px solid #ddd;
+  border-radius: 4px;
+  background : #fff;
+  align-items : center;
+  overflow: hidden;
+  margin-bottom: 1em;
+}
+
+.input-container.invalid {
+  border-color: #e9322d;
+
+}
+
+.input-container input[type] {
+  outline: none;
+  border: none;
+  background: none;
+  font-size: 1em;
+  padding: .5em;
+  color: inherit;
+  flex : auto 1 1;
+  width : 100%;
+  background : none;
+  background-color : transparent;
+  margin-bottom: 0px;
+}
+
+.input-container .fa {
+  padding : 10px;
+}
+
+.list-container {
+  position: relative;
+}
+
+.list-container-hidden-input {
+  position: absolute;
+  top: 112px;
+  width: 100%;
+  opacity: 0%;
+  z-index: -1;
+}
+
+.list-details {
+  position: relative;
+  bottom: 0px;
+  text-align: center;
+  height: 150px;
+  border: 2px solid #ddd;
+  border-radius: 4px;
+  background : #fff;
+  align-items : center;
+  padding: 0em 0.6em;
+  margin-bottom: 1em;
+}
+
+.list-details img {
+  float: left;
+}
+
 @media (min-width: 48em) {
   body {
     font-size: 16px;
+  }
+
+  .content-wrapper {
+    top: 13%;
   }
 
   .content {

@@ -1,17 +1,21 @@
-import { ChangeEvent, FormEvent, useState } from 'react';
+import { ChangeEvent, FormEvent, MouseEvent, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { UseMutationState } from 'urql';
 import { EmptyMutationState, GraphQLComponent } from './GraphQLComponents';
 import { ServerTypeDropdown } from './ServerAdd';
-import { useAddVanillaServerMutation } from './ServerQueries';
-import { ServerNameInput } from './utils';
+import {
+  AddVanillaServer,
+  AddVanillaServerInput,
+  useAddVanillaServerMutation,
+} from './ServerQueries';
+import { Listbox, ServerNameInput } from './utils';
 import { useGetVersionsQuery, VersionListData } from './VersionQueries';
 
 function ServerAddVanilla() {
   const response = useGetVersionsQuery();
 
-  const [mutationResult, setMutationResult] = useState(EmptyMutationState);
-  const [, addServer] = useAddVanillaServerMutation();
+  const [initialMutationResult, addServer] = useAddVanillaServerMutation();
+  const [mutationResult, setMutationResult] = useState(initialMutationResult);
 
   const [name, setName] = useState('');
   const handleNameChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -19,15 +23,17 @@ function ServerAddVanilla() {
   };
 
   const [version, setVersion] = useState('');
-  const handleVersionChange = (event: ChangeEvent<HTMLSelectElement>) => {
-    setVersion(event.target.value);
+  const handleVersionClick = (event: MouseEvent<HTMLOptionElement>) => {
+    setVersion(event.currentTarget.value);
   };
 
   const handleSubmit = (event: FormEvent) => {
     event.preventDefault();
     setMutationResult({ ...mutationResult, fetching: true });
     addServer({ name, version }).then((result) =>
-      setMutationResult(result as UseMutationState)
+      setMutationResult(
+        result as UseMutationState<AddVanillaServer, AddVanillaServerInput>
+      )
     );
   };
 
@@ -50,25 +56,35 @@ function ServerAddVanilla() {
       <ServerTypeDropdown />
       <form className="pure-form" onSubmit={handleSubmit}>
         <p>Add a Vanilla server by specifying a name and version</p>
-        <fieldset>
+        <fieldset className="pure-g">
           <ServerNameInput name={name} onChange={handleNameChange} />
-          <select
-            className="pure-input-1"
-            defaultValue={version}
-            required
-            onChange={handleVersionChange}
-          >
-            <option value="" disabled hidden>
-              Choose a server version
-            </option>
-            {data.versions.map((v) => (
-              <option key={v} value={v}>
-                {v}
-              </option>
-            ))}
-          </select>
+          <div className="pure-u-1 pure-u-md-2-3">
+            <div className="input-container pure-u-1 pure-u-md-3-4">
+              <input type="text" placeholder="Search" />
+              <button className="pure-button" type="button" title="search">
+                Search
+                <i className="fas fa-search" />
+              </button>
+            </div>
+          </div>
+          <div className="pure-u-1 pure-u-md-1-2">
+            <Listbox
+              className="pure-input-1"
+              items={data.versions.map((v) => ({
+                key: v,
+                value: v,
+                text: v,
+              }))}
+              selected={version}
+              handleClick={handleVersionClick}
+            />
+          </div>
         </fieldset>
-        <button className="pure-button pure-button-primary" type="submit">
+        <button
+          title="add"
+          className="pure-button pure-button-primary"
+          type="submit"
+        >
           Add
         </button>
       </form>
