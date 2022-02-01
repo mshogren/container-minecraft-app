@@ -117,7 +117,7 @@ class Server:
         version = server.version
 
         if version not in Version.get_versions():
-            return ServerError("Version: {version} does not exist")
+            return ServerError(f"Version: {version} does not exist")
 
         model = DockerModel(**{
             "name": name,
