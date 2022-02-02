@@ -18,8 +18,8 @@ export interface ModpackInstanceData {
 }
 
 export const GET_MODPACKS = gql`
-  query GetModpacks {
-    modpacks {
+  query GetModpacks($search: String, $page: Int) {
+    modpacks(search: $search, page: $page) {
       categories
       downloadCount
       id

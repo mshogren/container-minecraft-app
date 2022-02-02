@@ -30,7 +30,8 @@ export interface MutationConfiguration extends GraphQLHookConfiguration<never> {
 }
 
 export interface GraphQLComponentProps<Data, Variables> {
-  query: QueryConfiguration<Data, Variables>;
+  // eslint-disable-next-line no-unused-vars, no-undef
+  content: QueryConfiguration<Data, Variables> | JSX.Element;
   mutations?: MutationConfiguration[];
 }
 
@@ -46,9 +47,22 @@ export function EmptyMutationState<Data, Variables>() {
 export function GraphQLComponent<Data, Variables>(
   props: GraphQLComponentProps<Data, Variables>
 ) {
-  const { query, mutations } = props;
-  const { response, onErrorClick, successRenderer } = query;
-  const [{ data, fetching, error }] = response;
+  const { content, mutations } = props;
+  const { response, onErrorClick, successRenderer } =
+    'response' in content
+      ? (content as QueryConfiguration<Data, Variables>)
+      : {
+          response: undefined,
+          onErrorClick: undefined,
+          successRenderer: undefined,
+        };
+  const [{ data, fetching, error }] = response ?? [
+    {
+      data: undefined,
+      fetching: false,
+      error: undefined,
+    },
+  ];
 
   const navigate = useNavigate();
 
@@ -107,5 +121,7 @@ export function GraphQLComponent<Data, Variables>(
 
   if (loading !== '') return <div className="loader">{loading}</div>;
 
-  return successRenderer(data as Data);
+  if (successRenderer) return successRenderer(data as Data);
+  // eslint-disable-next-line no-unused-vars, no-undef
+  return content as JSX.Element;
 }

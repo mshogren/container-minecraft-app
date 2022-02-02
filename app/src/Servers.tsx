@@ -73,7 +73,7 @@ function ServerList() {
   return (
     <div className="content">
       <GraphQLComponent<ServerListData, object>
-        query={{ response, successRenderer: servers }}
+        content={{ response, successRenderer: servers }}
       />
     </div>
   );

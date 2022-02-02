@@ -94,7 +94,7 @@ function ServerDetails() {
   return (
     <div className="content">
       <GraphQLComponent<ServerInstanceData, object>
-        query={{ response, successRenderer: serverDetails }}
+        content={{ response, successRenderer: serverDetails }}
         mutations={[
           {
             result: startResult,

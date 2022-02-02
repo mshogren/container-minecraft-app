@@ -27,6 +27,12 @@ function ServerAddVanilla() {
     setVersion(event.currentTarget.value);
   };
 
+  const [search, setSearch] = useState('');
+  const handleSearch = () => {
+    const searchInput = document.getElementById('search') as HTMLInputElement;
+    setSearch(searchInput?.value ?? '');
+  };
+
   const handleSubmit = (event: FormEvent) => {
     event.preventDefault();
     setMutationResult({ ...mutationResult, fetching: true });
@@ -60,8 +66,18 @@ function ServerAddVanilla() {
           <ServerNameInput name={name} onChange={handleNameChange} />
           <div className="pure-u-1 pure-u-md-2-3">
             <div className="input-container pure-u-1 pure-u-md-3-4">
-              <input type="text" placeholder="Search" />
-              <button className="pure-button" type="button" title="search">
+              <input
+                id="search"
+                type="text"
+                placeholder="Search"
+                defaultValue={search}
+              />
+              <button
+                className="pure-button"
+                type="button"
+                title="search"
+                onClick={handleSearch}
+              >
                 Search
                 <i className="fas fa-search" />
               </button>
@@ -70,11 +86,13 @@ function ServerAddVanilla() {
           <div className="pure-u-1 pure-u-md-1-2">
             <Listbox
               className="pure-input-1"
-              items={data.versions.map((v) => ({
-                key: v,
-                value: v,
-                text: v,
-              }))}
+              items={data.versions
+                .filter((v) => v.indexOf(search) > -1)
+                .map((v) => ({
+                  key: v,
+                  value: v,
+                  text: v,
+                }))}
               selected={version}
               handleClick={handleVersionClick}
             />
@@ -94,7 +112,7 @@ function ServerAddVanilla() {
   return (
     <div className="content">
       <GraphQLComponent<VersionListData, object>
-        query={{ response, successRenderer: addServerForm }}
+        content={{ response, successRenderer: addServerForm }}
         mutations={[
           {
             result: mutationResult,

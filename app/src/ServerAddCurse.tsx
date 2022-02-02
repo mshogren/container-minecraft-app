@@ -1,6 +1,6 @@
 import { ChangeEvent, FormEvent, MouseEvent, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { UseMutationState } from 'urql';
+import { UseMutationState, UseQueryArgs } from 'urql';
 import { EmptyMutationState, GraphQLComponent } from './GraphQLComponents';
 import {
   ModpackData,
@@ -15,26 +15,73 @@ import {
 } from './ServerQueries';
 import { Listbox, ServerNameInput } from './utils';
 
+interface ModpackClickHandler {
+  // eslint-disable-next-line no-unused-vars
+  (event: MouseEvent<HTMLOptionElement>, modpacks: ModpackData[]): void;
+}
+
+function ModpackListbox(props: {
+  search: string;
+  page: number;
+  modpackId: string;
+  handleModpackClick: ModpackClickHandler;
+}) {
+  const { search, page, modpackId, handleModpackClick } = props;
+
+  const response = useGetModpacksQuery({
+    variables: { search, page },
+  } as UseQueryArgs);
+
+  const successRenderer = (data: ModpackListData) => (
+    <Listbox
+      className="pure-input-1"
+      items={data.modpacks.map((m) => ({
+        key: m.id,
+        value: m.id,
+        text: m.name,
+      }))}
+      selected={modpackId}
+      handleClick={(e) => handleModpackClick(e, data.modpacks)}
+    />
+  );
+
+  return (
+    <GraphQLComponent<ModpackListData, object>
+      content={{ response, successRenderer }}
+    />
+  );
+}
+
 function ServerAddCurse() {
-  const response = useGetModpacksQuery();
-
-  const [initialMutationResult, addServer] = useAddCurseServerMutation();
-  const [mutationResult, setMutationResult] = useState(initialMutationResult);
-
   const [name, setName] = useState('');
   const handleNameChange = (event: ChangeEvent<HTMLInputElement>) => {
     setName(event.target.value);
   };
 
-  const [modpackId, setModpack] = useState('');
-  const handleModpackClick = (event: MouseEvent<HTMLOptionElement>) => {
-    setModpack(event.currentTarget.value);
+  const [modpack, setModpack] = useState(null as unknown as ModpackData);
+  const handleModpackClick = (
+    event: MouseEvent<HTMLOptionElement>,
+    modpacks: ModpackData[]
+  ) => {
+    setModpack(
+      modpacks.find((m) => m.id === event.currentTarget.value) as ModpackData
+    );
   };
+
+  const [search, setSearch] = useState('');
+  const handleSearch = () => {
+    const searchInput = document.getElementById('search') as HTMLInputElement;
+    setSearch(searchInput?.value ?? '');
+    setModpack(null as unknown as ModpackData);
+  };
+
+  const [initialMutationResult, addServer] = useAddCurseServerMutation();
+  const [mutationResult, setMutationResult] = useState(initialMutationResult);
 
   const handleSubmit = (event: FormEvent) => {
     event.preventDefault();
     setMutationResult({ ...mutationResult, fetching: true });
-    addServer({ name, modpackId }).then((result) =>
+    addServer({ name, modpackId: modpack.id }).then((result) =>
       setMutationResult(
         result as UseMutationState<
           AddCurseforgeServer,
@@ -58,7 +105,7 @@ function ServerAddCurse() {
     </>
   );
 
-  function modpackInfo(modpack?: ModpackData) {
+  function modpackInfo() {
     if (modpack) {
       return (
         <>
@@ -77,7 +124,7 @@ function ServerAddCurse() {
     return '';
   }
 
-  const addServerForm = (data: ModpackListData) => (
+  const addServerForm = () => (
     <>
       <ServerTypeDropdown />
       <form className="pure-form" onSubmit={handleSubmit}>
@@ -89,27 +136,33 @@ function ServerAddCurse() {
           <ServerNameInput name={name} onChange={handleNameChange} />
           <div className="pure-u-1 pure-u-md-2-3">
             <div className="input-container pure-u-1 pure-u-md-3-4">
-              <input type="text" placeholder="Search" />
-              <button className="pure-button" type="button" title="search">
+              <input
+                id="search"
+                type="text"
+                placeholder="Search"
+                defaultValue={search}
+              />
+              <button
+                className="pure-button"
+                type="button"
+                title="search"
+                onClick={handleSearch}
+              >
                 Search
                 <i className="fas fa-search" />
               </button>
             </div>
           </div>
           <div className="pure-u-1 pure-u-md-1-2">
-            <Listbox
-              className="pure-input-1"
-              items={data.modpacks.map((m) => ({
-                key: m.id,
-                value: m.id,
-                text: m.name,
-              }))}
-              selected={modpackId}
-              handleClick={handleModpackClick}
+            <ModpackListbox
+              search={search}
+              page={0}
+              modpackId={modpack ? modpack.id : ''}
+              handleModpackClick={handleModpackClick}
             />
           </div>
           <div className="list-details pure-u-1 pure-u-md-1-2">
-            {modpackInfo(data.modpacks.find((m) => m.id === modpackId))}
+            {modpackInfo()}
           </div>
         </fieldset>
         <button
@@ -126,7 +179,7 @@ function ServerAddCurse() {
   return (
     <div className="content">
       <GraphQLComponent<ModpackListData, object>
-        query={{ response, successRenderer: addServerForm }}
+        content={addServerForm()}
         mutations={[
           {
             result: mutationResult,
