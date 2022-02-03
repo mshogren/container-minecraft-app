@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "309c944e27b121b42c56d215c130b9c8923a2f84dbad1b89bdf19a810d463d58"
+            "sha256": "412c8a7401532739559879f71e2bfffaa89cdd391fee41d424ac756e17a3e6fe"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -49,11 +49,11 @@
         },
         "charset-normalizer": {
             "hashes": [
-                "sha256:876d180e9d7432c5d1dfd4c5d26b72f099d503e8fcc0feb7532c9289be60fcbd",
-                "sha256:cb957888737fc0bbcd78e3df769addb41fd1ff8cf950dc9e7ad7793f1bf44455"
+                "sha256:2842d8f5e82a1f6aa437380934d5e1cd4fcf2003b06fed6940769c164a480a45",
+                "sha256:98398a9d69ee80548c762ba991a4728bfc3836768ed226b3945908d1a688371c"
             ],
             "markers": "python_version >= '3'",
-            "version": "==2.0.10"
+            "version": "==2.0.11"
         },
         "click": {
             "hashes": [
@@ -385,11 +385,11 @@
                 "fastapi"
             ],
             "hashes": [
-                "sha256:10e20215c563d41999e30d0b02f520981a1505b2063c7a8de157f4680edf3ad4",
-                "sha256:7092c26114475b814c605833f3a6b0b06a78cb60b5f0c802f2b26b633df00ff5"
+                "sha256:61479094bb0a7bdac0ab5ac5badcc7949c360a4181f9907044020bbe1400fd71",
+                "sha256:f610f6f3f0e5f72aecb2f471e972a22f8479339dfdc68bba90c2bd76bb01781e"
             ],
             "index": "pypi",
-            "version": "==0.95.1"
+            "version": "==0.95.2"
         },
         "typing-extensions": {
             "hashes": [
@@ -664,11 +664,11 @@
         },
         "setuptools": {
             "hashes": [
-                "sha256:2404879cda71495fc4d5cbc445ed52fdaddf352b36e40be8dcc63147cb4edabe",
-                "sha256:68eb94073fc486091447fcb0501efd6560a0e5a1839ba249e5ff3c4c93f05f90"
+                "sha256:b83cf328a4f6a987c95610e76b29a30778db05174eef71f771776c48f8f25d1b",
+                "sha256:f6871e8aba174d1e22f576c7a471d8460e226b8424b0f2e929a13330b8b83118"
             ],
             "markers": "python_version >= '3.7'",
-            "version": "==60.5.0"
+            "version": "==60.7.0"
         },
         "toml": {
             "hashes": [
