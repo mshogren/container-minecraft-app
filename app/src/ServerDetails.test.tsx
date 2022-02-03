@@ -30,10 +30,12 @@ describe('The server details page', () => {
   const testData = {
     data: {
       server: {
+        created: new Date(),
         id: 'Id1',
         name: 'Server 1',
+        ports: [],
+        started: new Date(),
         status: 'Status 1',
-        created: new Date(),
       },
     },
   };

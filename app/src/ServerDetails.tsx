@@ -41,6 +41,16 @@ function ServerDetails() {
   };
 
   const serverDetails = ({ server }: ServerInstanceData) => {
+    const { created, name, ports, started, status } = server;
+    const formattedPorts =
+      ports.length > 0 ? (
+        ports.map((p) =>
+          p.hostPort ? `${window.location.hostname}:${p.hostPort} ` : ''
+        )
+      ) : (
+        <span>&nbsp;</span>
+      );
+
     return (
       <div>
         <form className="pure-form">
@@ -72,18 +82,30 @@ function ServerDetails() {
               <th>Status</th>
             </tr>
             <tr>
+              <th>Ports</th>
+            </tr>
+            <tr>
+              <th>Started</th>
+            </tr>
+            <tr>
               <th>Created</th>
             </tr>
           </thead>
           <tbody>
             <tr>
-              <td>{server.name}</td>
+              <td>{name}</td>
             </tr>
             <tr>
-              <td>{server.status}</td>
+              <td>{status}</td>
             </tr>
             <tr>
-              <td>{formatDate(server.created)}</td>
+              <td>{formattedPorts}</td>
+            </tr>
+            <tr>
+              <td>{formatDate(started)}</td>
+            </tr>
+            <tr>
+              <td>{formatDate(created)}</td>
             </tr>
           </tbody>
         </table>
