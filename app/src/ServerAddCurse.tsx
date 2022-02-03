@@ -1,4 +1,10 @@
-import { ChangeEvent, FormEvent, MouseEvent, useState } from 'react';
+import {
+  ChangeEvent,
+  FormEvent,
+  KeyboardEvent,
+  MouseEvent,
+  useState,
+} from 'react';
 import { useNavigate } from 'react-router-dom';
 import { UseMutationState, UseQueryArgs } from 'urql';
 import { EmptyMutationState, GraphQLComponent } from './GraphQLComponents';
@@ -74,6 +80,12 @@ function ServerAddCurse() {
     setSearch(searchInput?.value ?? '');
     setModpack(null as unknown as ModpackData);
   };
+  const handleKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === 'Enter') {
+      handleSearch();
+      event.preventDefault();
+    }
+  };
 
   const [initialMutationResult, addServer] = useAddCurseServerMutation();
   const [mutationResult, setMutationResult] = useState(initialMutationResult);
@@ -141,6 +153,7 @@ function ServerAddCurse() {
                 type="text"
                 placeholder="Search"
                 defaultValue={search}
+                onKeyDown={handleKeyDown}
               />
               <button
                 className="pure-button"

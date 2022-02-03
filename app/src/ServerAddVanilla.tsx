@@ -1,4 +1,10 @@
-import { ChangeEvent, FormEvent, MouseEvent, useState } from 'react';
+import {
+  ChangeEvent,
+  FormEvent,
+  KeyboardEvent,
+  MouseEvent,
+  useState,
+} from 'react';
 import { useNavigate } from 'react-router-dom';
 import { UseMutationState } from 'urql';
 import { EmptyMutationState, GraphQLComponent } from './GraphQLComponents';
@@ -31,6 +37,12 @@ function ServerAddVanilla() {
   const handleSearch = () => {
     const searchInput = document.getElementById('search') as HTMLInputElement;
     setSearch(searchInput?.value ?? '');
+  };
+  const handleKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === 'Enter') {
+      handleSearch();
+      event.preventDefault();
+    }
   };
 
   const handleSubmit = (event: FormEvent) => {
@@ -71,6 +83,7 @@ function ServerAddVanilla() {
                 type="text"
                 placeholder="Search"
                 defaultValue={search}
+                onKeyDown={handleKeyDown}
               />
               <button
                 className="pure-button"
