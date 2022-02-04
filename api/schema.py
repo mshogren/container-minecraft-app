@@ -1,11 +1,12 @@
 from typing import List
 
 import strawberry
+from cachetools import func
 from typing_extensions import Annotated
 
 from modpack import Modpack, ModpackSchemaType
-from server import (ServerResponse, AddCurseforgeServerInput,
-                    AddVanillaServerInput, Server, ServerSchemaType)
+from server import (AddCurseforgeServerInput, AddVanillaServerInput, Server,
+                    ServerResponse, ServerSchemaType)
 from settings import SchemaLabels as labels
 from version import Version
 
@@ -28,6 +29,7 @@ class Query:
         name=labels.QUERY_MODPACKS_FIELD_NAME,
         description=labels.QUERY_MODPACKS_FIELD_DESCRIPTION)
     @staticmethod
+    @func.ttl_cache
     def modpacks(
         page: Annotated[int, strawberry.argument(
             name=labels.QUERY_MODPACKS_PAGE_ARG_NAME,
@@ -60,6 +62,7 @@ class Query:
         name=labels.QUERY_VERSIONS_FIELD_NAME,
         description=labels.QUERY_VERSIONS_FIELD_DESCRIPTION)
     @staticmethod
+    @func.ttl_cache
     def versions() -> List[str]:
         return Version.get_versions()
 
