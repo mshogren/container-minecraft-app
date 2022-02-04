@@ -7,13 +7,9 @@ interface RenderFunction<Data> {
   (data: Data): JSX.Element;
 }
 
-interface HandlerFunction {
-  (): void;
-}
-
 interface GraphQLHookConfiguration<Data> {
   loadingMessage?: string;
-  onErrorClick?: HandlerFunction;
+  onErrorClick?: () => void;
   successRenderer?: RenderFunction<Data>;
 }
 
@@ -25,7 +21,7 @@ export interface QueryConfiguration<Data, Variables>
 
 export interface MutationConfiguration extends GraphQLHookConfiguration<never> {
   result: UseMutationState;
-  onErrorClick: HandlerFunction;
+  onErrorClick: () => void;
   successRenderer?: RenderFunction<never>;
 }
 

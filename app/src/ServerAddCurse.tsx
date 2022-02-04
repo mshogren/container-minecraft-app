@@ -3,23 +3,20 @@ import {
   FormEvent,
   KeyboardEvent,
   MouseEvent,
+  useEffect,
   useState,
 } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { UseMutationState, UseQueryArgs } from 'urql';
+import { createClient, UseMutationState } from 'urql';
 import { EmptyMutationState, GraphQLComponent } from './GraphQLComponents';
-import {
-  ModpackData,
-  ModpackListData,
-  useGetModpacksQuery,
-} from './ModpackQueries';
+import { GET_MODPACKS, ModpackData, ModpackListData } from './ModpackQueries';
 import { ServerTypeDropdown } from './ServerAdd';
 import {
   AddCurseforgeServer,
   AddCurseforgeServerInput,
   useAddCurseServerMutation,
 } from './ServerQueries';
-import { Listbox, ServerNameInput } from './utils';
+import { InfiniteListbox, ServerNameInput } from './utils';
 
 interface ModpackClickHandler {
   // eslint-disable-next-line no-unused-vars
@@ -28,32 +25,73 @@ interface ModpackClickHandler {
 
 function ModpackListbox(props: {
   search: string;
-  page: number;
   modpackId: string;
   handleModpackClick: ModpackClickHandler;
 }) {
-  const { search, page, modpackId, handleModpackClick } = props;
+  const { search, modpackId, handleModpackClick } = props;
 
-  const response = useGetModpacksQuery({
-    variables: { search, page },
-  } as UseQueryArgs);
+  const initialState = {
+    hasNextPage: true,
+    isNextPageLoading: false,
+    items: [] as ModpackData[],
+    page: 0,
+  };
 
-  const successRenderer = (data: ModpackListData) => (
-    <Listbox
-      className="pure-input-1"
-      items={data.modpacks.map((m) => ({
+  const [{ hasNextPage, isNextPageLoading, items, page }, setListboxState] =
+    useState(initialState);
+
+  useEffect(() => {
+    setListboxState(initialState);
+  }, [search]);
+
+  const client = createClient({
+    url: import.meta.env.VITE_GRAPHQL_ENDPOINT as string,
+  });
+
+  const getModpacks = () => {
+    setListboxState({
+      hasNextPage,
+      isNextPageLoading: true,
+      items,
+      page,
+    });
+
+    const query = client.query(GET_MODPACKS, {
+      search: encodeURI(search),
+      page,
+    });
+
+    query.toPromise().then((result) => {
+      if (result.data?.modpacks?.length > 0)
+        setListboxState({
+          hasNextPage: result.data.modpacks.length > 0,
+          isNextPageLoading: false,
+          items: [...items].concat(result.data.modpacks),
+          page: page + 1,
+        });
+      else
+        setListboxState({
+          hasNextPage: false,
+          isNextPageLoading: false,
+          items,
+          page,
+        });
+    });
+  };
+
+  return (
+    <InfiniteListbox
+      hasNextPage={hasNextPage}
+      isNextPageLoading={isNextPageLoading}
+      items={items.map((m) => ({
         key: m.id,
         value: m.id,
         text: m.name,
       }))}
+      loadNextPage={getModpacks}
+      className="pure-input-1"
       selected={modpackId}
-      handleClick={(e) => handleModpackClick(e, data.modpacks)}
-    />
-  );
-
-  return (
-    <GraphQLComponent<ModpackListData, object>
-      content={{ response, successRenderer }}
+      handleClick={(e) => handleModpackClick(e, items)}
     />
   );
 }
@@ -169,7 +207,6 @@ function ServerAddCurse() {
           <div className="pure-u-1 pure-u-md-1-2">
             <ModpackListbox
               search={search}
-              page={0}
               modpackId={modpack ? modpack.id : ''}
               handleModpackClick={handleModpackClick}
             />
