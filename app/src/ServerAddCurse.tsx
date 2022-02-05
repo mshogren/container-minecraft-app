@@ -7,7 +7,7 @@ import {
   useState,
 } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { createClient, UseMutationState } from 'urql';
+import { useClient, UseMutationState } from 'urql';
 import { EmptyMutationState, GraphQLComponent } from './GraphQLComponents';
 import { GET_MODPACKS, ModpackData, ModpackListData } from './ModpackQueries';
 import { ServerTypeDropdown } from './ServerAdd';
@@ -44,9 +44,7 @@ function ModpackListbox(props: {
     setListboxState(initialState);
   }, [search]);
 
-  const client = createClient({
-    url: import.meta.env.VITE_GRAPHQL_ENDPOINT as string,
-  });
+  const client = useClient();
 
   const getModpacks = () => {
     setListboxState({
