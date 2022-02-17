@@ -1,5 +1,7 @@
+from os.path import join
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
 from strawberry.fastapi import GraphQLRouter
 
@@ -20,5 +22,16 @@ if ORIGIN:
         allow_methods=["*"],
         allow_headers=["*"],
     )
+
+APP_PATH = "../app"
+
 app.include_router(graphql_app, prefix="/graphql")
-app.mount("/", StaticFiles(directory="../app", html=True), name="app")
+
+
+@app.get('/{resource:path}', include_in_schema=False)
+def static(resource: str):
+    file_name = "index.html" if "." not in resource else resource
+    return FileResponse(path=join(APP_PATH, file_name))
+
+
+app.mount("/", StaticFiles(directory=APP_PATH, html=True), name="app")
