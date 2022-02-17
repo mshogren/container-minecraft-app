@@ -27,4 +27,4 @@ version = "==0.96.0"
 
 [packages.uvicorn]
 extras = [ "standard",]
-version = "==0.17.4"
+version = "==0.17.5"
