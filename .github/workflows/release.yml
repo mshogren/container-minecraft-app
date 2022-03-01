@@ -43,7 +43,7 @@ jobs:
           config-file-path: "./changelog.config.js"
 
       - name: Log in to the Container registry
-        uses: docker/login-action@6af3c118c8376c675363897acf1757f7a9be6583 # tag=v1
+        uses: docker/login-action@dd4fa0671be5250ee6f50aedf4cb05514abda2c7 # tag=v1
         with:
           registry: ${{ env.REGISTRY }}
           username: ${{ github.actor }}
