@@ -5,11 +5,25 @@
   "version": "0.2.0",
   "configurations": [
     {
+      "name": "Run Current App Test File",
+      "request": "launch",
+      "autoAttachChildProcesses": true,
+      "cwd": "${workspaceFolder}${pathSeparator}app",
+      "skipFiles": ["<node_internals>/**", "**/node_modules/**"],
+      "program": "${workspaceRoot}/app/node_modules/vitest/vitest.mjs",
+      "args": ["run", "${relativeFile}"],
+      "smartStep": true,
+      "console": "integratedTerminal",
+      "type": "pwa-node"
+    },
+    {
       "name": "Run App",
       "request": "launch",
       "runtimeArgs": [
         "run",
-        "dev"
+        "dev",
+        "--",
+        "--host"
       ],
       "cwd": "${workspaceFolder}${pathSeparator}app",
       "runtimeExecutable": "npm",

@@ -28,6 +28,7 @@ export interface MutationConfiguration extends GraphQLHookConfiguration<never> {
 export interface GraphQLComponentProps<Data, Variables> {
   // eslint-disable-next-line no-unused-vars, no-undef
   content: QueryConfiguration<Data, Variables> | JSX.Element;
+  // eslint-disable-next-line react/require-default-props
   mutations?: MutationConfiguration[];
 }
 
