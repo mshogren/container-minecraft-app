@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "727429eb970b029b4656621601834d4b43e823f45edb856ff2db58c09b7e9dda"
+            "sha256": "45eeb97af6cf2701f673ccdc26c8597bfe5d616381d8f3619b65ef088805c778"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -396,11 +396,11 @@
                 "fastapi"
             ],
             "hashes": [
-                "sha256:e410fc048eb3be1b8d4d9a29cbfc823386ba84e126f85d7dee62be610b73abae",
-                "sha256:f8134f481759e2a6a5fd76c58a6b597bef667302ed855a2836437efad36aae93"
+                "sha256:082592b78522dc8215939c3ea33d76e71888e188e176f3bc7a960d29c3e5a331",
+                "sha256:de3eddaa54dcb59fbc5bc9a4ccf9d53aec91ade9b134d2d784fb22ccd0c69f93"
             ],
             "index": "pypi",
-            "version": "==0.102.2"
+            "version": "==0.103.0"
         },
         "typing-extensions": {
             "hashes": [
@@ -452,10 +452,10 @@
         },
         "watchgod": {
             "hashes": [
-                "sha256:48140d62b0ebe9dd9cf8381337f06351e1f2e70b2203fa9c6eff4e572ca84f29",
-                "sha256:d6c1ea21df37847ac0537ca0d6c2f4cdf513562e95f77bb93abbcf05573407b7"
+                "sha256:29a1d8f25e1721ddb73981652ca318c47387ffb12ec4171ddd7b9d01540033b1",
+                "sha256:339c2cfede1ccc1e277bbf5e82e42886f3c80801b01f45ab10d9461c4118b5eb"
             ],
-            "version": "==0.7"
+            "version": "==0.8"
         },
         "websocket-client": {
             "hashes": [
@@ -667,11 +667,11 @@
         },
         "pytest": {
             "hashes": [
-                "sha256:9ce3ff477af913ecf6321fe337b93a2c0dcf2a0a1439c43f5452112c1e4280db",
-                "sha256:e30905a0c131d3d94b89624a1cc5afec3e0ba2fbdb151867d8e0ebd49850f171"
+                "sha256:b555252a95bbb2a37a97b5ac2eb050c436f7989993565f5e0c9128fcaacadd0e",
+                "sha256:f1089d218cfcc63a212c42896f1b7fbf096874d045e1988186861a1a87d27b47"
             ],
             "index": "pypi",
-            "version": "==7.0.1"
+            "version": "==7.1.0"
         },
         "setuptools": {
             "hashes": [
