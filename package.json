@@ -28,7 +28,7 @@
     "husky": "7.0.4",
     "lint-staged": "12.3.5",
     "madr": "2.1.2",
-    "prettier": "2.5.1",
+    "prettier": "2.6.0",
     "tsc-files": "1.1.3",
     "vite": "2.8.6",
     "vitest": "0.6.1"
