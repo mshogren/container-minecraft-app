@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "42b6b627d9517d33f3bb7c2d1554216d812f98874e56b37490b0f313c2027e13"
+            "sha256": "4db62dfa5b424686b52cae7138f78dab47978c226b8bbabe0f9656ce5a5d0823"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -396,11 +396,11 @@
                 "fastapi"
             ],
             "hashes": [
-                "sha256:a9134e6928417a9af997d5d0cf3657ea606676b6566003b3d40999b2c39e5331",
-                "sha256:b3efca529eccade4a7c1b44bbaa84701a5c9b3f8c52b55f684232e681e64a1c5"
+                "sha256:17f964071c73a8a98e197ba95537b4c3fc5e78642f51a8327e906ef21d49ce4f",
+                "sha256:72ee6d9a1ebd5f9839b2d20f9939b512eafe46270ac3cb7fd4b7db68b6fa055f"
             ],
             "index": "pypi",
-            "version": "==0.104.3"
+            "version": "==0.105.0"
         },
         "typing-extensions": {
             "hashes": [
@@ -660,11 +660,11 @@
         },
         "pylint": {
             "hashes": [
-                "sha256:7cc6d0c4f61dff440f9ed8b657f4ecd615dcfe35345953eb7b1dc74afe901d7a",
-                "sha256:8672cf7441b81410f5de7defdf56e2d559c956fd0579652f2e0a0a35bea2d546"
+                "sha256:c149694cfdeaee1aa2465e6eaab84c87a881a7d55e6e93e09466be7164764d1e",
+                "sha256:dab221658368c7a05242e673c275c488670144123f4bd262b2777249c1c0de9b"
             ],
             "index": "pypi",
-            "version": "==2.13.4"
+            "version": "==2.13.5"
         },
         "pyparsing": {
             "hashes": [
@@ -684,11 +684,11 @@
         },
         "setuptools": {
             "hashes": [
-                "sha256:41aface2e85b517c3a466b4689b8055c02cd2e623461f09af7d93f3da65c4709",
-                "sha256:88fafba4abc2f047e08a188fd4bbc10b0e464592c37b514c19f8f8f88d94450b"
+                "sha256:7999cbd87f1b6e1f33bf47efa368b224bed5e27b5ef2c4d46580186cbcb1a86a",
+                "sha256:a65e3802053e99fc64c6b3b29c11132943d5b8c8facbcc461157511546510967"
             ],
             "markers": "python_version >= '3.7'",
-            "version": "==61.3.1"
+            "version": "==62.0.0"
         },
         "toml": {
             "hashes": [
@@ -703,7 +703,7 @@
                 "sha256:939de3e7a6161af0c887ef91b7d41a53e7c5a1ca976325f429cb46ea9bc30ecc",
                 "sha256:de526c12914f0c550d15924c62d72abc48d6fe7364aa87328337a31007fe8a4f"
             ],
-            "markers": "python_version < '3.11'",
+            "markers": "python_version >= '3.7'",
             "version": "==2.0.1"
         },
         "typing-extensions": {
