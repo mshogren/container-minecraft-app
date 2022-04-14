@@ -45,7 +45,7 @@
     "tsc-files": "1.1.3",
     "typescript": "4.6.3",
     "vite": "2.9.3",
-    "vite-plugin-checker": "0.4.5",
+    "vite-plugin-checker": "0.4.6",
     "vitest": "0.9.3",
     "wonka": "4.0.15"
   }
