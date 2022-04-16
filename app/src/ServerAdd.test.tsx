@@ -62,7 +62,7 @@ describe('The add server page', () => {
     serverTypes.forEach((serverType) => {
       it(`to the ${serverType} form`, async () => {
         const combobox = await screen.findByRole('combobox');
-        userEvent.selectOptions(combobox, serverType);
+        await userEvent.selectOptions(combobox, serverType);
         expect(window.location.pathname).toBe(`/${serverType}`);
       });
     });

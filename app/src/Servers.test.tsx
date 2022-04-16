@@ -101,7 +101,7 @@ describe('The servers page', () => {
       );
 
       const button = await screen.findByRole('button');
-      userEvent.click(button);
+      await userEvent.click(button);
 
       expect(window.location.pathname).toBe('/');
     });
@@ -156,13 +156,13 @@ describe('The servers page', () => {
       const links = await screen.findAllByRole('link');
       expect(links.length).toBe(2);
 
-      userEvent.click(links[1]);
+      await userEvent.click(links[1]);
       expect(window.location.pathname).toBe('/Id2');
     });
 
     it('to the add server form', async () => {
       const button = await screen.findByTitle('add');
-      userEvent.click(button);
+      await userEvent.click(button);
       expect(window.location.pathname).toBe('/add');
     });
   });

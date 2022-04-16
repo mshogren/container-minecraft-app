@@ -96,11 +96,9 @@ describe('The server details page', () => {
         renderElement(mockClient);
 
         const button = await screen.findByTitle(action);
-        userEvent.click(button);
+        await userEvent.click(button);
 
-        await waitFor(() =>
-          expect(screen.queryByText(/Loading.../)).toBeTruthy()
-        );
+        expect(screen.queryByText(/Loading.../)).toBeTruthy();
       });
 
       it('shows a network error message', async () => {
@@ -118,12 +116,10 @@ describe('The server details page', () => {
         renderElement(mockClient);
 
         const button = await screen.findByTitle(action);
-        userEvent.click(button);
+        await userEvent.click(button);
 
-        await waitFor(() => {
-          expect(screen.queryByText(/Error/)).toBeTruthy();
-          expect(screen.queryByText(/network error/)).toBeTruthy();
-        });
+        expect(screen.queryByText(/Error/)).toBeTruthy();
+        expect(screen.queryByText(/network error/)).toBeTruthy();
       });
 
       it('shows an application error message', async () => {
@@ -141,12 +137,10 @@ describe('The server details page', () => {
         renderElement(mockClient);
 
         const button = await screen.findByTitle('start');
-        userEvent.click(button);
+        await userEvent.click(button);
 
-        await waitFor(() => {
-          expect(screen.queryByText(/Error/)).toBeTruthy();
-          expect(screen.queryByText(/application error/)).toBeTruthy();
-        });
+        expect(screen.queryByText(/Error/)).toBeTruthy();
+        expect(screen.queryByText(/application error/)).toBeTruthy();
       });
 
       it('shows an api error message', async () => {
@@ -166,12 +160,10 @@ describe('The server details page', () => {
         renderElement(mockClient);
 
         const button = await screen.findByTitle(action);
-        userEvent.click(button);
+        await userEvent.click(button);
 
-        await waitFor(() => {
-          expect(screen.queryByText(/Error/)).toBeTruthy();
-          expect(screen.queryByText(/api error/)).toBeTruthy();
-        });
+        expect(screen.queryByText(/Error/)).toBeTruthy();
+        expect(screen.queryByText(/api error/)).toBeTruthy();
       });
 
       it('rerenders the page when clicking OK on the error page', async () => {
@@ -191,16 +183,14 @@ describe('The server details page', () => {
         renderElement(mockClient);
 
         const button = await screen.findByTitle(action);
-        userEvent.click(button);
+        await userEvent.click(button);
 
         const okButton = await screen.findByRole('button');
-        userEvent.click(okButton);
+        await userEvent.click(okButton);
 
-        await waitFor(() => {
-          expect(screen.queryByText(/Server 1/)).toBeTruthy();
-          expect(screen.queryByTitle(/start/)).toBeTruthy();
-          expect(screen.queryByTitle(/stop/)).toBeTruthy();
-        });
+        expect(screen.queryByText(/Server 1/)).toBeTruthy();
+        expect(screen.queryByTitle(/start/)).toBeTruthy();
+        expect(screen.queryByTitle(/stop/)).toBeTruthy();
       });
     });
   });

@@ -76,11 +76,11 @@ describe('Submitting the vanilla server form', () => {
 
   const submitForm = async () => {
     const textbox = await screen.findByTitle(/A name must be valid ASCII/);
-    userEvent.type(textbox, serverName);
+    await userEvent.type(textbox, serverName);
     const option = await screen.findByText(serverVersion);
-    userEvent.click(option);
+    await userEvent.click(option);
     const button = await screen.findByText('Add');
-    userEvent.click(button);
+    await userEvent.click(button);
   };
 
   it('shows a loading message', async () => {
@@ -204,7 +204,7 @@ describe('Submitting the vanilla server form', () => {
 
     await submitForm();
     const button = await screen.findByRole('button');
-    userEvent.click(button);
+    await userEvent.click(button);
 
     const textbox = await screen.findByTitle(/A name must be valid ASCII/);
     expect((textbox as HTMLInputElement).value).toBe(serverName);
@@ -234,7 +234,7 @@ describe('Submitting the vanilla server form', () => {
 
     await submitForm();
     const button = await screen.findByRole('button');
-    userEvent.click(button);
+    await userEvent.click(button);
 
     expect(window.location.pathname).toBe('/servers');
   });

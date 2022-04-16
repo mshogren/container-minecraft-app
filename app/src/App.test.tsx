@@ -35,7 +35,7 @@ describe('The home page', () => {
   it('navigates to servers', async () => {
     const button = await screen.findByRole('button');
 
-    userEvent.click(button);
+    await userEvent.click(button);
 
     expect(window.location.pathname).toBe('/servers');
   });
