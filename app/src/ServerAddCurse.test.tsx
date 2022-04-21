@@ -43,7 +43,7 @@ describe('The add curseforge modpack server page', () => {
     await waitFor(() => expect(screen.queryByText(/Loading.../)).toBeTruthy());
   });
 
-  it.skip('shows a network error message', async () => {
+  it('shows a network error message', async () => {
     const mockClient = createMockClient(() => {
       return fromValue({
         error: new CombinedError({
@@ -57,7 +57,7 @@ describe('The add curseforge modpack server page', () => {
     await waitFor(() => expect(screen.queryByText(/Error/)).toBeTruthy());
   });
 
-  it.skip('shows an application error message', async () => {
+  it('shows an application error message', async () => {
     const mockClient = createMockClient(() => {
       return fromValue({
         error: new CombinedError({

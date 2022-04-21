@@ -33,12 +33,15 @@ function ModpackListbox(props: {
   const initialState = {
     hasNextPage: true,
     isNextPageLoading: false,
+    hasError: false,
     items: [] as ModpackData[],
     page: 0,
   };
 
-  const [{ hasNextPage, isNextPageLoading, items, page }, setListboxState] =
-    useState(initialState);
+  const [
+    { hasNextPage, isNextPageLoading, hasError, items, page },
+    setListboxState,
+  ] = useState(initialState);
 
   useEffect(() => {
     setListboxState(initialState);
@@ -50,6 +53,7 @@ function ModpackListbox(props: {
     setListboxState({
       hasNextPage,
       isNextPageLoading: true,
+      hasError: false,
       items,
       page,
     });
@@ -60,10 +64,19 @@ function ModpackListbox(props: {
     });
 
     query.toPromise().then((result) => {
-      if (result.data?.modpacks?.length > 0)
+      if (result.error)
+        setListboxState({
+          hasNextPage: false,
+          isNextPageLoading: false,
+          hasError: true,
+          items: [{} as ModpackData],
+          page,
+        });
+      else if (result.data?.modpacks?.length > 0)
         setListboxState({
           hasNextPage: result.data.modpacks.length > 0,
           isNextPageLoading: false,
+          hasError: false,
           items: [...items].concat(result.data.modpacks),
           page: page + 1,
         });
@@ -71,6 +84,7 @@ function ModpackListbox(props: {
         setListboxState({
           hasNextPage: false,
           isNextPageLoading: false,
+          hasError: false,
           items,
           page,
         });
@@ -81,6 +95,7 @@ function ModpackListbox(props: {
     <InfiniteListbox
       hasNextPage={hasNextPage}
       isNextPageLoading={isNextPageLoading}
+      hasError={hasError}
       items={items.map((m) => ({
         key: m.id,
         value: m.id,

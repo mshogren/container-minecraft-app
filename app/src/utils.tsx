@@ -38,6 +38,7 @@ interface ListBoxItem {
 export function InfiniteListbox(props: {
   hasNextPage: boolean;
   isNextPageLoading: boolean;
+  hasError: boolean;
   items: ListBoxItem[];
   loadNextPage: () => void;
   selected: string;
@@ -47,6 +48,7 @@ export function InfiniteListbox(props: {
   const {
     hasNextPage,
     isNextPageLoading,
+    hasError,
     items,
     loadNextPage,
     selected,
@@ -84,6 +86,7 @@ export function InfiniteListbox(props: {
             width="100%"
           >
             {({ index, style }) => {
+              if (hasError) return <div style={style}>Error :(</div>;
               if (!isItemLoaded(index))
                 return (
                   <div style={style}>
