@@ -1,5 +1,5 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
 import { createClient, Provider } from 'urql';
 import 'purecss/build/pure-min.css';
@@ -10,13 +10,15 @@ const client = createClient({
   url: import.meta.env.VITE_GRAPHQL_ENDPOINT,
 });
 
-ReactDOM.render(
+const container = document.getElementById('root');
+// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+const root = createRoot(container!);
+root.render(
   <React.StrictMode>
     <BrowserRouter>
       <Provider value={client}>
         <App />
       </Provider>
     </BrowserRouter>
-  </React.StrictMode>,
-  document.getElementById('root')
+  </React.StrictMode>
 );
