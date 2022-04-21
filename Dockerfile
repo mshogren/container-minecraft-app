@@ -22,7 +22,7 @@ FROM node:16 AS node-deps
 
 WORKDIR /app
 COPY app/package*.json ./
-RUN npm install
+RUN npm install --legacy-peer-deps
 COPY app ./
 RUN npm run build
 
