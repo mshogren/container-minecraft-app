@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "@fortawesome/fontawesome-free": "6.1.1",
-    "graphql": "16.3.0",
+    "graphql": "16.4.0",
     "purecss": "2.1.0",
     "react": "18.0.0",
     "react-dom": "18.0.0",
