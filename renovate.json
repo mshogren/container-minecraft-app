@@ -3,6 +3,10 @@
     "config:base",
     "helpers:pinGitHubActionDigests"
   ],
+  "lockFileMaintenance": {
+    "enabled": true,
+    "schedule": ["before 6am"]
+  },
   "packageRules": [
     {
       "matchManagers": ["pipenv"],
