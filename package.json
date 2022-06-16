@@ -54,8 +54,5 @@
     "**/*.{ts,tsx}": [
       "tsc-files -p app/tsconfig.json --noEmit"
     ]
-  },
-  "dependencies": {
-    "i": "^0.3.7"
   }
 }
