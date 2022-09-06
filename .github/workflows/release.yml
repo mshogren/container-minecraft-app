@@ -25,7 +25,7 @@ jobs:
     steps:
       - uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b # tag=v3
 
-      - uses: actions/setup-node@eeb10cff27034e7acf239c5d29f62154018672fd # tag=v3
+      - uses: actions/setup-node@2fddd8803e2f5c9604345a0b591c3020ee971a93 # tag=v3
         with:
           node-version: '16'
           cache: 'npm'
@@ -35,7 +35,7 @@ jobs:
 
       - name: Conventional Changelog Action
         id: changelog
-        uses: TriPSs/conventional-changelog-action@9b8c94a880e647cdc3e5071e15e20f0fe210b5ce # tag=v3
+        uses: TriPSs/conventional-changelog-action@d360fad3a42feca6462f72c97c165d60a02d4bf2 # tag=v3
         with:
           github-token: ${{ secrets.github_token }}
           output-file: "false"
