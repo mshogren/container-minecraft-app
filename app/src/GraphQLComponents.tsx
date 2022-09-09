@@ -1,5 +1,10 @@
 import { useNavigate } from 'react-router-dom';
-import { CombinedError, UseMutationState, UseQueryResponse } from 'urql';
+import {
+  AnyVariables,
+  CombinedError,
+  UseMutationState,
+  UseQueryResponse,
+} from 'urql';
 import { ServerError } from './ServerQueries';
 
 interface RenderFunction<Data> {
@@ -13,7 +18,7 @@ interface GraphQLHookConfiguration<Data> {
   successRenderer?: RenderFunction<Data>;
 }
 
-export interface QueryConfiguration<Data, Variables>
+export interface QueryConfiguration<Data, Variables extends AnyVariables>
   extends GraphQLHookConfiguration<Data> {
   response: UseQueryResponse<Data, Variables>;
   successRenderer: RenderFunction<Data>;
@@ -25,14 +30,14 @@ export interface MutationConfiguration extends GraphQLHookConfiguration<never> {
   successRenderer?: RenderFunction<never>;
 }
 
-export interface GraphQLComponentProps<Data, Variables> {
+export interface GraphQLComponentProps<Data, Variables extends AnyVariables> {
   // eslint-disable-next-line no-unused-vars, no-undef
   content: QueryConfiguration<Data, Variables> | JSX.Element;
   // eslint-disable-next-line react/require-default-props
   mutations?: MutationConfiguration[];
 }
 
-export function EmptyMutationState<Data, Variables>() {
+export function EmptyMutationState<Data, Variables extends AnyVariables>() {
   return {
     data: undefined,
     error: undefined,
@@ -41,7 +46,7 @@ export function EmptyMutationState<Data, Variables>() {
   } as UseMutationState<Data, Variables>;
 }
 
-export function GraphQLComponent<Data, Variables>(
+export function GraphQLComponent<Data, Variables extends AnyVariables>(
   props: GraphQLComponentProps<Data, Variables>
 ) {
   const { content, mutations } = props;

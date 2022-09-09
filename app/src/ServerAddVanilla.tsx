@@ -6,7 +6,7 @@ import {
   useState,
 } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { UseMutationState } from 'urql';
+import { AnyVariables, UseMutationState } from 'urql';
 import { EmptyMutationState, GraphQLComponent } from './GraphQLComponents';
 import { ServerTypeDropdown } from './ServerAdd';
 import {
@@ -124,7 +124,7 @@ function ServerAddVanilla() {
 
   return (
     <div className="content">
-      <GraphQLComponent<VersionListData, object>
+      <GraphQLComponent<VersionListData, AnyVariables>
         content={{ response, successRenderer: addServerForm }}
         mutations={[
           {

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { UseMutationState, UseQueryArgs } from 'urql';
+import { AnyVariables, UseMutationState, UseQueryArgs } from 'urql';
 import { EmptyMutationState, GraphQLComponent } from './GraphQLComponents';
 import {
   ServerIdInput,
@@ -17,7 +17,7 @@ function ServerDetails() {
   const { serverId } = useParams();
 
   const response = useGetServerByIdQuery({
-    variables: { serverId },
+    variables: { serverId } as AnyVariables,
     requestPolicy: 'network-only',
   } as UseQueryArgs);
 
@@ -115,7 +115,7 @@ function ServerDetails() {
 
   return (
     <div className="content">
-      <GraphQLComponent<ServerInstanceData, object>
+      <GraphQLComponent<ServerInstanceData, AnyVariables>
         content={{ response, successRenderer: serverDetails }}
         mutations={[
           {

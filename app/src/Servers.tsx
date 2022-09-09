@@ -1,5 +1,5 @@
 import { Routes, Route, Outlet, Link } from 'react-router-dom';
-import { UseQueryArgs } from 'urql';
+import { AnyVariables, UseQueryArgs } from 'urql';
 import { GraphQLComponent } from './GraphQLComponents';
 import ServerAdd from './ServerAdd';
 import ServerAddCurse from './ServerAddCurse';
@@ -72,7 +72,7 @@ function ServerList() {
 
   return (
     <div className="content">
-      <GraphQLComponent<ServerListData, object>
+      <GraphQLComponent<ServerListData, AnyVariables>
         content={{ response, successRenderer: servers }}
       />
     </div>
