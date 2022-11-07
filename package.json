@@ -23,7 +23,7 @@
   "devDependencies": {
     "@commitlint/cli": "17.2.0",
     "@commitlint/config-conventional": "17.2.0",
-    "eslint": "8.26.0",
+    "eslint": "8.27.0",
     "graphql-schema-linter": "3.0.1",
     "husky": "8.0.1",
     "jsdom": "20.0.2",
