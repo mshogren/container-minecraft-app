@@ -35,7 +35,7 @@ jobs:
 
       - name: Conventional Changelog Action
         id: changelog
-        uses: TriPSs/conventional-changelog-action@13aba394b1a95185539dbc4f468c53214ee52ccc # tag=v3
+        uses: TriPSs/conventional-changelog-action@c989d559ea64cf4c21dc9c795834f219cfc66e5d # v3
         with:
           github-token: ${{ secrets.github_token }}
           output-file: "false"
