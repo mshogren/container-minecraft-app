@@ -16,7 +16,7 @@
   },
   "homepage": "https://github.com/mshogren/container-minecraft-app#readme",
   "dependencies": {
-    "purecss": "2.1.0"
+    "purecss": "2.2.0"
   },
   "devDependencies": {
     "@fullhuman/postcss-purgecss": "5.0.0",
