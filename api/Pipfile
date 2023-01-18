@@ -19,7 +19,7 @@ cachetools = "==5.2.1"
 
 [packages.pydantic]
 extras = [ "dotenv",]
-version = "==1.10.2"
+version = "==1.10.4"
 
 [packages.strawberry-graphql]
 extras = [ "fastapi",]
