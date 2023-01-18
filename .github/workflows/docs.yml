@@ -39,7 +39,7 @@ jobs:
         run: hugo
 
       - name: Check HTML
-        uses: anishathalye/proof-html@980f57e44299db8b8471c66ae45d211ab67dbfe4 # v2
+        uses: anishathalye/proof-html@786bab9af8983219684cd48d573922de73faf4df # v2
         with:
           directory: "./docs/public"
           #arguments:
