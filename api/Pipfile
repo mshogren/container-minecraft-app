@@ -13,7 +13,7 @@ python_version = "3.9"
 
 [packages]
 docker = "==6.0.1"
-pyquery = "==1.4.3"
+pyquery = "==2.0.0"
 packaging = "==23.0"
 cachetools = "==5.2.1"
 
