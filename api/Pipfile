@@ -15,7 +15,7 @@ python_version = "3.9"
 docker = "==5.0.3"
 pyquery = "==1.4.3"
 packaging = "==21.3"
-cachetools = "==5.2.0"
+cachetools = "==5.2.1"
 
 [packages.pydantic]
 extras = [ "dotenv",]
