@@ -27,7 +27,7 @@
     "graphql-schema-linter": "3.0.1",
     "husky": "8.0.3",
     "jsdom": "21.1.0",
-    "lint-staged": "13.1.1",
+    "lint-staged": "13.1.2",
     "madr": "3.0.0",
     "prettier": "2.8.4",
     "tsc-files": "1.1.3",
