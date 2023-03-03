@@ -5,11 +5,6 @@
   "directories": {
     "doc": "docs"
   },
-  "scripts": {
-    "autopep8": "api/.venv/bin/autopep8 --experimental --in-place",
-    "pylint": "api/.venv/bin/pylint --rcfile=api/.pylintrc",
-    "lint-graphql-schema": "cd api; .venv/bin/strawberry export-schema main | npx graphql-schema-linter -s -e relay-page-info-spec,enum-values-have-descriptions"
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/mshogren/container-minecraft-app.git"
@@ -23,36 +18,9 @@
   "devDependencies": {
     "@commitlint/cli": "17.4.4",
     "@commitlint/config-conventional": "17.4.4",
-    "eslint": "8.35.0",
     "graphql-schema-linter": "3.0.1",
     "husky": "8.0.3",
-    "jsdom": "21.1.0",
     "lint-staged": "13.1.2",
-    "madr": "3.0.0",
-    "prettier": "2.8.4",
-    "tsc-files": "1.1.3",
-    "vite": "4.1.4",
-    "vitest": "0.29.2"
-  },
-  "workspaces": [
-    "api",
-    "app",
-    "docs"
-  ],
-  "lint-staged": {
-    "**/*.py": [
-      "npm run autopep8",
-      "npm run pylint",
-      "npm run lint-graphql-schema"
-    ],
-    "app/*": [
-      "prettier --ignore-unknown --write"
-    ],
-    "app/**/*.{js,jsx,ts,tsx}": [
-      "eslint"
-    ],
-    "**/*.{ts,tsx}": [
-      "tsc-files -p app/tsconfig.json --noEmit"
-    ]
+    "madr": "3.0.0"
   }
 }
