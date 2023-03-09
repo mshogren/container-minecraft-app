@@ -32,7 +32,7 @@ jobs:
 
       - uses: peaceiris/actions-hugo@16361eb4acea8698b220b76c0d4e84e1fd22c61d # tag=v2
         with:
-          hugo-version: '0.89.4'
+          hugo-version: '0.104.3'
           extended: true
 
       - name: run hugo
