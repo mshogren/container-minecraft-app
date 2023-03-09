@@ -38,11 +38,11 @@ name = "Michael Shogren"
 [mediaTypes]
   [mediaTypes.'text/pages.dev']
     delimiter = ''
-    suffixes = ''
+    suffixes = 'headers'
 
 [outputFormats]
   [outputFormats.HEADERS]
-    baseName = '_headers'
+    baseName = '_'
     isPlainText = true
     mediaType = 'text/pages.dev'
     notAlternative = true
