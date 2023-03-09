@@ -1,4 +1,4 @@
-{{- $css := partial "style.html" . }}
+{{- $css := partial "style.html" . | resources.PostProcess }}
 /*
   Strict-Transport-Security: max-age=31536000; includeSubDomains
   X-Frame-Options: DENY
