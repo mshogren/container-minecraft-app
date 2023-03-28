@@ -45,7 +45,7 @@ jobs:
           #arguments:
 
       - name: deploy
-        uses: distributhor/workflow-webhook@08a8e7fc1ebc95a83bc4ab5756a89a90cdd9f699 # v3
+        uses: distributhor/workflow-webhook@48a40b380ce4593b6a6676528cd005986ae56629 # v3
         env:
           webhook_url: ${{ secrets.DOCS_DEPLOY_WEBHOOK_URL }}
           webhook_secret: ${{ secrets.DOCS_DEPLOY_WEBHOOK_URL }}
