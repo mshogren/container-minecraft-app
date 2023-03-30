@@ -9,7 +9,7 @@ pylint = "*"
 pytest = "*"
 
 [requires]
-python_version = "3.9"
+python_version = "3.11"
 
 [packages]
 docker = "==6.0.1"

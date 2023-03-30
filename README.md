@@ -8,5 +8,5 @@ The initial idea
 
 Requirements
 * A working node/npm environment
-* Python 3.9+
+* Python 3.11+
 * Hugo to generate website documentation
