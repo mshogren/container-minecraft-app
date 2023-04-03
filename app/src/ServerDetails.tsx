@@ -29,14 +29,20 @@ function ServerDetails() {
   const handleStartClick = () => {
     setStartResult({ ...startResult, fetching: true });
     startServer({ serverId } as ServerIdInput).then((result) =>
-      setStartResult(result as UseMutationState<StartServer, ServerIdInput>)
+      setStartResult({ ...result, fetching: false } as UseMutationState<
+        StartServer,
+        ServerIdInput
+      >)
     );
   };
 
   const handleStopClick = () => {
     setStopResult({ ...stopResult, fetching: true });
     stopServer({ serverId } as ServerIdInput).then((result) =>
-      setStopResult(result as UseMutationState<StopServer, ServerIdInput>)
+      setStopResult({ ...result, fetching: false } as UseMutationState<
+        StopServer,
+        ServerIdInput
+      >)
     );
   };
 

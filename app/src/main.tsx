@@ -1,13 +1,14 @@
 import React from 'react';
 import { createRoot } from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
-import { createClient, Provider } from 'urql';
+import { cacheExchange, createClient, fetchExchange, Provider } from 'urql';
 import 'purecss/build/pure-min.css';
 import 'purecss/build/grids-responsive-min.css';
 import App from './App';
 
 const client = createClient({
   url: import.meta.env.VITE_GRAPHQL_ENDPOINT,
+  exchanges: [cacheExchange, fetchExchange],
 });
 
 const container = document.getElementById('root');
