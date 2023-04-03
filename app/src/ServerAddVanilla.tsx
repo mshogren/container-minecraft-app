@@ -49,9 +49,10 @@ function ServerAddVanilla() {
     event.preventDefault();
     setMutationResult({ ...mutationResult, fetching: true });
     addServer({ name, version }).then((result) =>
-      setMutationResult(
-        result as UseMutationState<AddVanillaServer, AddVanillaServerInput>
-      )
+      setMutationResult({ ...result, fetching: false } as UseMutationState<
+        AddVanillaServer,
+        AddVanillaServerInput
+      >)
     );
   };
 

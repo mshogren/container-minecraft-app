@@ -145,12 +145,10 @@ function ServerAddCurse() {
     event.preventDefault();
     setMutationResult({ ...mutationResult, fetching: true });
     addServer({ name, modpackId: modpack.id }).then((result) =>
-      setMutationResult(
-        result as UseMutationState<
-          AddCurseforgeServer,
-          AddCurseforgeServerInput
-        >
-      )
+      setMutationResult({ ...result, fetching: false } as UseMutationState<
+        AddCurseforgeServer,
+        AddCurseforgeServerInput
+      >)
     );
   };
 
