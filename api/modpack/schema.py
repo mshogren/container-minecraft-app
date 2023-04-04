@@ -30,7 +30,7 @@ class ModpackSchemaType:
     thumbnail_url: Optional[str] = strawberry.field(
         name=labels.MODPACK_THUMBNAILURL_FIELD_NAME,
         description=labels.MODPACK_THUMBNAILURL_FIELD_DESCRIPTION)
-    version: str = strawberry.field(
+    version: Optional[str] = strawberry.field(
         name=labels.MODPACK_VERSION_FIELD_NAME,
         description=labels.MODPACK_VERSION_FIELD_DESCRIPTION)
     website_url: str = strawberry.field(

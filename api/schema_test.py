@@ -16,6 +16,7 @@ class TestSchema:
 
         actual = schema.execute_sync(query)
         assert actual.errors is None
+        assert actual.data is not None
 
         expected = ['Modpack', 'Server']
         type_names = [x["name"] for x in actual.data["__schema"]["types"]]
@@ -45,6 +46,7 @@ class TestSchema:
 
         actual = schema.execute_sync(query)
         assert actual.errors is None
+        assert actual.data is not None
 
         expected = ['modpack', 'modpacks', 'server', 'servers', 'versions']
         field_names = [x["name"] for x in actual.data["__type"]["fields"]]

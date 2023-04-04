@@ -34,14 +34,16 @@ class ModpackInfo:
     modloader_version: Optional[str]
 
 
-def parse_attachments(attachments: List[model.AttachmentModel]) -> str:
+def parse_attachments(
+        attachments: Optional[List[model.AttachmentModel]]) -> Optional[str]:
     if isinstance(attachments, list):
         thumbnail_urls = [x.thumbnailUrl for x in attachments]
         return next((x for x in thumbnail_urls if not x is None), None)
     return None
 
 
-def parse_categories(categories: List[model.CategoryModel]) -> List[str]:
+def parse_categories(
+        categories: Optional[List[model.CategoryModel]]) -> List[str]:
     if isinstance(categories, list):
         category_names = [x.name for x in categories]
         return [x for x in category_names if not x is None]
@@ -49,7 +51,7 @@ def parse_categories(categories: List[model.CategoryModel]) -> List[str]:
 
 
 def parse_game_versions(
-        versions: List[model.GameVersionLatestFileModel]) -> str:
+        versions: Optional[List[model.GameVersionLatestFileModel]]) -> Optional[str]:
     if isinstance(versions, list):
         version_names = [x.gameVersion for x in versions]
         return next((x for x in version_names if not x is None), None)
@@ -58,7 +60,7 @@ def parse_game_versions(
 
 def parse_modpack(modpack_model: model.ModpackModel) -> ModpackSchemaType:
     return ModpackSchemaType(
-        id=modpack_model.id,
+        id=strawberry.ID(modpack_model.id),
         name=modpack_model.name,
         website_url=modpack_model.websiteUrl,
         summary=modpack_model.summary,
@@ -90,10 +92,10 @@ def get_modpack_filename(website_url) -> str:
     html = PyQuery(url=files_url)
     filename = html("h2:contains('Additional Files')").next().find(
         "span:contains('Filename')").next().text()
-    return quote(filename)
+    return quote(str(filename))
 
 
-def get_modpack_loader(file_model: model.ModpackFileModel) -> str:
+def get_modpack_loader(file_model: model.ModpackFileModel) -> Optional[str]:
     file_name = file_model.fileName
     download_url = file_model.downloadUrl.replace(
         file_name, quote(file_name))
@@ -135,11 +137,12 @@ class Modpack:
             data = json.loads(response.read())
         modpack_models = []
         for modpack in data:
+            modpack_model = None
             try:
                 modpack_model = model.ModpackModel(**modpack)
             except ValidationError as error:
                 logging.error(error)
-            if has_server_file(modpack_model):
+            if modpack_model is not None and has_server_file(modpack_model):
                 modpack_models.append(modpack_model)
         return [parse_modpack(x) for x in modpack_models]
 
@@ -152,8 +155,11 @@ class Modpack:
                 modpack.id, modpack.default_file_id)
             server_file_id = file_model.serverPackFileId
             modloader_string = get_modpack_loader(file_model)
+            modloader, modloader_version = [None, None]
             if not modloader_string is None:
-                modloader, modloader_version = modloader_string.split("-")
+                split = modloader_string.split("-")
+                if len(split) >= 2:
+                    modloader, modloader_version = split
         except HTTPError as error:
             message = f"{error_base} could not be retrieved"
             raise ModpackError(message) from error

@@ -29,7 +29,7 @@ class Query:
         name=labels.QUERY_MODPACKS_FIELD_NAME,
         description=labels.QUERY_MODPACKS_FIELD_DESCRIPTION)
     @staticmethod
-    @func.ttl_cache
+    @func.ttl_cache  # type: ignore
     def modpacks(
         page: Annotated[int, strawberry.argument(
             name=labels.QUERY_MODPACKS_PAGE_ARG_NAME,
@@ -62,7 +62,7 @@ class Query:
         name=labels.QUERY_VERSIONS_FIELD_NAME,
         description=labels.QUERY_VERSIONS_FIELD_DESCRIPTION)
     @staticmethod
-    @func.ttl_cache
+    @func.ttl_cache  # type: ignore
     def versions() -> List[str]:
         return Version.get_versions()
 

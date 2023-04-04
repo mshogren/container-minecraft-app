@@ -1,5 +1,7 @@
+from __future__ import annotations
+
 from datetime import datetime
-from typing import List
+from typing import List, TypeAlias
 
 import strawberry
 from settings import SchemaLabels as labels
@@ -8,6 +10,11 @@ from server.image import Image
 from server.model import TypeEnum
 from server.port import Port
 from server.volume import Volume
+
+
+enum_type = strawberry.enum(
+    TypeEnum, name=labels.TYPE_ENUM_NAME,
+    description=labels.TYPE_ENUM_DESCRIPTION)
 
 
 @strawberry.type(
@@ -39,9 +46,7 @@ class ServerSchemaType:
     status: str = strawberry.field(
         name=labels.SERVER_STATUS_FIELD_NAME,
         description=labels.SERVER_STATUS_FIELD_DESCRIPTION)
-    type: strawberry.enum(
-        TypeEnum, name=labels.TYPE_ENUM_NAME,
-        description=labels.TYPE_ENUM_DESCRIPTION) = strawberry.field(
+    type: enum_type = strawberry.field(
         name=labels.SERVER_TYPE_FIELD_NAME,
         description=labels.SERVER_TYPE_FIELD_DESCRIPTION)
     volumes: List[Volume] = strawberry.field(
@@ -95,7 +100,7 @@ class ServerError:
         description=labels.SERVERERROR_ERROR_FIELD_DESCRIPTION)
 
 
-ServerResponse = strawberry.union(
+ServerResponse: TypeAlias = strawberry.union(
     name=labels.SERVERRESPONSE_TYPE_NAME,
     types=[ServerSuccess, ServerError],
-    description=labels.SERVERRESPONSE_TYPE_DESCRIPTION)
+    description=labels.SERVERRESPONSE_TYPE_DESCRIPTION)  # type: ignore

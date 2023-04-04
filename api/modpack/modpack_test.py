@@ -59,14 +59,15 @@ class TestParseGameVersions:
 
     @staticmethod
     def test_parse_game_versions_with_empty_versions():
-        actual = parse_game_versions(None)
+        actual = parse_game_versions([])
         assert actual is None
 
     @staticmethod
     def test_parse_game_versions_with_invalid_versions():
         with pytest.raises(Exception):
             data = [{"Invalid": -1}]
-            models = [GameVersionLatestFileModel(**x) for x in data]
+            models = [GameVersionLatestFileModel(
+                **x) for x in data]  # type: ignore
             parse_game_versions(models)
 
     @staticmethod
@@ -100,7 +101,7 @@ class TestParseAttachments:
     def test_parse_attachments_with_invalid_attachments():
         with pytest.raises(Exception):
             data = [{"Invalid": -1}]
-            models = [AttachmentModel(**x) for x in data]
+            models = [AttachmentModel(**x) for x in data]  # type: ignore
             parse_attachments(models)
 
     @staticmethod
@@ -133,7 +134,7 @@ class TestParseCategories:
     def test_parse_categories_with_invalid_categories():
         with pytest.raises(Exception):
             data = [{"Invalid": -1}]
-            models = [CategoryModel(**x) for x in data]
+            models = [CategoryModel(**x) for x in data]  # type: ignore
             parse_categories(models)
 
     @ staticmethod

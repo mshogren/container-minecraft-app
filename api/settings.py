@@ -1,4 +1,5 @@
 from pydantic import BaseSettings
+from typing import Optional
 
 
 class SchemaLabels:
@@ -134,4 +135,4 @@ class SchemaLabels:
 class Settings(BaseSettings):
     # pylint: disable=too-few-public-methods
     default_image: str = "itzg/minecraft-server"
-    allowed_origin: str = None
+    allowed_origin: Optional[str] = None
