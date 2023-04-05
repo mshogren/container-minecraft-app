@@ -2,9 +2,9 @@ import json
 
 import pytest
 
-from modpack import (has_server_file, parse_attachments, parse_categories,
+from modpack import (has_server_file, parse_categories,
                      parse_game_versions)
-from modpack.model import (AttachmentModel, CategoryModel,
+from modpack.model import (CategoryModel,
                            GameVersionLatestFileModel, LatestFileModel,
                            ModpackModel)
 
@@ -12,16 +12,20 @@ from modpack.model import (AttachmentModel, CategoryModel,
 @pytest.fixture
 def modpack_model():
     data = {
-        "attachments": [],
+        "logo": {
+            "thumbnailUrl": ""
+        },
         "categories": [],
-        "defaultFileId": "fileId",
+        "mainFileId": "fileId",
         "downloadCount": 0,
-        "gameVersionLatestFiles": [],
+        "latestFilesIndexes": [],
         "id": "",
         "latestFiles": [],
         "name": "",
         "summary": "",
-        "websiteUrl": ""
+        "links": {
+            "websiteUrl": ""
+        }
     }
     return ModpackModel(**data)
 
@@ -84,39 +88,6 @@ class TestParseGameVersions:
         models = [GameVersionLatestFileModel(**x) for x in data]
         actual = parse_game_versions(models)
         assert actual == "testVersion1"
-
-
-class TestParseAttachments:
-    @staticmethod
-    def test_parse_attachments_with_no_attachments():
-        actual = parse_attachments(None)
-        assert actual is None
-
-    @staticmethod
-    def test_parse_attachments_with_empty_attachments():
-        actual = parse_attachments([])
-        assert actual is None
-
-    @staticmethod
-    def test_parse_attachments_with_invalid_attachments():
-        with pytest.raises(Exception):
-            data = [{"Invalid": -1}]
-            models = [AttachmentModel(**x) for x in data]  # type: ignore
-            parse_attachments(models)
-
-    @staticmethod
-    def test_parse_attachments_with_valid_attachments():
-        data = [{"thumbnailUrl": "testUrl"}]
-        models = [AttachmentModel(**x) for x in data]
-        actual = parse_attachments(models)
-        assert actual == "testUrl"
-
-    @ staticmethod
-    def test_parse_attachments_with_multiple_valid_attachments():
-        data = [{"thumbnailUrl": "testUrl1"}, {"thumbnailUrl": "testUrl2"}]
-        models = [AttachmentModel(**x) for x in data]
-        actual = parse_attachments(models)
-        assert actual == "testUrl1"
 
 
 class TestParseCategories:

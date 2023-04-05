@@ -6,7 +6,7 @@ from pydantic import BaseModel
 class ModpackFileModel(BaseModel):
     downloadUrl: str
     fileName: str
-    gameVersion: List[str]
+    gameVersions: List[str]
     id: str
     serverPackFileId: str
 
@@ -28,17 +28,21 @@ class LatestFileModel(BaseModel):
     serverPackFileId: Optional[str]
 
 
+class LinksModel(BaseModel):
+    websiteUrl: str
+
+
 class ModpackModel(BaseModel):
-    attachments: List[AttachmentModel]
+    logo: AttachmentModel
     categories: List[CategoryModel]
-    defaultFileId: str
+    mainFileId: str
     downloadCount: int
-    gameVersionLatestFiles: List[GameVersionLatestFileModel]
+    latestFilesIndexes: List[GameVersionLatestFileModel]
     id: str
     latestFiles: List[LatestFileModel]
     name: str
     summary: str
-    websiteUrl: str
+    links: LinksModel
 
 
 class ModpackManifestModloaderModel(BaseModel):

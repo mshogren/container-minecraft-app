@@ -1,22 +1,22 @@
 import json
 from typing import List
-from urllib.request import urlopen
+from urllib.request import Request, urlopen
 
 import pytest
 
-from modpack import API_BASE_URL, QUERY_STRING_BASE, Modpack, get_modpack_file_model
+from modpack import API_BASE_URL, API_KEY, QUERY_STRING_BASE, Modpack, get_modpack_file_model
 from modpack.schema import ModpackSchemaType
 
 
 def has_server_file(modpack) -> bool:
     server_files = [file for file in modpack.get("latestFiles") if not file.get(
-        "serverPackFileId") is None and file.get("id") == modpack.get("defaultFileId")]
+        "serverPackFileId") is None and file.get("id") == modpack.get("mainFileId")]
     return len(server_files) > 0
 
 
 def do_versions_match(modpack: ModpackSchemaType) -> bool:
     modpack_file = get_modpack_file_model(modpack.id, modpack.default_file_id)
-    result = modpack.version in modpack_file.gameVersion
+    result = modpack.version in modpack_file.gameVersions
     if not result:
         print(f"{modpack.id}")
     return result
@@ -47,8 +47,11 @@ class TestExternalModpackAPI:
             query_string_filters = f"&pageSize={page_size}&index={page * page_size}"
             url = f"{API_BASE_URL}search?{QUERY_STRING_BASE}{query_string_filters}"
             print(url)
-            with urlopen(url) as response:
-                data += json.loads(response.read())
+            request = Request(url=url)
+            request.add_header("X-API-KEY", API_KEY)
+            with urlopen(request) as response:
+                result = json.loads(response.read())
+                data += result["data"]
 
         assert len(data) == pages * page_size
 
@@ -62,7 +65,7 @@ class TestExternalModpackAPI:
 
         modpacks_with_game_version_latest_files = [
             modpack for modpack in data
-            if not modpack.get("gameVersionLatestFiles") is None]
+            if not modpack.get("latestFilesIndexes") is None]
         assert len(modpacks_with_game_version_latest_files) == pages * page_size
 
         modpacks_with_server_files = [

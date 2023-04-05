@@ -6,20 +6,22 @@ import zipfile
 from typing import List, Optional
 from urllib.error import HTTPError
 from urllib.parse import quote
-from urllib.request import urlopen
+from urllib.request import Request, urlopen
 
 import strawberry
 from pydantic import ValidationError
 from pyquery import PyQuery
 
 from modpack import model
+from settings import Settings
 
 from .schema import ModpackSchemaType
 
-API_BASE_URL = "https://addons-ecs.forgesvc.net/api/v2/addon/"
+API_BASE_URL = "https://api.curseforge.com/v1/mods/"
 GOOGLE_CACHE_BASE_URL = "http://webcache.googleusercontent.com/search?q=cache:"
 DOWNLOADS_BASE_URL = "https://edge.forgecdn.net/files/"
-QUERY_STRING_BASE = "gameId=432&categoryId=0&sectionId=4471"
+QUERY_STRING_BASE = "gameId=432&categoryId=0&classId=4471&sortField=2&sortOrder=desc"
+API_KEY = Settings().curseforge_api_key
 
 
 class ModpackError(Exception):
@@ -32,14 +34,6 @@ class ModpackInfo:
     url: str
     modloader: Optional[str]
     modloader_version: Optional[str]
-
-
-def parse_attachments(
-        attachments: Optional[List[model.AttachmentModel]]) -> Optional[str]:
-    if isinstance(attachments, list):
-        thumbnail_urls = [x.thumbnailUrl for x in attachments]
-        return next((x for x in thumbnail_urls if not x is None), None)
-    return None
 
 
 def parse_categories(
@@ -62,29 +56,31 @@ def parse_modpack(modpack_model: model.ModpackModel) -> ModpackSchemaType:
     return ModpackSchemaType(
         id=strawberry.ID(modpack_model.id),
         name=modpack_model.name,
-        website_url=modpack_model.websiteUrl,
+        website_url=modpack_model.links.websiteUrl,
         summary=modpack_model.summary,
-        thumbnail_url=parse_attachments(modpack_model.attachments),
+        thumbnail_url=modpack_model.logo.thumbnailUrl,
         categories=parse_categories(modpack_model.categories),
         download_count=modpack_model.downloadCount,
-        default_file_id=modpack_model.defaultFileId,
-        version=parse_game_versions(modpack_model.gameVersionLatestFiles))
+        default_file_id=modpack_model.mainFileId,
+        version=parse_game_versions(modpack_model.latestFilesIndexes))
 
 
 def has_server_file(modpack_model: model.ModpackModel) -> bool:
     server_files = [
         file for file in modpack_model.latestFiles
         if not file.serverPackFileId is None and file.id
-        == modpack_model.defaultFileId]
+        == modpack_model.mainFileId]
     return len(server_files) > 0
 
 
 def get_modpack_file_model(
         modpack_id: str, default_file_id: str) -> model.ModpackFileModel:
-    url = f"{API_BASE_URL}{modpack_id}/file/{default_file_id}"
-    with urlopen(url) as response:
+    url = f"{API_BASE_URL}{modpack_id}/files/{default_file_id}"
+    request = Request(url=url)
+    request.add_header("X-API-KEY", API_KEY)
+    with urlopen(request) as response:
         data = json.loads(response.read())
-    return model.ModpackFileModel(**data)
+    return model.ModpackFileModel(**data["data"])
 
 
 def get_modpack_filename(website_url) -> str:
@@ -114,9 +110,11 @@ class Modpack:
         url = f"{API_BASE_URL}{modpack_id}"
         error_base = f"The modpack with id: {modpack_id}"
         try:
-            with urlopen(url) as response:
+            request = Request(url=url)
+            request.add_header("X-API-KEY", API_KEY)
+            with urlopen(request) as response:
                 data = json.loads(response.read())
-                modpack_model = model.ModpackModel(**data)
+                modpack_model = model.ModpackModel(**data["data"])
         except HTTPError as error:
             message = f"{error_base} could not be retrieved"
             raise ModpackError(message) from error
@@ -133,10 +131,12 @@ class Modpack:
         page_size = 50
         filters = f"&pageSize={page_size}&index={page * page_size}&searchFilter={search}"
         url = f"{API_BASE_URL}search?{QUERY_STRING_BASE}{filters}"
-        with urlopen(url) as response:
+        request = Request(url=url)
+        request.add_header("X-API-KEY", API_KEY)
+        with urlopen(request) as response:
             data = json.loads(response.read())
         modpack_models = []
-        for modpack in data:
+        for modpack in data["data"]:
             modpack_model = None
             try:
                 modpack_model = model.ModpackModel(**modpack)

@@ -137,3 +137,4 @@ class Settings(BaseSettings):
     # pylint: disable=too-few-public-methods
     default_image: str = "itzg/minecraft-server"
     allowed_origin: Optional[str] = None
+    curseforge_api_key: str = ""

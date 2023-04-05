@@ -83,7 +83,7 @@ jobs:
 
             Run the image:
             ```
-            docker run -d -p 8000:80 -v /var/run/docker.sock:/var/run/docker.sock ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ steps.changelog.outputs.version }}
+            docker run -d -p 8000:80 -e CURSEFORGE_API_KEY="<Replace with your own CurseForge API Key>" -v /var/run/docker.sock:/var/run/docker.sock ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ steps.changelog.outputs.version }}
             ```
 
             ${{ steps.changelog.outputs.clean_changelog }}
