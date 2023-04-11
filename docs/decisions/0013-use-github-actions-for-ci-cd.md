@@ -19,14 +19,14 @@ These are the core decision drivers
   * Build chaining
   * Storing and reusing build artifacts
 
-Another nice-to-have set of features we are familiar with from TeamCity is build chaining, and defining artifact dependencies to speed up chained builds.  
+Another nice-to-have set of features we are familiar with from TeamCity is build chaining, and defining artifact dependencies to speed up chained builds.
 We can explain with an example
 * Our project builds four separate things
   * A documentation website
   * An API backend
   * A front-end app
   * A container image to run the app and API together
-* The container image should be rebuilt when any opf the following three things happen
+* The container image should be rebuilt when any of the following three things happen
   * Its definition or external dependencies on other images have changed
   * The API backend has been changed
   * The front-end app has changed
@@ -34,7 +34,7 @@ We can explain with an example
 * The above requirements are handled quite well by all the tools mentioned below.
 * In the case where building the API or the front-end are expensive operations, they should not be repeated when building the docker image.
 * The docker build should retrieve artifacts from the API and app builds rather than repeating them.
-* These sorts of artifact dependencies should be possible to define for even the most complex n-tier application projects 
+* These sorts of artifact dependencies should be possible to define for even the most complex n-tier application projects
 
 ## Considered Options
 
@@ -48,7 +48,7 @@ We can explain with an example
 
 ## Decision Outcome
 
-Chosen option: "Github Actions", because 
+Chosen option: "Github Actions", because
 * TeamCity and Jenkins cost too much or require dedicated effort to install and run
 * TravisCI is no longer free to use in all cases
 * Github Actions has advanced features, good documentation, and is currently being improved by Github

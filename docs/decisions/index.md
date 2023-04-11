@@ -26,6 +26,9 @@ This log lists the architectural decisions for container-minecraft-app.
 * [ADR-0019](0019-use-jest-as-test-framework-for-app.md) - Use Jest as test framework for app
 * [ADR-0020](0020-use-urql-as-graphql-client-library-for-app.md) - Use URQL as GraphQL client library for app
 * [ADR-0021](0021-use-vitest-as-test-framework-for-app.md) - Use Vitest as test framework for app
+* [ADR-0022](0022-cache-some-query-results.md) - Cache some query results
+* [ADR-0023](0023-use-react-hooks.md) - Use React hooks
+* [ADR-0024](0024-do-not-use-ui-framework.md) - Do not use a UI framework
 
 <!-- adrlogstop -->
 
