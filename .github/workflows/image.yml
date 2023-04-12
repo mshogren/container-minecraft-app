@@ -34,7 +34,9 @@ jobs:
       app: ${{ steps.filter.outputs.app }}
 
     steps:
-    - uses: dorny/paths-filter@v2
+    - uses: actions/checkout@8f4b7f84864484a7bf31766abe9204da3cbe65b3 # v3
+
+    - uses: dorny/paths-filter@4512585405083f25c027a35db413c2b3b9006d50 # v2
       id: filter
       with:
         filters: |
@@ -112,6 +114,7 @@ jobs:
         run: npm run build
 
   release:
+    needs: [test-api, test-app]
     runs-on: ubuntu-latest
     permissions:
       contents: write
