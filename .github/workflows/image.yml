@@ -132,8 +132,16 @@ jobs:
       - name: install dependencies
         run: npm ci
 
+      - name: Build and export Docker image
+        uses: docker/build-push-action@3b5e8027fcad23fda98b2e3ac259d8d67585f671 # v4
+        with:
+          context: .
+          load: true
+          tags: containerminecraftapp:test
+
       - name: Conventional Changelog Action
         id: changelog
+        if: github.event_name == 'push'
         uses: TriPSs/conventional-changelog-action@858fe562a4d01987825f5e96b2a541f53b22c8b6 # v3
         with:
           github-token: ${{ secrets.github_token }}
@@ -156,14 +164,35 @@ jobs:
           tags: |
             type=semver,pattern={{version}},value=${{ steps.changelog.outputs.tag }}
 
-      - name: Build and export Docker image
+      - name: Build and push Docker image
         id: package
         uses: docker/build-push-action@3b5e8027fcad23fda98b2e3ac259d8d67585f671 # v4
         if: ${{ steps.changelog.outputs.skipped == 'false' }}
         with:
           context: .
-          load: true
+          push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
+
+      - name: Create Release
+        uses: actions/create-release@0cb9c9b65d5d1901c1f53e5e66eaf4afd303e70e # renovate: tag=v1
+        if: ${{ steps.changelog.outputs.skipped == 'false' }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.github_token }}
+        with:
+          tag_name: ${{ steps.changelog.outputs.tag }}
+          release_name: ${{ steps.changelog.outputs.tag }}
+          body: |
+            Get the image:
+            ```
+            docker pull ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ steps.changelog.outputs.version }}
+            ```
+
+            Run the image:
+            ```
+            docker run -d -p 8000:80 -e CURSEFORGE_API_KEY="<Replace with your own CurseForge API Key>" -v /var/run/docker.sock:/var/run/docker.sock ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ steps.changelog.outputs.version }}
+            ```
+
+            ${{ steps.changelog.outputs.clean_changelog }}
 
 
