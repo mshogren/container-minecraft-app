@@ -29,6 +29,7 @@ This log lists the architectural decisions for container-minecraft-app.
 * [ADR-0022](0022-cache-some-query-results.md) - Cache some query results
 * [ADR-0023](0023-use-react-hooks.md) - Use React hooks
 * [ADR-0024](0024-do-not-use-ui-framework.md) - Do not use a UI framework
+* [ADR-0025](0025-use-cypress-for-end-to-end-tests.md) - Use cypress for end-to-end tests
 
 <!-- adrlogstop -->
 
