@@ -139,6 +139,8 @@ jobs:
           context: .
           load: true
           tags: containerminecraftapp:test
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
 
       - name: End-to-end tests
         uses: cypress-io/github-action@v5
