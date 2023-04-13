@@ -28,14 +28,14 @@ describe('server add', () => {
     cy.get('div .input-container option').first().click();
     cy.get('button').contains('Add').click();
 
-    cy.get('button', { timeout: 30000 }).contains('OK').click();
+    cy.get('button').contains('OK').click();
     cy.location().should((location) => {
       expect(location.pathname).to.eq('/servers');
     });
 
     cy.get('tr').contains(name).get('a').contains('Details').click();
     cy.get('button').contains('Stop').click();
-    cy.contains('exited', { timeout: 30000 });
+    cy.contains('exited');
 
     cy.exec(`docker rm ${name}`);
     cy.exec(`docker volume rm ${name}`);
@@ -54,14 +54,14 @@ describe('server add', () => {
     cy.get('div .input-container option').first().click();
     cy.get('button').contains('Add').click();
 
-    cy.get('button', { timeout: 30000 }).contains('OK').click();
+    cy.get('button').contains('OK').click();
     cy.location().should((location) => {
       expect(location.pathname).to.eq('/servers');
     });
 
     cy.get('tr').contains(name).get('a').contains('Details').click();
     cy.get('button').contains('Stop').click();
-    cy.contains('exited', { timeout: 30000 });
+    cy.contains('exited');
 
     cy.exec(`docker rm ${name}`);
     cy.exec(`docker volume rm ${name}`);
