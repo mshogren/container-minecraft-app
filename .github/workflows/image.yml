@@ -23,6 +23,7 @@ env:
   PYTHON_VERSION: '3.11'
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository }}
+  CURSEFORGE_API_KEY: ${{ secrets.CURSEFORGE_API_KEY }}
 
 jobs:
   changes:
@@ -142,8 +143,6 @@ jobs:
       - name: End-to-end tests
         uses: cypress-io/github-action@v5
         with:
-          env:
-           CURSEFORGE_API_KEY: ${{ secrets.CURSEFORGE_API_KEY }}
           working-directory: ./app
           start: docker run -d -p 8000:80 -e CURSEFORGE_API_KEY="${CURSEFORGE_API_KEY}" -v /var/run/docker.sock:/var/run/docker.sock containerminecraftapp:test
           browser: chrome
