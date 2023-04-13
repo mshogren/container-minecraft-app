@@ -23,7 +23,7 @@ env:
   PYTHON_VERSION: '3.11'
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository }}
-  CURSEFORGE_API_KEY: ${{ secrets.CURSEFORGE_API_KEY }}
+  CURSEFORGE_API_KEY: '${{ secrets.CURSEFORGE_API_KEY }}'
 
 jobs:
   changes:
