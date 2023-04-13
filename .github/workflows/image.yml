@@ -142,7 +142,7 @@ jobs:
       - name: End-to-end tests
         uses: cypress-io/github-action@v5
         with:
-          project: ./app
+          working-directory: ./app
           start: docker run -d -p 8000:80 -e CURSEFORGE_API_KEY="${{ secrets.DOCS_DEPLOY_WEBHOOK_URL }}" -v /var/run/docker.sock:/var/run/docker.sock containerminecraftapp:test
           browser: chrome
 
