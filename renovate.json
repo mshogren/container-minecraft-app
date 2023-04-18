@@ -18,6 +18,11 @@
       "matchUpdateTypes": ["minor", "patch"],
       "schedule": ["before 6am"],
       "automerge": true
+    },
+    {
+      "matchDatasources": ["docker"],
+      "matchPackageNames": ["node"],
+      "versioning": "node"
     }
   ],
   "platformAutomerge": true
