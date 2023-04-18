@@ -8,7 +8,7 @@ class ModpackFileModel(BaseModel):
     fileName: str
     gameVersions: List[str]
     id: str
-    serverPackFileId: str
+    serverPackFileId: Optional[str]
 
 
 class AttachmentModel(BaseModel):

@@ -10,7 +10,6 @@ from urllib.request import Request, urlopen
 
 import strawberry
 from pydantic import ValidationError
-from pyquery import PyQuery
 
 from modpack import model
 from settings import Settings
@@ -18,7 +17,6 @@ from settings import Settings
 from .schema import ModpackSchemaType
 
 API_BASE_URL = "https://api.curseforge.com/v1/mods/"
-GOOGLE_CACHE_BASE_URL = "http://webcache.googleusercontent.com/search?q=cache:"
 DOWNLOADS_BASE_URL = "https://edge.forgecdn.net/files/"
 QUERY_STRING_BASE = "gameId=432&categoryId=0&classId=4471&sortField=2&sortOrder=desc"
 API_KEY = Settings().curseforge_api_key
@@ -83,14 +81,6 @@ def get_modpack_file_model(
     return model.ModpackFileModel(**data["data"])
 
 
-def get_modpack_filename(website_url) -> str:
-    files_url = f"{GOOGLE_CACHE_BASE_URL}{website_url}/files"
-    html = PyQuery(url=files_url)
-    filename = html("h2:contains('Additional Files')").next().find(
-        "span:contains('Filename')").next().text()
-    return quote(str(filename))
-
-
 def get_modpack_loader(file_model: model.ModpackFileModel) -> Optional[str]:
     file_name = file_model.fileName
     download_url = file_model.downloadUrl.replace(
@@ -150,10 +140,15 @@ class Modpack:
     def get_modpack_info(modpack: ModpackSchemaType) -> ModpackInfo:
         error_base = f"The modpack file for modpack id: {modpack.id}"
         try:
-            filename = get_modpack_filename(modpack.website_url)
             file_model = get_modpack_file_model(
                 modpack.id, modpack.default_file_id)
             server_file_id = file_model.serverPackFileId
+            if server_file_id is None:
+                message = f"{error_base} is not in a valid format"
+                raise ModpackError(message)
+            server_file_model = get_modpack_file_model(
+                modpack.id, server_file_id)
+            filename = server_file_model.fileName
             modloader_string = get_modpack_loader(file_model)
             modloader, modloader_version = [None, None]
             if not modloader_string is None:
@@ -166,9 +161,6 @@ class Modpack:
         except ValidationError as error:
             message = f"{error_base} is not in a valid format"
             raise ModpackError(message) from error
-        if filename is None or filename == "":
-            message = f"{error_base} could not be retrieved"
-            raise ModpackError(message)
         return ModpackInfo(
             url=f"{DOWNLOADS_BASE_URL}{server_file_id[:4]}/{server_file_id[4:]}/{filename}",
             modloader=modloader,
