@@ -145,7 +145,7 @@ jobs:
           CURSEFORGE_API_KEY: ${{ secrets.CURSEFORGE_API_KEY }}
         with:
           working-directory: ./app
-          start: docker run -d -p 8000:80 -e CURSEFORGE_API_KEY -v /var/run/docker.sock:/var/run/docker.sock containerminecraftapp:test
+          start: docker run -p 8000:80 -e CURSEFORGE_API_KEY -v /var/run/docker.sock:/var/run/docker.sock containerminecraftapp:test
           browser: chrome
 
       - name: Conventional Changelog Action
