@@ -95,8 +95,7 @@ def get_modpack_loader(file_model: model.ModpackFileModel) -> Optional[str]:
 
 
 class Modpack:
-    @staticmethod
-    def get_modpack(modpack_id: strawberry.ID) -> ModpackSchemaType:
+    def get_modpack(self, modpack_id: strawberry.ID) -> ModpackSchemaType:
         url = f"{API_BASE_URL}{modpack_id}"
         error_base = f"The modpack with id: {modpack_id}"
         try:
@@ -115,9 +114,8 @@ class Modpack:
             return parse_modpack(modpack_model)
         raise ModpackError(f"{error_base} has no server pack available")
 
-    @staticmethod
     def get_modpacks(
-            page: int = 0, search: str = "") -> List[ModpackSchemaType]:
+            self, page: int = 0, search: str = "") -> List[ModpackSchemaType]:
         page_size = 50
         filters = f"&pageSize={page_size}&index={page * page_size}&searchFilter={search}"
         url = f"{API_BASE_URL}search?{QUERY_STRING_BASE}{filters}"
@@ -136,8 +134,7 @@ class Modpack:
                 modpack_models.append(modpack_model)
         return [parse_modpack(x) for x in modpack_models]
 
-    @staticmethod
-    def get_modpack_info(modpack: ModpackSchemaType) -> ModpackInfo:
+    def get_modpack_info(self, modpack: ModpackSchemaType) -> ModpackInfo:
         error_base = f"The modpack file for modpack id: {modpack.id}"
         try:
             file_model = get_modpack_file_model(

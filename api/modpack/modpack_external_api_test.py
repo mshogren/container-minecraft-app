@@ -29,7 +29,7 @@ class TestExternalModpackAPI:
         data: List[ModpackSchemaType] = []
         pages = 4
         for page in range(pages):
-            data += Modpack.get_modpacks(page)
+            data += Modpack().get_modpacks(page)
 
         modpacks_where_server_file_version_matches_modpack_version = [
             modpack for modpack in data

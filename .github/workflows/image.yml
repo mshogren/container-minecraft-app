@@ -79,7 +79,7 @@ jobs:
         run: pipenv run pylint *.py **/*.py
 
       - name: lint the graphql schema
-        run: pipenv run strawberry export-schema main | npx graphql-schema-linter -s -e relay-page-info-spec,enum-values-have-descriptions
+        run: pipenv run strawberry export-schema main | npx graphql-schema-linter -s -e relay-page-info-spec
 
       - name: test with pytest
         run: pipenv run pytest

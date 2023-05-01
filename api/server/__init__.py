@@ -1,200 +1,32 @@
-import logging
-from functools import cache
-from typing import List, Optional
+from typing import List
 
-import docker
 import strawberry
-from docker.errors import APIError
-from docker.models.containers import Container
-from packaging import version as version_parser
-from pydantic import BaseModel
-from modpack import Modpack, ModpackError
-from settings import Settings
-from version import Version
 
-from .image import Image
-from .model import ContainerDetailsModel, EnvironmentModel, TypeEnum
-from .port import Port
-from .schema import (AddCurseforgeServerInput, ServerError,
-                     ServerResponse, ServerSuccess,
-                     AddVanillaServerInput, ServerSchemaType)
-from .volume import Volume
+from .abstract_server import AbstractServer
+from .docker_server import DockerServer
+from .schema import (AddCurseforgeServerInput, AddVanillaServerInput,
+                     ServerResponse, ServerSchemaType)
 
 
-class NonMinecraftServerError(Exception):
-    pass
+class Server(AbstractServer):
+    implementation: AbstractServer = DockerServer()
 
+    def get_server(self, container_id: strawberry.ID) -> ServerSchemaType:
+        return self.implementation.get_server(container_id)
 
-class DockerModel(BaseModel):
-    name: str
-    image: str = Settings().default_image
-    detach: bool = True
-    ports: dict = {"25565/tcp": None}
-    volumes: List[str]
-    labels: dict = {}
-    environment: List[str] = ["EULA=TRUE"]
+    def get_servers(self) -> List[ServerSchemaType]:
+        return self.implementation.get_servers()
 
+    def add_vanilla_server(self,
+                           server: AddVanillaServerInput) -> ServerResponse:
+        return self.implementation.add_vanilla_server(server)
 
-@cache
-def get_client():
-    return docker.from_env()
-
-
-def is_container_relevant(
-        container: Optional[Container],
-        image_name: Optional[str]) -> bool:
-    return (bool(container)
-            and hasattr(container, "image")
-            and str(container.image).find(f"'{image_name}:") > -1)
-
-
-def parse_container_environment(environment: List[str]) -> EnvironmentModel:
-    env_dict = dict((key, value)
-                    for key, value in (element.split("=")
-                                       for element in environment))
-    return EnvironmentModel(**env_dict)  # type: ignore
-
-
-def get_image_tag_for_version(version: str) -> str:
-    if version_parser.parse(version) < version_parser.parse("1.17"):
-        return ":java8-multiarch"
-    return ""
-
-
-def get_server_by_id(container_id) -> Container:
-    container: Container = get_client().containers.get(container_id)  # type: ignore
-    if not is_container_relevant(container, Settings().default_image):
-        raise NonMinecraftServerError(
-            "The container is not a Minecraft server")
-    return container
-
-
-def add_server(model) -> ServerResponse:
-    try:
-        container: Container = get_client().containers.run(**model.dict())  # type: ignore
-        server = Server.get_server(strawberry.ID(str(container.id)))
-        return ServerSuccess(server=server)
-    except NonMinecraftServerError as ex:
-        return ServerError(error=str(ex))
-    except APIError as ex:
-        return ServerError(error=str(ex))
-
-
-class Server:
-    @staticmethod
-    def get_server(container_id: strawberry.ID) -> ServerSchemaType:
-        container = get_server_by_id(container_id)
-        container_details = get_client().api.inspect_container(container.id)
-        container_model = ContainerDetailsModel(**container_details)
-        container_environment = parse_container_environment(
-            container_model.Configuration.Env)
-        return ServerSchemaType(
-            id=container_id,
-            name=container_model.Name[1:],
-            image=Image(container_model.Configuration.Image),
-            ports=[Port(key, value)
-                   for (key, value) in
-                   container_model.NetworkSettings.Ports.items()],
-            volumes=[Volume(x) for x in container_model.Mounts],
-            created=container_model.Created,
-            started=container_model.State.StartedAt,
-            status=container_model.State.Status,
-            type=container_environment.type,
-            game_version=container_environment.version)
-
-    @staticmethod
-    def get_servers() -> List[ServerSchemaType]:
-        default_image = Settings().default_image
-        containers: List[Container] = get_client(
-        ).containers.list(all=True)  # type: ignore
-        container_ids = [str(x.id) for x in containers
-                         if is_container_relevant(x, default_image)]
-        return [Server.get_server(strawberry.ID(x)) for x in container_ids]
-
-    @staticmethod
-    def add_vanilla_server(
-            server: AddVanillaServerInput) -> ServerResponse:
-        logging.info('%s', server)
-
-        name = server.name
-        server_type = TypeEnum.VANILLA.name
-        version = server.version
-
-        if version not in Version.get_versions():
-            return ServerError(error=f"Version: {version} does not exist")
-
-        model = DockerModel(**{
-            "name": name,
-            "volumes": [name + ":/data"]
-        })
-
-        model.image += get_image_tag_for_version(version)
-
-        model.environment.extend([f"TYPE={server_type}", f"VERSION={version}"])
-
-        return add_server(model)
-
-    @staticmethod
     def add_curseforge_server(
-            server: AddCurseforgeServerInput) -> ServerResponse:
-        logging.info('%s', server)
+            self, server: AddCurseforgeServerInput) -> ServerResponse:
+        return self.implementation.add_curseforge_server(server)
 
-        name = server.name
+    def start_server(self, container_id: strawberry.ID):
+        return self.implementation.start_server(container_id)
 
-        try:
-            modpack = Modpack.get_modpack(strawberry.ID(server.modpack_id))
-            modpack_info = Modpack.get_modpack_info(modpack)
-        except ModpackError as error:
-            return ServerError(error=str(error))
-
-        version = modpack.version
-
-        if version not in Version.get_versions():
-            return ServerError(error=f"Version: {version} does not exist")
-
-        server_type = TypeEnum.FORGE.name
-        if modpack_info.modloader == 'fabric':
-            server_type = TypeEnum.FABRIC.name
-
-        model = DockerModel(**{
-            "name": name,
-            "volumes": [name + ":/data"]
-        })
-
-        model.image += get_image_tag_for_version(version)
-
-        model.environment.extend([
-            f"TYPE={server_type}",
-            f"VERSION={version}",
-            f"GENERIC_PACK={modpack_info.url}"])
-
-        if modpack_info.modloader == 'forge' and not modpack_info.modloader_version is None:
-            model.environment.extend([
-                f"FORGEVERSION={modpack_info.modloader_version}"
-            ])
-
-        return add_server(model)
-
-    @staticmethod
-    def start_server(container_id: strawberry.ID):
-        try:
-            container = get_server_by_id(container_id)
-            container.start()
-            server = Server.get_server(strawberry.ID(str(container.id)))
-            return ServerSuccess(server=server)
-        except NonMinecraftServerError as ex:
-            return ServerError(error=str(ex))
-        except APIError as ex:
-            return ServerError(error=str(ex))
-
-    @staticmethod
-    def stop_server(container_id: strawberry.ID):
-        try:
-            container = get_server_by_id(container_id)
-            container.stop()
-            server = Server.get_server(strawberry.ID(str(container.id)))
-            return ServerSuccess(server=server)
-        except NonMinecraftServerError as ex:
-            return ServerError(error=str(ex))
-        except APIError as ex:
-            return ServerError(error=str(ex))
+    def stop_server(self, container_id: strawberry.ID):
+        return self.implementation.stop_server(container_id)

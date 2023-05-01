@@ -2,14 +2,23 @@ from datetime import datetime
 from enum import Enum
 from typing import List
 
+import strawberry
 from pydantic import BaseModel, Field
+from settings import SchemaLabels as labels
 
 
-class TypeEnum(str, Enum):
-    CURSEFORGE = "CURSEFORGE"
-    FABRIC = "FABRIC"
-    FORGE = "FORGE"
-    VANILLA = "VANILLA"
+@strawberry.enum(
+    name=labels.TYPE_ENUM_NAME,
+    description=labels.TYPE_ENUM_DESCRIPTION)
+class TypeEnum(Enum):
+    CURSEFORGE = strawberry.enum_value(
+        "CURSEFORGE", description=labels.TYPE_ENUM_CURSEFORGE_DESCRIPTION)
+    FABRIC = strawberry.enum_value(
+        "FABRIC", description=labels.TYPE_ENUM_FABRIC_DESCRIPTION)
+    FORGE = strawberry.enum_value(
+        "FORGE", description=labels.TYPE_ENUM_FORGE_DESCRIPTION)
+    VANILLA = strawberry.enum_value(
+        "VANILLA", description=labels.TYPE_ENUM_VANILLA_DESCRIPTION)
 
 
 class EnvironmentModel(BaseModel):

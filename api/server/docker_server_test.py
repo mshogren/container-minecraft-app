@@ -1,6 +1,6 @@
 from types import SimpleNamespace
 
-from server import is_container_relevant
+from .docker_server import is_container_relevant
 
 
 class TestIsContainerRelevant:

@@ -12,11 +12,6 @@ from server.port import Port
 from server.volume import Volume
 
 
-enum_type = strawberry.enum(
-    TypeEnum, name=labels.TYPE_ENUM_NAME,
-    description=labels.TYPE_ENUM_DESCRIPTION)
-
-
 @strawberry.type(
     name=labels.SERVER_TYPE_NAME,
     description=labels.SERVER_TYPE_DESCRIPTION)
@@ -46,7 +41,7 @@ class ServerSchemaType:
     status: str = strawberry.field(
         name=labels.SERVER_STATUS_FIELD_NAME,
         description=labels.SERVER_STATUS_FIELD_DESCRIPTION)
-    type: enum_type = strawberry.field(
+    type: TypeEnum = strawberry.field(
         name=labels.SERVER_TYPE_FIELD_NAME,
         description=labels.SERVER_TYPE_FIELD_DESCRIPTION)
     volumes: List[Volume] = strawberry.field(

@@ -25,8 +25,7 @@ def parse_versions(data) -> List[str]:
 
 class Version:
     # pylint: disable=too-few-public-methods
-    @staticmethod
-    def get_versions() -> List[str]:
+    def get_versions(self) -> List[str]:
         with urlopen(VERSIONS_URL) as response:
             try:
                 data = json.loads(response.read())
