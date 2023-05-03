@@ -6,13 +6,13 @@ import docker
 import strawberry
 from docker.errors import APIError
 from docker.models.containers import Container
-from packaging import version as version_parser
 from pydantic import BaseModel
 from modpack import Modpack, ModpackError
 from settings import Settings
 from version import Version
 
-from .abstract_server import AbstractServer
+from server import (AbstractServer, NonMinecraftServerError,
+                    get_image_tag_for_version)
 from .image import Image
 from .model import ContainerDetailsModel, EnvironmentModel, TypeEnum
 from .port import Port
@@ -20,10 +20,6 @@ from .schema import (AddCurseforgeServerInput, AddVanillaServerInput,
                      ServerError, ServerResponse, ServerSchemaType,
                      ServerSuccess)
 from .volume import Volume
-
-
-class NonMinecraftServerError(Exception):
-    pass
 
 
 class DockerModel(BaseModel):
@@ -54,12 +50,6 @@ def parse_container_environment(environment: List[str]) -> EnvironmentModel:
                     for key, value in (element.split("=")
                                        for element in environment))
     return EnvironmentModel(**env_dict)  # type: ignore
-
-
-def get_image_tag_for_version(version: str) -> str:
-    if version_parser.parse(version) < version_parser.parse("1.17"):
-        return ":java8-multiarch"
-    return ""
 
 
 def get_server_by_id(container_id) -> Container:
@@ -171,7 +161,7 @@ class DockerServer(AbstractServer):
 
         return self.add_server(model)
 
-    def start_server(self, container_id: strawberry.ID):
+    def start_server(self, container_id: strawberry.ID) -> ServerResponse:
         try:
             container = get_server_by_id(container_id)
             container.start()
@@ -182,7 +172,7 @@ class DockerServer(AbstractServer):
         except APIError as ex:
             return ServerError(error=str(ex))
 
-    def stop_server(self, container_id: strawberry.ID):
+    def stop_server(self, container_id: strawberry.ID) -> ServerResponse:
         try:
             container = get_server_by_id(container_id)
             container.stop()

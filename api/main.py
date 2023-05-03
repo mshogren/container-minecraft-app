@@ -1,15 +1,22 @@
 from os.path import join
-from fastapi import FastAPI
+from fastapi import Depends, FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
-from strawberry.fastapi import GraphQLRouter
+from strawberry.fastapi import BaseContext, GraphQLRouter
 
 from schema import schema
+from server import AbstractServer
+from server.docker_server import DockerServer
 from settings import Settings
 
 
-graphql_app = GraphQLRouter(schema)
+class CustomContext(BaseContext):
+    # pylint: disable=too-few-public-methods
+    def __init__(self, server_helper: AbstractServer):
+        super().__init__()
+        self.server_helper = server_helper
+
 
 app = FastAPI()
 
@@ -24,6 +31,17 @@ if ORIGIN:
     )
 
 APP_PATH = "../app"
+
+
+def custom_context_dependency() -> CustomContext:
+    return CustomContext(server_helper=DockerServer())
+
+
+async def get_context(custom_context=Depends(custom_context_dependency)):
+    return custom_context
+
+
+graphql_app = GraphQLRouter(schema, context_getter=get_context)
 
 app.include_router(graphql_app, prefix="/graphql")
 

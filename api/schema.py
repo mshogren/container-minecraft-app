@@ -1,17 +1,18 @@
 from typing import List
 
 import strawberry
+from strawberry.types import Info
 from cachetools import func
 from typing_extensions import Annotated
 
 from modpack import Modpack, ModpackSchemaType
-from server import (AddCurseforgeServerInput, AddVanillaServerInput, Server,
-                    ServerResponse, ServerSchemaType)
+from server.schema import (
+    AddCurseforgeServerInput, AddVanillaServerInput, ServerResponse,
+    ServerSchemaType)
 from settings import SchemaLabels as labels
 from version import Version
 
 modpack_helper = Modpack()
-server_helper = Server()
 version_helper = Version()
 
 
@@ -46,17 +47,17 @@ class Query:
     @strawberry.field(
         name=labels.QUERY_SERVER_FIELD_NAME,
         description=labels.QUERY_SERVER_FIELD_DESCRIPTION)
-    def server(self,
+    def server(self, info: Info,
                server_id: Annotated[strawberry.ID, strawberry.argument(
             name=labels.QUERY_SERVER_SERVERID_ARG_NAME,
             description=labels.QUERY_SERVER_SERVERID_ARG_DESCRIPTION)]) -> ServerSchemaType:
-        return server_helper.get_server(server_id)
+        return info.context.server_helper.get_server(server_id)
 
     @strawberry.field(
         name=labels.QUERY_SERVERS_FIELD_NAME,
         description=labels.QUERY_SERVERS_FIELD_DESCRIPTION)
-    def servers(self) -> List[ServerSchemaType]:
-        return server_helper.get_servers()
+    def servers(self, info: Info) -> List[ServerSchemaType]:
+        return info.context.server_helper.get_servers()
 
     @strawberry.field(
         name=labels.QUERY_VERSIONS_FIELD_NAME,
@@ -73,34 +74,36 @@ class Mutation:
     @strawberry.mutation(
         name=labels.MUTATION_ADDCURSEFORGESERVER_FIELD_NAME,
         description=labels.MUTATION_ADDCURSEFORGESERVER_FIELD_DESCRIPTION)
-    def add_curseforge_server(self, server: Annotated[AddCurseforgeServerInput, strawberry.argument(
+    def add_curseforge_server(self, info: Info,
+                              server: Annotated[AddCurseforgeServerInput, strawberry.argument(
             name=labels.MUTATION_ADDCURSEFORGESERVER_ARG_NAME,
             description=labels.MUTATION_ADDCURSEFORGESERVER_ARG_DESCRIPTION)]) -> ServerResponse:
-        return server_helper.add_curseforge_server(server)
+        return info.context.server_helper.add_curseforge_server(server)
 
     @strawberry.mutation(
         name=labels.MUTATION_ADDVANILLASERVER_FIELD_NAME,
         description=labels.MUTATION_ADDVANILLASERVER_FIELD_DESCRIPTION)
-    def add_vanilla_server(self, server: Annotated[AddVanillaServerInput, strawberry.argument(
+    def add_vanilla_server(self, info: Info,
+                           server: Annotated[AddVanillaServerInput, strawberry.argument(
             name=labels.MUTATION_ADDVANILLASERVER_ARG_NAME,
             description=labels.MUTATION_ADDVANILLASERVER_ARG_DESCRIPTION)]) -> ServerResponse:
-        return server_helper.add_vanilla_server(server)
+        return info.context.server_helper.add_vanilla_server(server)
 
     @strawberry.mutation(
         name=labels.MUTATION_STARTSERVER_FIELD_NAME,
         description=labels.MUTATION_STARTSERVER_FIELD_DESCRIPTION)
-    def start_server(self, server_id: Annotated[strawberry.ID, strawberry.argument(
+    def start_server(self, info: Info, server_id: Annotated[strawberry.ID, strawberry.argument(
             name=labels.MUTATION_STARTSERVER_ARG_NAME,
             description=labels.MUTATION_STARTSERVER_ARG_DESCRIPTION)]) -> ServerResponse:
-        return server_helper.start_server(server_id)
+        return info.context.server_helper.start_server(server_id)
 
     @strawberry.mutation(
         name=labels.MUTATION_STOPSERVER_FIELD_NAME,
         description=labels.MUTATION_STOPSERVER_FIELD_DESCRIPTION)
-    def stop_server(self, server_id: Annotated[strawberry.ID, strawberry.argument(
+    def stop_server(self, info: Info, server_id: Annotated[strawberry.ID, strawberry.argument(
             name=labels.MUTATION_STOPSERVER_ARG_NAME,
             description=labels.MUTATION_STOPSERVER_ARG_DESCRIPTION)]) -> ServerResponse:
-        return server_helper.stop_server(server_id)
+        return info.context.server_helper.stop_server(server_id)
 
 
 schema = strawberry.Schema(Query, Mutation)

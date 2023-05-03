@@ -1,32 +1,46 @@
+from abc import ABC, abstractmethod
 from typing import List
 
 import strawberry
+from packaging import version as version_parser
 
-from .abstract_server import AbstractServer
-from .docker_server import DockerServer
 from .schema import (AddCurseforgeServerInput, AddVanillaServerInput,
                      ServerResponse, ServerSchemaType)
 
 
-class Server(AbstractServer):
-    implementation: AbstractServer = DockerServer()
+class NonMinecraftServerError(Exception):
+    pass
 
+
+def get_image_tag_for_version(version: str) -> str:
+    if version_parser.parse(version) < version_parser.parse("1.17"):
+        return ":java8-multiarch"
+    return ""
+
+
+class AbstractServer(ABC):
+    @abstractmethod
     def get_server(self, container_id: strawberry.ID) -> ServerSchemaType:
-        return self.implementation.get_server(container_id)
+        pass
 
+    @abstractmethod
     def get_servers(self) -> List[ServerSchemaType]:
-        return self.implementation.get_servers()
+        pass
 
+    @abstractmethod
     def add_vanilla_server(self,
                            server: AddVanillaServerInput) -> ServerResponse:
-        return self.implementation.add_vanilla_server(server)
+        pass
 
+    @abstractmethod
     def add_curseforge_server(
             self, server: AddCurseforgeServerInput) -> ServerResponse:
-        return self.implementation.add_curseforge_server(server)
+        pass
 
-    def start_server(self, container_id: strawberry.ID):
-        return self.implementation.start_server(container_id)
+    @abstractmethod
+    def start_server(self, container_id: strawberry.ID) -> ServerResponse:
+        pass
 
-    def stop_server(self, container_id: strawberry.ID):
-        return self.implementation.stop_server(container_id)
+    @abstractmethod
+    def stop_server(self, container_id: strawberry.ID) -> ServerResponse:
+        pass
