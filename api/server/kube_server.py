@@ -1,3 +1,4 @@
+from functools import cache
 from typing import List, Optional
 
 import strawberry
@@ -12,8 +13,12 @@ from .schema import (ServerError, ServerResponse, ServerSchemaType,
                      ServerSuccess)
 
 NAMESPACE = Settings().kubernetes_namespace
-config.load_config()
-apps = client.AppsV1Api()
+
+
+@cache
+def get_client():
+    config.load_config()
+    return client.AppsV1Api()
 
 
 def is_container_relevant(
@@ -54,7 +59,7 @@ def parse_deployment(deployment) -> ServerSchemaType:
 
 class KubernetesServer(AbstractServer):
     def get_server(self, container_id: strawberry.ID) -> ServerSchemaType:
-        response = apps.read_namespaced_deployment(
+        response = get_client().read_namespaced_deployment(
             name=container_id, namespace=NAMESPACE)
         if not is_container_relevant(response, Settings().default_image):
             raise NonMinecraftServerError(
@@ -62,7 +67,7 @@ class KubernetesServer(AbstractServer):
         return parse_deployment(response)
 
     def get_servers(self) -> List[ServerSchemaType]:
-        response = apps.list_namespaced_deployment(namespace=NAMESPACE)
+        response = get_client().list_namespaced_deployment(namespace=NAMESPACE)
         return [parse_deployment(x) for x in response.items
                 if is_container_relevant(x, Settings().default_image)]
 
@@ -87,7 +92,7 @@ class KubernetesServer(AbstractServer):
                 metadata=client.V1ObjectMeta(name=model.name),
                 spec=spec
             )
-            apps.create_namespaced_deployment(
+            get_client().create_namespaced_deployment(
                 namespace=NAMESPACE,
                 body=deployment)
             return ServerSuccess(server=self.get_server(
@@ -100,10 +105,10 @@ class KubernetesServer(AbstractServer):
     def patch_deployment_replicas(
             self, container_id: strawberry.ID, replicas: int) -> ServerResponse:
         try:
-            deployment = apps.read_namespaced_deployment(
+            deployment = get_client().read_namespaced_deployment(
                 name=container_id, namespace=NAMESPACE)
             deployment.spec.replicas = replicas  # type: ignore
-            apps.patch_namespaced_deployment(
+            get_client().patch_namespaced_deployment(
                 name=container_id, namespace=NAMESPACE, body=deployment)
             return ServerSuccess(server=self.get_server(container_id))
         except NonMinecraftServerError as ex:
