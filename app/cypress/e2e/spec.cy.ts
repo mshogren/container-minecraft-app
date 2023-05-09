@@ -11,12 +11,23 @@ describe('servers list', () => {
 });
 
 describe('server add', () => {
+  const stoppedText = Cypress.env('kubernetes') ? 'Unavailable' : 'exited';
+
+  const cleanup = (name: string) => {
+    if (Cypress.env('kubernetes')) {
+      cy.exec(`kubectl delete deployment ${name}`);
+    } else {
+      cy.exec(`docker rm ${name}`);
+      cy.exec(`docker volume rm ${name}`);
+    }
+  };
+
   it('opens', () => {
     cy.visit('/servers/add');
   });
 
   it('adds a vanilla server', () => {
-    const name = 'Cypress-Vanilla-Test';
+    const name = 'cypress-vanilla-test';
     cy.visit('/servers/add');
 
     cy.get('select').select('vanilla');
@@ -35,14 +46,13 @@ describe('server add', () => {
 
     cy.get('tr').contains(name).get('a').contains('Details').click();
     cy.get('button').contains('Stop').click();
-    cy.contains('exited');
+    cy.contains(stoppedText);
 
-    cy.exec(`docker rm ${name}`);
-    cy.exec(`docker volume rm ${name}`);
+    cleanup(name);
   });
 
   it('adds a curseforge server', () => {
-    const name = 'Cypress-Curse-Test';
+    const name = 'cypress-curse-test';
     cy.visit('/servers/add');
 
     cy.get('select').select('curse');
@@ -61,9 +71,8 @@ describe('server add', () => {
 
     cy.get('tr').contains(name).get('a').contains('Details').click();
     cy.get('button').contains('Stop').click();
-    cy.contains('exited');
+    cy.contains(stoppedText);
 
-    cy.exec(`docker rm ${name}`);
-    cy.exec(`docker volume rm ${name}`);
+    cleanup(name);
   });
 });
