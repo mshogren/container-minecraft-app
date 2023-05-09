@@ -8,6 +8,7 @@ from strawberry.fastapi import BaseContext, GraphQLRouter
 from schema import schema
 from server import AbstractServer
 from server.docker_server import DockerServer
+from server.kube_server import KubernetesServer
 from settings import Settings
 
 
@@ -34,7 +35,9 @@ APP_PATH = "../app"
 
 
 def custom_context_dependency() -> CustomContext:
-    return CustomContext(server_helper=DockerServer())
+    is_kubernetes = bool(Settings().kubernetes_service_host)
+    server_helper = KubernetesServer() if is_kubernetes else DockerServer()
+    return CustomContext(server_helper=server_helper)
 
 
 async def get_context(custom_context=Depends(custom_context_dependency)):

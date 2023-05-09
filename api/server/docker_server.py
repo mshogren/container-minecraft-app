@@ -1,4 +1,3 @@
-import logging
 from functools import cache
 from typing import List, Optional
 
@@ -6,30 +5,15 @@ import docker
 import strawberry
 from docker.errors import APIError
 from docker.models.containers import Container
-from pydantic import BaseModel
-from modpack import Modpack, ModpackError
+from server import AbstractServer, NonMinecraftServerError, ServerModel
 from settings import Settings
-from version import Version
 
-from server import (AbstractServer, NonMinecraftServerError,
-                    get_image_tag_for_version)
 from .image import Image
-from .model import ContainerDetailsModel, EnvironmentModel, TypeEnum
+from .model import ContainerDetailsModel, EnvironmentModel
 from .port import Port
-from .schema import (AddCurseforgeServerInput, AddVanillaServerInput,
-                     ServerError, ServerResponse, ServerSchemaType,
+from .schema import (ServerError, ServerResponse, ServerSchemaType,
                      ServerSuccess)
 from .volume import Volume
-
-
-class DockerModel(BaseModel):
-    name: str
-    image: str = Settings().default_image
-    detach: bool = True
-    ports: dict = {"25565/tcp": None}
-    volumes: List[str]
-    labels: dict = {}
-    environment: List[str] = ["EULA=TRUE"]
 
 
 @cache
@@ -89,77 +73,18 @@ class DockerServer(AbstractServer):
                          if is_container_relevant(x, default_image)]
         return [self.get_server(strawberry.ID(x)) for x in container_ids]
 
-    def add_server(self, model) -> ServerResponse:
+    def add_server(self, model: ServerModel) -> ServerResponse:
         try:
-            container: Container = get_client().containers.run(**model.dict())  # type: ignore
+            args = model.dict()
+            env = args.pop("env")
+            args["environment"] = [f"{x}={env[x]}" for x in env.keys()]
+            container: Container = get_client().containers.run(**args)  # type: ignore
             server = self.get_server(strawberry.ID(str(container.id)))
             return ServerSuccess(server=server)
         except NonMinecraftServerError as ex:
             return ServerError(error=str(ex))
         except APIError as ex:
             return ServerError(error=str(ex))
-
-    def add_vanilla_server(self,
-                           server: AddVanillaServerInput) -> ServerResponse:
-        logging.info('%s', server)
-
-        name = server.name
-        server_type = TypeEnum.VANILLA.name
-        version = server.version
-
-        if version not in Version().get_versions():
-            return ServerError(error=f"Version: {version} does not exist")
-
-        model = DockerModel(**{
-            "name": name,
-            "volumes": [name + ":/data"]
-        })
-
-        model.image += get_image_tag_for_version(version)
-
-        model.environment.extend([f"TYPE={server_type}", f"VERSION={version}"])
-
-        return self.add_server(model)
-
-    def add_curseforge_server(
-            self, server: AddCurseforgeServerInput) -> ServerResponse:
-        logging.info('%s', server)
-
-        name = server.name
-
-        try:
-            modpack = Modpack().get_modpack(strawberry.ID(server.modpack_id))
-            modpack_info = Modpack().get_modpack_info(modpack)
-        except ModpackError as error:
-            return ServerError(error=str(error))
-
-        version = modpack.version
-
-        if version not in Version().get_versions():
-            return ServerError(error=f"Version: {version} does not exist")
-
-        server_type = TypeEnum.FORGE.name
-        if modpack_info.modloader == 'fabric':
-            server_type = TypeEnum.FABRIC.name
-
-        model = DockerModel(**{
-            "name": name,
-            "volumes": [name + ":/data"]
-        })
-
-        model.image += get_image_tag_for_version(version)
-
-        model.environment.extend([
-            f"TYPE={server_type}",
-            f"VERSION={version}",
-            f"GENERIC_PACK={modpack_info.url}"])
-
-        if modpack_info.modloader == 'forge' and not modpack_info.modloader_version is None:
-            model.environment.extend([
-                f"FORGEVERSION={modpack_info.modloader_version}"
-            ])
-
-        return self.add_server(model)
 
     def start_server(self, container_id: strawberry.ID) -> ServerResponse:
         try:
