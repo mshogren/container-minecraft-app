@@ -23,7 +23,7 @@ version = "==1.10.7"
 
 [packages.strawberry-graphql]
 extras = [ "fastapi",]
-version = "==0.177.2"
+version = "==0.177.3"
 
 [packages.uvicorn]
 extras = [ "standard",]
