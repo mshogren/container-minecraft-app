@@ -16,6 +16,7 @@ docker = "==6.1.2"
 packaging = "==23.1"
 cachetools = "==5.3.0"
 kubernetes = "==26.1.0"
+jose = "==1.0.0"
 
 [packages.pydantic]
 extras = [ "dotenv",]
