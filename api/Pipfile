@@ -19,7 +19,7 @@ kubernetes = "==26.1.0"
 
 [packages.pydantic]
 extras = [ "dotenv",]
-version = "==1.10.7"
+version = "==1.10.8"
 
 [packages.strawberry-graphql]
 extras = [ "fastapi",]
