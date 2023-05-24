@@ -5,7 +5,8 @@ import docker
 import strawberry
 from docker.errors import APIError
 from docker.models.containers import Container
-from server import AbstractServer, NonMinecraftServerError, ServerModel
+from server import (OWNER_NAME_LABEL_NAME, AbstractServer,
+                    NonMinecraftServerError, ServerModel, check_owner)
 from settings import Settings
 
 from .image import Image
@@ -54,6 +55,7 @@ class DockerServer(AbstractServer):
         return ServerSchemaType(
             id=container_id,
             name=container_model.Name[1:],
+            owner=container_model.Configuration.Labels.get(OWNER_NAME_LABEL_NAME, ""),
             image=Image(container_model.Configuration.Image),
             ports=[Port(key, value)
                    for (key, value) in
@@ -75,6 +77,8 @@ class DockerServer(AbstractServer):
 
     def add_server(self, model: ServerModel) -> ServerResponse:
         try:
+            if self.user:
+                model.labels |= self.user.get_labels()
             args = model.dict()
             env = args.pop("env")
             args["environment"] = [f"{x}={env[x]}" for x in env.keys()]
@@ -89,6 +93,9 @@ class DockerServer(AbstractServer):
     def start_server(self, container_id: strawberry.ID) -> ServerResponse:
         try:
             container = get_server_by_id(container_id)
+            if not check_owner(container.labels, self.user):
+                return ServerError(
+                    error="The Minecraft server is not owned by the current user")
             container.start()
             server = self.get_server(strawberry.ID(str(container.id)))
             return ServerSuccess(server=server)
@@ -100,6 +107,9 @@ class DockerServer(AbstractServer):
     def stop_server(self, container_id: strawberry.ID) -> ServerResponse:
         try:
             container = get_server_by_id(container_id)
+            if not check_owner(container.labels, self.user):
+                return ServerError(
+                    error="The Minecraft server is not owned by the current user")
             container.stop()
             server = self.get_server(strawberry.ID(str(container.id)))
             return ServerSuccess(server=server)

@@ -1,12 +1,24 @@
-import { beforeEach, describe, expect, it } from 'vitest';
+import { PropsWithChildren } from 'react';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { BrowserRouter } from 'react-router-dom';
 import { Client, CombinedError, Provider, TypedDocumentNode } from 'urql';
 import { fromValue, never } from 'wonka';
+import { AuthProvider } from 'react-oidc-context';
 import Servers from './Servers';
 import { GET_SERVERS } from './ServerQueries';
 import App from './App';
+
+vi.mock('react-oidc-context', () => {
+  return {
+    AuthProvider: ({ children }: PropsWithChildren) => children,
+    hasAuthParams: () => true,
+    useAuth: () => {
+      return { isAuthenticated: true, settings: {} };
+    },
+  };
+});
 
 function createMockClient(executeQuery: CallableFunction): Client {
   return {
@@ -94,9 +106,11 @@ describe('The servers page', () => {
 
       render(
         <BrowserRouter>
-          <Provider value={mockClient}>
-            <App />
-          </Provider>
+          <AuthProvider>
+            <Provider value={mockClient}>
+              <App />
+            </Provider>
+          </AuthProvider>
         </BrowserRouter>
       );
 

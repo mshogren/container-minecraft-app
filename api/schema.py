@@ -1,14 +1,12 @@
 from typing import List
+from cachetools import func
 
 import strawberry
 from strawberry.types import Info
-from cachetools import func
 from typing_extensions import Annotated
-
 from modpack import Modpack, ModpackSchemaType
-from server.schema import (
-    AddCurseforgeServerInput, AddVanillaServerInput, ServerResponse,
-    ServerSchemaType)
+from server.schema import (AddCurseforgeServerInput, AddVanillaServerInput,
+                           ServerResponse, ServerSchemaType)
 from settings import SchemaLabels as labels
 from version import Version
 

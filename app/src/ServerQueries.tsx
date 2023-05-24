@@ -21,6 +21,7 @@ export interface ServerData {
   id: string;
   image: ImageData;
   name: string;
+  owner: string;
   ports: PortData[];
   started: Date;
   status: string;
@@ -85,6 +86,7 @@ export const GET_SERVERS = gql`
         tag
       }
       name
+      owner
       ports {
         hostPort
         port
@@ -118,6 +120,7 @@ export const GET_SERVER_BY_ID = gql`
         tag
       }
       name
+      owner
       ports {
         hostPort
         port

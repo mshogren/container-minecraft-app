@@ -45,9 +45,7 @@
           "logging.yaml"
       ],
       "cwd": "${workspaceFolder}${pathSeparator}api",
-      "env": {
-        "ALLOWED_ORIGIN": "http://localhost:3000"
-      },
+      "envFile": "${workspaceFolder}/.env",
       "jinja": true
     }
   ],

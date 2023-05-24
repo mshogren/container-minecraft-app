@@ -1,8 +1,64 @@
-import { Routes, Route, Outlet, Link } from 'react-router-dom';
+import { PropsWithChildren, useEffect } from 'react';
+import { Routes, Route, Outlet, Link, useNavigate } from 'react-router-dom';
+import { useAuth, hasAuthParams } from 'react-oidc-context';
 import './App.css';
 import Servers from './Servers';
 
+// eslint-disable-next-line no-undef
+function ProtectedRoute({ children }: PropsWithChildren): JSX.Element {
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    navigate('/');
+  };
+
+  const auth = useAuth();
+
+  useEffect(() => {
+    if (
+      auth.settings.authority &&
+      !hasAuthParams() &&
+      !auth.isAuthenticated &&
+      !auth.activeNavigator &&
+      !auth.isLoading
+    ) {
+      auth.signinRedirect({ state: window.location.pathname });
+    }
+  }, [
+    auth.isAuthenticated,
+    auth.activeNavigator,
+    auth.isLoading,
+    auth.signinRedirect,
+  ]);
+
+  if (auth.activeNavigator) {
+    return <div className="loader">Signing in...</div>;
+  }
+
+  if (auth.settings.authority && !auth.isAuthenticated) {
+    return (
+      <div className="content">
+        <p>Error :(</p>
+        <p>{auth.error?.message}</p>
+        <button type="button" className="pure-button" onClick={handleClick}>
+          OK
+        </button>
+      </div>
+    );
+  }
+
+  // eslint-disable-next-line no-undef
+  return children as JSX.Element;
+}
+
 function Layout() {
+  const auth = useAuth();
+
+  const handleClick = () => {
+    if (!auth.isAuthenticated) auth.signinRedirect();
+    if (auth.isAuthenticated) auth.removeUser();
+  };
+
   return (
     <div>
       <nav className="home-menu pure-menu pure-menu-horizontal pure-menu-fixed">
@@ -18,6 +74,15 @@ function Layout() {
             </Link>
           </li>
         </ul>
+        {auth.settings.authority && (
+          <ul className="pure-menu-list auth">
+            <li className="pure-menu-item">
+              <Link className="pure-menu-link" to="/" onClick={handleClick}>
+                {auth.isAuthenticated ? 'Logout' : 'Login'}
+              </Link>
+            </li>
+          </ul>
+        )}
       </nav>
       <main className="content-wrapper">
         <Outlet />
@@ -58,7 +123,14 @@ function App() {
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<Home />} />
-          <Route path="servers/*" element={<Servers />} />
+          <Route
+            path="servers/*"
+            element={
+              <ProtectedRoute>
+                <Servers />
+              </ProtectedRoute>
+            }
+          />
           <Route path="*" element={<Home />} />
         </Route>
       </Routes>

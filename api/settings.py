@@ -109,6 +109,8 @@ class SchemaLabels:
     SERVER_IMAGE_FIELD_DESCRIPTION = "The image used by the server container"
     SERVER_NAME_FIELD_NAME = "name"
     SERVER_NAME_FIELD_DESCRIPTION = "The name of the server container"
+    SERVER_OWNER_FIELD_NAME = "owner"
+    SERVER_OWNER_FIELD_DESCRIPTION = "The owner of the server container"
     SERVER_PORTS_FIELD_NAME = "ports"
     SERVER_PORTS_FIELD_DESCRIPTION = "A collections of ports published by the server container"
     SERVER_STARTED_FIELD_NAME = "started"
@@ -144,3 +146,6 @@ class Settings(BaseSettings):
     curseforge_api_key: str = ""
     kubernetes_service_host: Optional[str] = None
     kubernetes_namespace: str = "default"
+    authority: str = ""
+    client_id: str = ""
+    client_secret: Optional[str] = None

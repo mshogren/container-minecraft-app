@@ -1,4 +1,5 @@
 import { Routes, Route, Outlet, Link } from 'react-router-dom';
+import { useAuth } from 'react-oidc-context';
 import { AnyVariables, UseQueryArgs } from 'urql';
 import { GraphQLComponent } from './GraphQLComponents';
 import ServerAdd from './ServerAdd';
@@ -13,6 +14,7 @@ function ServerList() {
     requestPolicy: 'network-only',
   } as UseQueryArgs);
 
+  const auth = useAuth();
   const [, reexecuteQuery] = response;
 
   const servers = (data: ServerListData) => {
@@ -40,6 +42,7 @@ function ServerList() {
             <tr>
               <th>Name</th>
               <th>Status</th>
+              {auth.settings.authority ? <th>Owner</th> : null}
               <th>Created</th>
               <th>Actions</th>
             </tr>
@@ -47,11 +50,12 @@ function ServerList() {
           <tbody>
             {data.servers.length > 0 ? (
               data.servers.map((server) => {
-                const { id, name, status, created } = server;
+                const { id, name, owner, status, created } = server;
                 return (
                   <tr key={id}>
                     <td>{name}</td>
                     <td>{status}</td>
+                    {auth.settings.authority ? <td>{owner ?? ' '}</td> : null}
                     <td>{formatDate(created)}</td>
                     <td>
                       <Link to={id}>Details</Link>

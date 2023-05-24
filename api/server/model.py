@@ -29,6 +29,7 @@ class EnvironmentModel(BaseModel):
 class ConfigModel(BaseModel):
     Image: str
     Env: List[str]
+    Labels: dict[str, str]
 
 
 class NetworkSettingsModel(BaseModel):

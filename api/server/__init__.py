@@ -1,6 +1,6 @@
 import logging
 from abc import ABC, abstractmethod
-from typing import List
+from typing import List, Mapping, Optional
 
 import strawberry
 from packaging import version as version_parser
@@ -14,6 +14,12 @@ from .schema import (AddCurseforgeServerInput, AddVanillaServerInput,
                      ServerError, ServerResponse, ServerSchemaType)
 
 
+OWNER_NAME_LABEL_NAME = "container-minecraft-app.owner.name"
+OWNER_ISSUER_LABEL_NAME = "container-minecraft-app.owner.iss"
+OWNER_AUDIENCE_LABEL_NAME = "container-minecraft-app.owner.aud"
+OWNER_SUBJECT_LABEL_NAME = "container-minecraft-app.owner.sub"
+
+
 class NonMinecraftServerError(Exception):
     pass
 
@@ -24,8 +30,33 @@ class ServerModel(BaseModel):
     detach: bool = True
     ports: dict = {"25565/tcp": None}
     volumes: List[str]
-    labels: dict = {}
+    labels: dict[str, str] = {}
     env: dict[str, str] = {"EULA": "TRUE"}
+
+
+class UserModel(BaseModel):
+    iss: str
+    aud: str
+    sub: str
+    name: str
+
+    def get_labels(self) -> dict[str, str]:
+        labels = {}
+        labels[OWNER_NAME_LABEL_NAME] = self.name
+        labels[OWNER_ISSUER_LABEL_NAME] = self.iss
+        labels[OWNER_AUDIENCE_LABEL_NAME] = self.aud
+        labels[OWNER_SUBJECT_LABEL_NAME] = self.sub
+        return labels
+
+
+def check_owner(labels: dict[str, str], user: Optional[UserModel]) -> bool:
+    is_match = labels.get(OWNER_ISSUER_LABEL_NAME) == (
+        user.iss if user else None)
+    is_match = is_match and labels.get(
+        OWNER_AUDIENCE_LABEL_NAME) == (user.aud if user else None)
+    is_match = is_match and labels.get(
+        OWNER_SUBJECT_LABEL_NAME) == (user.sub if user else None)
+    return is_match
 
 
 def get_image_tag_for_version(version: str) -> str:
@@ -35,6 +66,9 @@ def get_image_tag_for_version(version: str) -> str:
 
 
 class AbstractServer(ABC):
+    def __init__(self, user: Optional[Mapping[str, str]]):
+        self.user = None if user is None else UserModel(**user)
+
     @abstractmethod
     def get_server(self, container_id: strawberry.ID) -> ServerSchemaType:
         pass
@@ -65,8 +99,7 @@ class AbstractServer(ABC):
 
         model.image += get_image_tag_for_version(version)
 
-        model.env["TYPE"] = server_type
-        model.env["VERSION"] = version
+        model.env |= {"TYPE": server_type, "VERSION": version}
 
         return self.add_server(model)
 
@@ -98,12 +131,11 @@ class AbstractServer(ABC):
 
         model.image += get_image_tag_for_version(version)
 
-        model.env["TYPE"] = server_type
-        model.env["VERSION"] = version
-        model.env["GENERIC_PACK"] = modpack_info.url
+        model.env |= {"TYPE": server_type, "VERSION": version,
+                      "GENERIC_PACK": modpack_info.url}
 
         if modpack_info.modloader == "forge" and not modpack_info.modloader_version is None:
-            model.env["FORGEVERSION"] = modpack_info.modloader_version
+            model.env |= {"FORGEVERSION": modpack_info.modloader_version}
 
         return self.add_server(model)
 

@@ -32,6 +32,9 @@ class ServerSchemaType:
     name: str = strawberry.field(
         name=labels.SERVER_NAME_FIELD_NAME,
         description=labels.SERVER_NAME_FIELD_DESCRIPTION)
+    owner: str = strawberry.field(
+        name=labels.SERVER_OWNER_FIELD_NAME,
+        description=labels.SERVER_OWNER_FIELD_DESCRIPTION)
     ports: List[Port] = strawberry.field(
         name=labels.SERVER_PORTS_FIELD_NAME,
         description=labels.SERVER_PORTS_FIELD_DESCRIPTION)

@@ -4,7 +4,8 @@ from typing import List, Optional
 import strawberry
 from kubernetes import client, config
 from kubernetes.client import ApiException
-from server import AbstractServer, NonMinecraftServerError, ServerModel
+from server import (OWNER_NAME_LABEL_NAME, AbstractServer,
+                    NonMinecraftServerError, ServerModel, check_owner)
 from settings import Settings
 
 from .image import Image
@@ -43,7 +44,10 @@ def parse_deployment(deployment) -> ServerSchemaType:
     container = deployment.spec.template.spec.containers[0]
     container_environment = parse_container_environment(container.env)
     return ServerSchemaType(
-        id=metadata.name, name=metadata.name, image=Image(container.image),
+        id=metadata.name,
+        name=metadata.name,
+        owner=metadata.labels.get(OWNER_NAME_LABEL_NAME, ""),
+        image=Image(container.image),
         ports=[],
         volumes=[],
         created=metadata.creation_timestamp,
@@ -73,6 +77,8 @@ class KubernetesServer(AbstractServer):
 
     def add_server(self, model: ServerModel) -> ServerResponse:
         try:
+            if self.user:
+                model.labels |= self.user.get_labels()
             container = client.V1Container(
                 name="minecraft-server", image=model.image,
                 ports=[client.V1ContainerPort(container_port=25565)],
@@ -87,11 +93,10 @@ class KubernetesServer(AbstractServer):
                     "matchLabels":
                     {"app": model.name}})
             deployment = client.V1Deployment(
-                api_version="apps/v1",
-                kind="Deployment",
-                metadata=client.V1ObjectMeta(name=model.name),
-                spec=spec
-            )
+                api_version="apps/v1", kind="Deployment",
+                metadata=client.V1ObjectMeta(
+                    name=model.name, labels=model.labels),
+                spec=spec)
             get_client().create_namespaced_deployment(
                 namespace=NAMESPACE,
                 body=deployment)
@@ -107,6 +112,10 @@ class KubernetesServer(AbstractServer):
         try:
             deployment = get_client().read_namespaced_deployment(
                 name=container_id, namespace=NAMESPACE)
+            if not check_owner(
+                    deployment.metadata.labels, self.user):  # type: ignore
+                return ServerError(
+                    error="The Minecraft server is not owned by the current user")
             deployment.spec.replicas = replicas  # type: ignore
             get_client().patch_namespaced_deployment(
                 name=container_id, namespace=NAMESPACE, body=deployment)
