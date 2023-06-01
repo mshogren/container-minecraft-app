@@ -1,7 +1,17 @@
 [[source]]
-url = "https://pypi.python.org/simple"
+url = "https://pypi.org/simple"
 verify_ssl = true
 name = "pypi"
+
+[packages]
+cachetools = "==5.3.1"
+docker = "==6.1.2"
+kubernetes = "==26.1.0"
+packaging = "==23.1"
+pydantic = {extras = ["dotenv"], version = "1.10.8"}
+python-jose = {extras = ["cryptography"], version = "3.3.0"}
+strawberry-graphql = {extras = ["fastapi"], version = "0.180.0"}
+uvicorn = {extras = ["standard"], version = "0.22.0"}
 
 [dev-packages]
 autopep8 = "*"
@@ -10,25 +20,3 @@ pytest = "*"
 
 [requires]
 python_version = "3.11"
-
-[packages]
-docker = "==6.1.2"
-packaging = "==23.1"
-cachetools = "==5.3.1"
-kubernetes = "==26.1.0"
-
-[packages.pydantic]
-extras = [ "dotenv",]
-version = "==1.10.8"
-
-[packages.strawberry-graphql]
-extras = [ "fastapi",]
-version = "==0.180.0"
-
-[packages.uvicorn]
-extras = [ "standard",]
-version = "==0.22.0"
-
-[packages.python-jose]
-extras = [ "cryptography", ]
-version = "==3.3.0"
