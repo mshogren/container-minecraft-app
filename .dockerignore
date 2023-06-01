@@ -7,6 +7,7 @@
 !api/*.py
 !api/src/*.py
 !api/src/modpack/*.py
+!api/src/schema/*.py
 !api/src/server/*.py
 !api/src/version/*.py
 !api/*.yaml
