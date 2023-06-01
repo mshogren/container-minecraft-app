@@ -2,11 +2,11 @@ import json
 
 import pytest
 
-from modpack import (has_server_file, parse_categories,
-                     parse_game_versions)
-from modpack.model import (CategoryModel,
-                           GameVersionLatestFileModel, LatestFileModel,
-                           ModpackModel)
+from . import (has_server_file, parse_categories,
+               parse_game_versions)
+from .model import (CategoryModel,
+                    GameVersionLatestFileModel, LatestFileModel,
+                    ModpackModel)
 
 
 @pytest.fixture

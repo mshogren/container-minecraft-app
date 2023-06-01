@@ -4,8 +4,8 @@ from urllib.request import Request, urlopen
 
 import pytest
 
-from modpack import API_BASE_URL, API_KEY, QUERY_STRING_BASE, Modpack, get_modpack_file_model
-from modpack.schema import ModpackSchemaType
+from . import API_BASE_URL, API_KEY, QUERY_STRING_BASE, Modpack, get_modpack_file_model
+from .schema import ModpackSchemaType
 
 
 def has_server_file(modpack) -> bool:

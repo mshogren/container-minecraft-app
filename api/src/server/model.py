@@ -4,7 +4,7 @@ from typing import List
 
 import strawberry
 from pydantic import BaseModel, Field
-from settings import SchemaLabels as labels
+from ..settings import SchemaLabels as labels
 
 
 @strawberry.enum(

@@ -1,6 +1,6 @@
 import pytest
 
-from version import parse_versions
+from ..version import parse_versions
 
 
 class TestParseVersions:

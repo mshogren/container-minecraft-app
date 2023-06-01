@@ -1,4 +1,4 @@
-from server.port import parse_host_ports
+from .port import parse_host_ports
 
 
 class TestParseHostPorts:

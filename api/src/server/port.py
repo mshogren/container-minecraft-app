@@ -1,7 +1,7 @@
 from typing import Optional
 
 import strawberry
-from settings import SchemaLabels as labels
+from ..settings import SchemaLabels as labels
 
 
 def parse_host_ports(host_ports) -> Optional[int]:

@@ -2,6 +2,6 @@
   "**/*.py": [
     ".venv/bin/autopep8 --experimental --in-place",
     ".venv/bin/pylint --rcfile=.pylintrc",
-    ".venv/bin/strawberry export-schema main | npx graphql-schema-linter -s -e relay-page-info-spec"
+    ".venv/bin/strawberry export-schema src.schema | npx graphql-schema-linter -s -e relay-page-info-spec"
   ]
 }

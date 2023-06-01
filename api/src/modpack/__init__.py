@@ -11,8 +11,8 @@ from urllib.request import Request, urlopen
 import strawberry
 from pydantic import ValidationError
 
-from modpack import model
-from settings import Settings
+from . import model
+from ..settings import Settings
 
 from .schema import ModpackSchemaType
 

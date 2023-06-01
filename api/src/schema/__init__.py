@@ -4,11 +4,11 @@ from cachetools import func
 import strawberry
 from strawberry.types import Info
 from typing_extensions import Annotated
-from modpack import Modpack, ModpackSchemaType
-from server.schema import (AddCurseforgeServerInput, AddVanillaServerInput,
-                           ServerResponse, ServerSchemaType)
-from settings import SchemaLabels as labels
-from version import Version
+from src.modpack import Modpack, ModpackSchemaType
+from src.server import (AddCurseforgeServerInput, AddVanillaServerInput,
+                        ServerResponse, ServerSchemaType)
+from src.settings import SchemaLabels as labels
+from src.version import Version
 
 modpack_helper = Modpack()
 version_helper = Version()

@@ -5,9 +5,9 @@ from typing import List, Mapping, Optional
 import strawberry
 from packaging import version as version_parser
 from pydantic import BaseModel
-from modpack import Modpack, ModpackError
-from settings import Settings
-from version import Version
+from ..modpack import Modpack, ModpackError
+from ..settings import Settings
+from ..version import Version
 
 from .model import TypeEnum
 from .schema import (AddCurseforgeServerInput, AddVanillaServerInput,

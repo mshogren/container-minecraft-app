@@ -1,4 +1,4 @@
-from server.image import Image
+from .image import Image
 
 
 class TestParseHostPorts:

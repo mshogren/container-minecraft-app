@@ -5,9 +5,9 @@ import docker
 import strawberry
 from docker.errors import APIError
 from docker.models.containers import Container
-from server import (OWNER_NAME_LABEL_NAME, AbstractServer,
-                    NonMinecraftServerError, ServerModel, check_owner)
-from settings import Settings
+from . import (OWNER_NAME_LABEL_NAME, AbstractServer,
+               NonMinecraftServerError, ServerModel, check_owner)
+from ..settings import Settings
 
 from .image import Image
 from .model import ContainerDetailsModel, EnvironmentModel, StatusEnum

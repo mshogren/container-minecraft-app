@@ -11,7 +11,7 @@ from starlette.requests import Request
 from starlette.websockets import WebSocket
 from strawberry.types import Info
 
-from settings import Settings
+from .settings import Settings
 
 
 class AuthError(Exception):

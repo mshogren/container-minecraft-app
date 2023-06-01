@@ -4,9 +4,9 @@ from typing import List, Optional
 import strawberry
 from kubernetes import client, config
 from kubernetes.client import ApiException
-from server import (OWNER_NAME_LABEL_NAME, AbstractServer,
-                    NonMinecraftServerError, ServerModel, check_owner)
-from settings import Settings
+from . import (OWNER_NAME_LABEL_NAME, AbstractServer,
+               NonMinecraftServerError, ServerModel, check_owner)
+from ..settings import Settings
 
 from .image import Image
 from .model import EnvironmentModel, StatusEnum, TypeEnum

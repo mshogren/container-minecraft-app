@@ -1,4 +1,4 @@
-from schema import schema
+from . import schema
 
 
 class TestSchema:

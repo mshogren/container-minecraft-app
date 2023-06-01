@@ -5,12 +5,12 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse, Response
 from fastapi.staticfiles import StaticFiles
 from strawberry.fastapi import BaseContext, GraphQLRouter
-from auth import get_payload, get_token
 
-from schema import schema
-from server.docker_server import DockerServer
-from server.kube_server import KubernetesServer
-from settings import Settings
+from .src.auth import get_payload, get_token
+from .src.schema import schema
+from .src.server.docker_server import DockerServer
+from .src.server.kube_server import KubernetesServer
+from .src.settings import Settings
 
 
 APP_PATH = "../app"

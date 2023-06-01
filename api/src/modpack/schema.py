@@ -1,7 +1,7 @@
 from typing import List, Optional
 
 import strawberry
-from settings import SchemaLabels as labels
+from ..settings import SchemaLabels as labels
 
 
 @strawberry.type(

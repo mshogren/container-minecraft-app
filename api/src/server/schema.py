@@ -4,12 +4,12 @@ from datetime import datetime
 from typing import List, TypeAlias
 
 import strawberry
-from settings import SchemaLabels as labels
+from ..settings import SchemaLabels as labels
 
-from server.image import Image
-from server.model import StatusEnum, TypeEnum
-from server.port import Port
-from server.volume import Volume
+from .image import Image
+from .model import StatusEnum, TypeEnum
+from .port import Port
+from .volume import Volume
 
 
 @strawberry.type(

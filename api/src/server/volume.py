@@ -1,7 +1,7 @@
 import strawberry
-from server.model import VolumeModel
 
-from settings import SchemaLabels as labels
+from .model import VolumeModel
+from ..settings import SchemaLabels as labels
 
 
 @strawberry.type(

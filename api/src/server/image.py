@@ -1,5 +1,5 @@
 import strawberry
-from settings import SchemaLabels as labels
+from ..settings import SchemaLabels as labels
 
 
 @strawberry.type(name=labels.IMAGE_TYPE_NAME,
