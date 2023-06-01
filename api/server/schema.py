@@ -7,7 +7,7 @@ import strawberry
 from settings import SchemaLabels as labels
 
 from server.image import Image
-from server.model import TypeEnum
+from server.model import StatusEnum, TypeEnum
 from server.port import Port
 from server.volume import Volume
 
@@ -41,7 +41,7 @@ class ServerSchemaType:
     started: datetime = strawberry.field(
         name=labels.SERVER_STARTED_FIELD_NAME,
         description=labels.SERVER_STARTED_FIELD_DESCRIPTION)
-    status: str = strawberry.field(
+    status: StatusEnum = strawberry.field(
         name=labels.SERVER_STATUS_FIELD_NAME,
         description=labels.SERVER_STATUS_FIELD_DESCRIPTION)
     type: TypeEnum = strawberry.field(

@@ -10,7 +10,7 @@ from server import (OWNER_NAME_LABEL_NAME, AbstractServer,
 from settings import Settings
 
 from .image import Image
-from .model import ContainerDetailsModel, EnvironmentModel
+from .model import ContainerDetailsModel, EnvironmentModel, StatusEnum
 from .port import Port
 from .schema import (ServerError, ServerResponse, ServerSchemaType,
                      ServerSuccess)
@@ -63,7 +63,8 @@ class DockerServer(AbstractServer):
             volumes=[Volume(x) for x in container_model.Mounts],
             created=container_model.Created,
             started=container_model.State.StartedAt,
-            status=container_model.State.Status,
+            status=StatusEnum.AVAILABLE
+            if container_model.State.Status == "running" else StatusEnum.UNAVAILABLE,
             type=container_environment.type,
             game_version=container_environment.version)
 

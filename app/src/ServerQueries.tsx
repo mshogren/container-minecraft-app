@@ -1,5 +1,17 @@
 import { gql, useMutation, useQuery, UseQueryArgs } from 'urql';
 
+export enum ServerType {
+  Curseforge = 'CURSEFORGE',
+  Fabric = 'FABRIC',
+  Forge = 'FORGE',
+  Vanilla = 'VANILLA',
+}
+
+export enum ServerStatus {
+  Available = 'AVAILABLE',
+  Unavailable = 'UNAVAILABLE',
+}
+
 export interface ImageData {
   name: string;
   tag: string;
@@ -24,8 +36,8 @@ export interface ServerData {
   owner: string;
   ports: PortData[];
   started: Date;
-  status: string;
-  type: string;
+  status: ServerStatus;
+  type: ServerType;
   volume: VolumeData[];
 }
 

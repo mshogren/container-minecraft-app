@@ -35,7 +35,7 @@ describe('The server details page', () => {
         name: 'Server 1',
         ports: [],
         started: new Date(),
-        status: 'Status 1',
+        status: 'UNAVAILABLE',
       },
     },
   };
@@ -84,13 +84,15 @@ describe('The server details page', () => {
     await waitFor(() => {
       expect(screen.queryByText(/Server 1/)).toBeTruthy();
       expect(screen.queryByTitle(/start/)).toBeTruthy();
-      expect(screen.queryByTitle(/stop/)).toBeTruthy();
     });
   });
 
   ['start', 'stop'].forEach((action) => {
     describe(`when clicking ${action}`, () => {
       it('shows a loading message', async () => {
+        testData.data.server.status =
+          action === 'start' ? 'UNAVAILABLE' : 'AVAILABLE';
+        const transientStatus = action === 'start' ? /starting/ : /stopping/;
         const mockClient = createMockClient(() => fromValue(testData));
 
         renderElement(mockClient);
@@ -98,7 +100,7 @@ describe('The server details page', () => {
         const button = await screen.findByTitle(action);
         await userEvent.click(button);
 
-        expect(screen.queryByText(/Loading.../)).toBeTruthy();
+        expect(screen.queryByTitle(transientStatus)).toBeTruthy();
       });
 
       it('shows a network error message', async () => {
@@ -138,7 +140,7 @@ describe('The server details page', () => {
 
         renderElement(mockClient);
 
-        const button = await screen.findByTitle('start');
+        const button = await screen.findByTitle(action);
         await userEvent.click(button);
 
         await waitFor(() => {
@@ -195,8 +197,7 @@ describe('The server details page', () => {
         await userEvent.click(okButton);
 
         expect(screen.queryByText(/Server 1/)).toBeTruthy();
-        expect(screen.queryByTitle(/start/)).toBeTruthy();
-        expect(screen.queryByTitle(/stop/)).toBeTruthy();
+        expect(screen.queryByTitle(action)).toBeTruthy();
       });
     });
   });

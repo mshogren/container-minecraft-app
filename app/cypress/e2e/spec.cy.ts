@@ -11,7 +11,7 @@ describe('servers list', () => {
 });
 
 describe('server add', () => {
-  const stoppedText = Cypress.env('kubernetes') ? 'Unavailable' : 'exited';
+  const stoppedText = 'Unavailable';
 
   const cleanup = (name: string) => {
     if (Cypress.env('kubernetes')) {

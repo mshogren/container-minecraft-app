@@ -5,6 +5,14 @@ import InfiniteLoader from 'react-window-infinite-loader';
 // eslint-disable-next-line @typescript-eslint/no-empty-function
 export function noop() {}
 
+export function getEnumKeyByEnumValue<T extends { [index: string]: string }>(
+  myEnum: T,
+  enumValue: string
+): keyof T | null {
+  const keys = Object.keys(myEnum).filter((x) => myEnum[x] === enumValue);
+  return keys.length > 0 ? keys[0] : null;
+}
+
 export function formatDate(date: Date) {
   return new Date(Date.parse(date.toString())).toLocaleString('en-CA');
 }

@@ -14,6 +14,7 @@ interface RenderFunction<Data> {
 
 interface GraphQLHookConfiguration<Data> {
   loadingMessage?: string;
+  loadingRenderer?: RenderFunction<Data>;
   onErrorClick?: () => void;
   successRenderer?: RenderFunction<Data>;
 }
@@ -114,13 +115,17 @@ export function GraphQLComponent<Data, Variables extends AnyVariables>(
     return mutationRenderer(mutationData);
   }
 
+  let loadingRenderer: RenderFunction<never> | undefined;
   let loading = '';
   if (fetching) loading = 'Loading...';
   mutations?.forEach((mutation) => {
-    if (loading === '' && mutation.result.fetching)
+    if (loading === '' && mutation.result.fetching) {
+      loadingRenderer = mutation.loadingRenderer;
       loading = mutation.loadingMessage ?? 'Loading...';
+    }
   });
 
+  if (loadingRenderer && data) return loadingRenderer(data as never);
   if (loading !== '') return <div className="loader">{loading}</div>;
 
   if (successRenderer) return successRenderer(data as Data);

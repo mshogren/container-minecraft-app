@@ -21,6 +21,16 @@ class TypeEnum(Enum):
         "VANILLA", description=labels.TYPE_ENUM_VANILLA_DESCRIPTION)
 
 
+@strawberry.enum(
+    name=labels.STATUS_ENUM_NAME,
+    description=labels.STATUS_ENUM_DESCRIPTION)
+class StatusEnum(Enum):
+    AVAILABLE = strawberry.enum_value(
+        "AVAILABLE", description=labels.STATUS_ENUM_AVAILABLE_DESCRIPTION)
+    UNAVAILABLE = strawberry.enum_value(
+        "UNAVAILABLE", description=labels.STATUS_ENUM_UNAVAILABLE_DESCRIPTION)
+
+
 class EnvironmentModel(BaseModel):
     version: str = Field(default="latest", alias="VERSION")
     type: TypeEnum = Field(alias="TYPE")

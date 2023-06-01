@@ -9,7 +9,7 @@ from server import (OWNER_NAME_LABEL_NAME, AbstractServer,
 from settings import Settings
 
 from .image import Image
-from .model import EnvironmentModel, TypeEnum
+from .model import EnvironmentModel, StatusEnum, TypeEnum
 from .schema import (ServerError, ServerResponse, ServerSchemaType,
                      ServerSuccess)
 
@@ -44,9 +44,8 @@ def parse_deployment(deployment) -> ServerSchemaType:
     container = deployment.spec.template.spec.containers[0]
     container_environment = parse_container_environment(container.env)
     return ServerSchemaType(
-        id=metadata.name,
-        name=metadata.name,
-        owner=metadata.labels.get(OWNER_NAME_LABEL_NAME, ""),
+        id=metadata.name, name=metadata.name, owner=metadata.labels.get(
+            OWNER_NAME_LABEL_NAME, ""),
         image=Image(container.image),
         ports=[],
         volumes=[],
@@ -56,7 +55,8 @@ def parse_deployment(deployment) -> ServerSchemaType:
              for x in (status.conditions if status.conditions else [])
              if x.type == "Available"),
             metadata.creation_timestamp),
-        status="Available" if status.available_replicas else "Unavailable",
+        status=StatusEnum.AVAILABLE
+        if status.available_replicas else StatusEnum.UNAVAILABLE,
         type=container_environment.type,
         game_version=container_environment.version)
 

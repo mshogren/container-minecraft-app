@@ -6,8 +6,12 @@ import ServerAdd from './ServerAdd';
 import ServerAddCurse from './ServerAddCurse';
 import ServerAddVanilla from './ServerAddVanilla';
 import ServerDetails from './ServerDetails';
-import { ServerListData, useGetServersQuery } from './ServerQueries';
-import { formatDate } from './utils';
+import {
+  ServerListData,
+  ServerStatus,
+  useGetServersQuery,
+} from './ServerQueries';
+import { formatDate, getEnumKeyByEnumValue } from './utils';
 
 function ServerList() {
   const response = useGetServersQuery({
@@ -54,7 +58,7 @@ function ServerList() {
                 return (
                   <tr key={id}>
                     <td>{name}</td>
-                    <td>{status}</td>
+                    <td>{getEnumKeyByEnumValue(ServerStatus, status)}</td>
                     {auth.settings.authority ? <td>{owner ?? ' '}</td> : null}
                     <td>{formatDate(created)}</td>
                     <td>

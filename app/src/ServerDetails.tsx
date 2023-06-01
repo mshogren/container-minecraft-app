@@ -5,13 +5,15 @@ import { EmptyMutationState, GraphQLComponent } from './GraphQLComponents';
 import {
   ServerIdInput,
   ServerInstanceData,
+  ServerStatus,
+  ServerType,
   StartServer,
   StopServer,
   useGetServerByIdQuery,
   useStartServerMutation,
   useStopServerMutation,
 } from './ServerQueries';
-import { formatDate } from './utils';
+import { formatDate, getEnumKeyByEnumValue } from './utils';
 
 function ServerDetails() {
   const { serverId } = useParams();
@@ -46,8 +48,11 @@ function ServerDetails() {
     );
   };
 
-  const serverDetails = ({ server }: ServerInstanceData) => {
-    const { created, name, ports, started, status } = server;
+  const serverDetails = (
+    transientStatus: string | undefined,
+    { server }: ServerInstanceData
+  ) => {
+    const { created, name, ports, started, status, type } = server;
     const formattedPorts =
       ports.length > 0 ? (
         ports.map((p) =>
@@ -56,26 +61,26 @@ function ServerDetails() {
       ) : (
         <span>&nbsp;</span>
       );
+    const buttonText =
+      transientStatus ??
+      (status === ServerStatus.Unavailable ? 'Start' : 'Stop');
+    const buttonTitle = buttonText.toLowerCase();
+    const buttonDisabled = transientStatus !== undefined;
+    const handleButtonClick =
+      status === ServerStatus.Unavailable ? handleStartClick : handleStopClick;
 
     return (
       <div>
         <form className="pure-form">
           <fieldset>
             <button
-              title="start"
+              title={buttonTitle}
               className="pure-button"
               type="button"
-              onClick={handleStartClick}
+              disabled={buttonDisabled}
+              onClick={handleButtonClick}
             >
-              Start
-            </button>
-            <button
-              title="stop"
-              className="pure-button"
-              type="button"
-              onClick={handleStopClick}
-            >
-              Stop
+              {buttonText}
             </button>
           </fieldset>
         </form>
@@ -83,6 +88,9 @@ function ServerDetails() {
           <thead>
             <tr>
               <th>Name</th>
+            </tr>
+            <tr>
+              <th>Type</th>
             </tr>
             <tr>
               <th>Status</th>
@@ -102,7 +110,10 @@ function ServerDetails() {
               <td>{name}</td>
             </tr>
             <tr>
-              <td>{status}</td>
+              <td>{getEnumKeyByEnumValue(ServerType, type)}</td>
+            </tr>
+            <tr>
+              <td>{getEnumKeyByEnumValue(ServerStatus, status)}</td>
             </tr>
             <tr>
               <td>{formattedPorts}</td>
@@ -122,16 +133,21 @@ function ServerDetails() {
   return (
     <div className="content">
       <GraphQLComponent<ServerInstanceData, AnyVariables>
-        content={{ response, successRenderer: serverDetails }}
+        content={{
+          response,
+          successRenderer: serverDetails.bind(null, undefined),
+        }}
         mutations={[
           {
             result: startResult,
+            loadingRenderer: serverDetails.bind(null, 'Starting'),
             onErrorClick: () => {
               setStartResult(EmptyMutationState);
             },
           },
           {
             result: stopResult,
+            loadingRenderer: serverDetails.bind(null, 'Stopping'),
             onErrorClick: () => {
               setStopResult(EmptyMutationState);
             },
