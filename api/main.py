@@ -6,11 +6,11 @@ from fastapi.responses import FileResponse, Response
 from fastapi.staticfiles import StaticFiles
 from strawberry.fastapi import BaseContext, GraphQLRouter
 
-from .src.auth import get_payload, get_token
-from .src.schema import schema
-from .src.server.docker_server import DockerServer
-from .src.server.kube_server import KubernetesServer
-from .src.settings import Settings
+from src.auth import get_payload, get_token
+from src.schema import schema
+from src.server.docker_server import DockerServer
+from src.server.kube_server import KubernetesServer
+from src.settings import Settings
 
 
 APP_PATH = "../app"
