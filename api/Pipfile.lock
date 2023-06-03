@@ -235,7 +235,7 @@
                 "sha256:190348041559e21b22a1d65cee485282ca11a6f81d503fddb84d5017e9ed1e49",
                 "sha256:80600258e7ed2f16b9aa1d7c295bd70194109ad5a30fdee0eaeefef1d4c559dd"
             ],
-            "markers": "python_version >= '2.6' and python_version not in '3.0, 3.1, 3.2, 3.3'",
+            "markers": "python_version >= '2.6' and python_version not in '3.0, 3.1, 3.2'",
             "version": "==0.18.0"
         },
         "fastapi": {
@@ -420,7 +420,7 @@
                 "sha256:0123cacc1627ae19ddf3c27a5de5bd67ee4586fbdd6440d9748f8abb483d3e86",
                 "sha256:961d03dc3453ebbc59dbdea9e4e11c5651520a876d0f4db161e8674aae935da9"
             ],
-            "markers": "python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3'",
+            "markers": "python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2'",
             "version": "==2.8.2"
         },
         "python-dotenv": {
@@ -531,7 +531,7 @@
                 "sha256:1e61c37477a1626458e36f7b1d82aa5c9b094fa4802892072e49de9c60c4c926",
                 "sha256:8abb2f1d86890a2dfb989f9a77cfcfd3e47c2a354b01111771326f8aa26e0254"
             ],
-            "markers": "python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3'",
+            "markers": "python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2'",
             "version": "==1.16.0"
         },
         "sniffio": {
@@ -555,11 +555,11 @@
                 "fastapi"
             ],
             "hashes": [
-                "sha256:7580b21d632e0901196e77d0752f303fd561832a5398fafbbaa5e0d3ea45ff13",
-                "sha256:f15eb91d92d6b241cdffc850870a064c12b5dcf7c4f3ed13b257fdc3c63ab617"
+                "sha256:3ef3e4a3d82f69c7da8436ca36504414230c83063e46a967df8eb5645121b6b5",
+                "sha256:f08c4445711205d9bb12fd59cba7631e754efe93fe08ec5b7a7d7f2ee60750fa"
             ],
             "index": "pypi",
-            "version": "==0.180.1"
+            "version": "==0.180.5"
         },
         "typing-extensions": {
             "hashes": [
