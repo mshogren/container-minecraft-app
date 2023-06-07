@@ -555,11 +555,11 @@
                 "fastapi"
             ],
             "hashes": [
-                "sha256:3ef3e4a3d82f69c7da8436ca36504414230c83063e46a967df8eb5645121b6b5",
-                "sha256:f08c4445711205d9bb12fd59cba7631e754efe93fe08ec5b7a7d7f2ee60750fa"
+                "sha256:36845e3f834133b2be8f9f4b3f3f4b85e171fa05846bbffd6064dbb9d09889cd",
+                "sha256:3e14764c39a9262b11ec1f260dfa6e809886a9ea1eeb4bfa90fac6b45362f2ff"
             ],
             "index": "pypi",
-            "version": "==0.180.5"
+            "version": "==0.183.1"
         },
         "typing-extensions": {
             "hashes": [
