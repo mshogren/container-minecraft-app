@@ -19,7 +19,7 @@
     "react-router-dom": "6.14.2",
     "react-window": "1.8.9",
     "react-window-infinite-loader": "1.0.9",
-    "urql": "4.0.4"
+    "urql": "4.0.5"
   },
   "devDependencies": {
     "@fullhuman/postcss-purgecss": "5.0.0",
