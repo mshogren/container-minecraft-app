@@ -51,7 +51,7 @@
     "typescript": "5.1.6",
     "vite": "4.4.8",
     "vite-plugin-checker": "0.6.1",
-    "vitest": "0.33.0",
+    "vitest": "0.34.1",
     "wonka": "6.3.2"
   }
 }
