@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "4911d527307ba0a3005b674d0087a8644e298449c3ec12b2ae2ba03a55f02369"
+            "sha256": "bcb1f0eabb428f666deed33760a4bfd934e0e38bf9c68bf2f8b6d34d176275ec"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -252,10 +252,10 @@
         },
         "fastapi": {
             "hashes": [
-                "sha256:494eb3494d89e8079c20859d7ca695f66eaccc40f46fe8c75ab6186d15f05ffd",
-                "sha256:ca2ae65fe42f6a34b5cf6c994337149154b1b400c39809d7b2dccdceb5ae77af"
+                "sha256:7b32000d14ca9992f7461117b81e4ef9ff0c07936af641b4fe40e67d5f9d63cb",
+                "sha256:aef5f8676eb1b8389952e1fe734abe20f04b71f6936afcc53b320ba79b686a4b"
             ],
-            "version": "==0.101.0"
+            "version": "==0.101.1"
         },
         "google-auth": {
             "hashes": [
@@ -436,9 +436,7 @@
             "version": "==2.21"
         },
         "pydantic": {
-            "extras": [
-                "dotenv"
-            ],
+            "extras": [],
             "hashes": [
                 "sha256:22d63db5ce4831afd16e7c58b3192d3faf8f79154980d9397d9867254310ba4b",
                 "sha256:43bdbf359d6304c57afda15c2b95797295b702948082d4c23851ce752f21da70"
@@ -553,6 +551,14 @@
             "markers": "python_version >= '3.7'",
             "version": "==2.4.0"
         },
+        "pydantic-settings": {
+            "hashes": [
+                "sha256:342337fff50b23585e807a86dec85037900972364435c55c2fc00d16ff080539",
+                "sha256:6183a2abeab465d5a3ab69758e9a22d38b0cc2ba193f0b85f6971a252ea630f6"
+            ],
+            "index": "pypi",
+            "version": "==2.0.2"
+        },
         "pygments": {
             "hashes": [
                 "sha256:13fc09fa63bc8d8671a6d247e1eb303c4b343eaee81d861f3404db2935653692",
@@ -573,6 +579,7 @@
                 "sha256:a8df96034aae6d2d50a4ebe8216326c61c3eb64836776504fcca410e5937a3ba",
                 "sha256:f5971a9226b701070a4bf2c38c89e5a3f0d64de8debda981d1db98583009122a"
             ],
+            "markers": "python_version >= '3.8'",
             "version": "==1.0.0"
         },
         "python-jose": {

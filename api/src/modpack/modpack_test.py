@@ -16,10 +16,10 @@ def modpack_model():
             "thumbnailUrl": ""
         },
         "categories": [],
-        "mainFileId": "fileId",
+        "mainFileId": 456,
         "downloadCount": 0,
         "latestFilesIndexes": [],
-        "id": "",
+        "id": 123,
         "latestFiles": [],
         "name": "",
         "summary": "",
@@ -38,19 +38,19 @@ class TestHasServerFile:
 
     @staticmethod
     def test_has_server_file_with_null_files_in_latest_files(modpack_model):
-        latest_file = json.loads('{"id": "fileId", "serverPackFileId": null}')
+        latest_file = json.loads('{"id": 456, "serverPackFileId": null}')
         modpack_model.latestFiles.append(LatestFileModel(**latest_file))
         assert not has_server_file(modpack_model)
 
     @staticmethod
     def test_has_server_file_with_mismatched_file_ids(modpack_model):
-        latest_file = {"id": "", "serverPackFileId": 11}
+        latest_file = {"id": 654, "serverPackFileId": 11}
         modpack_model.latestFiles.append(LatestFileModel(**latest_file))
         assert not has_server_file(modpack_model)
 
     @staticmethod
     def test_has_server_file_with_matching_file_ids(modpack_model):
-        latest_file = {"id": "fileId", "serverPackFileId": 11}
+        latest_file = {"id": 456, "serverPackFileId": 11}
         modpack_model.latestFiles.append(LatestFileModel(**latest_file))
         assert has_server_file(modpack_model)
 
