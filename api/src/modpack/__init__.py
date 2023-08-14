@@ -139,7 +139,7 @@ class Modpack:
         try:
             file_model = get_modpack_file_model(
                 modpack.id, modpack.default_file_id)
-            server_file_id = file_model.serverPackFileId
+            server_file_id = str(file_model.serverPackFileId)
             if server_file_id is None:
                 message = f"{error_base} is not in a valid format"
                 raise ModpackError(message)

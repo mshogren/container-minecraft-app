@@ -4,11 +4,11 @@ from pydantic import BaseModel
 
 
 class ModpackFileModel(BaseModel):
-    downloadUrl: str
+    downloadUrl: Optional[str]
     fileName: str
     gameVersions: List[str]
-    id: str
-    serverPackFileId: Optional[str]
+    id: int
+    serverPackFileId: Optional[int] = None
 
 
 class AttachmentModel(BaseModel):
@@ -24,8 +24,8 @@ class GameVersionLatestFileModel(BaseModel):
 
 
 class LatestFileModel(BaseModel):
-    id: str
-    serverPackFileId: Optional[str]
+    id: int
+    serverPackFileId: Optional[int] = None
 
 
 class LinksModel(BaseModel):
@@ -35,10 +35,10 @@ class LinksModel(BaseModel):
 class ModpackModel(BaseModel):
     logo: AttachmentModel
     categories: List[CategoryModel]
-    mainFileId: str
+    mainFileId: int
     downloadCount: int
     latestFilesIndexes: List[GameVersionLatestFileModel]
-    id: str
+    id: int
     latestFiles: List[LatestFileModel]
     name: str
     summary: str
