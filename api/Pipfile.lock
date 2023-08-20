@@ -589,6 +589,7 @@
                 "sha256:a8df96034aae6d2d50a4ebe8216326c61c3eb64836776504fcca410e5937a3ba",
                 "sha256:f5971a9226b701070a4bf2c38c89e5a3f0d64de8debda981d1db98583009122a"
             ],
+            "markers": "python_version >= '3.8'",
             "version": "==1.0.0"
         },
         "python-jose": {
@@ -651,6 +652,7 @@
                 "sha256:fd1592b3fdf65fff2ad0004b5e363300ef59ced41c2e6b3a99d4089fa8c5435d",
                 "sha256:fd66fc5d0da6d9815ba2cebeb4205f95818ff4b79c3ebe268e75d961704af52f"
             ],
+            "markers": "python_version >= '3.6'",
             "version": "==6.0.1"
         },
         "requests": {
