@@ -36,7 +36,7 @@ jobs:
     steps:
     - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4
 
-    - uses: dorny/paths-filter@v2
+    - uses: dorny/paths-filter@v3.0.0
       id: filter
       with:
         filters: |
@@ -146,7 +146,7 @@ jobs:
           cache-to: type=gha,mode=max
 
       - name: End-to-end tests
-        uses: cypress-io/github-action@v5
+        uses: cypress-io/github-action@v6.6.1
         env:
           CURSEFORGE_API_KEY: ${{ secrets.CURSEFORGE_API_KEY }}
         with:
