@@ -47,6 +47,19 @@
       "cwd": "${workspaceFolder}${pathSeparator}api",
       "envFile": "${workspaceFolder}/.env",
       "jinja": true
+    },
+    {
+      "name": "Run Django",
+      "type": "python",
+      "request": "launch",
+      "module": "manage",
+      "args": [
+          "runserver",
+          "0.0.0.0:8000"
+      ],
+      "cwd": "${workspaceFolder}${pathSeparator}api",
+      "envFile": "${workspaceFolder}/.env",
+      "jinja": true
     }
   ],
   "compounds": [
