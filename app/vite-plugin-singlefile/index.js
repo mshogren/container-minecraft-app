@@ -1,10 +1,9 @@
-Object.defineProperty(exports, '__esModule', { value: true });
-function viteSingleFile() {
+export default function viteSingleFile() {
   return {
     name: 'vite:singlefile',
     transformIndexHtml: {
-      enforce: 'post',
-      transform(html, ctx) {
+      order: 'post',
+      handler(html, ctx) {
         // Only use this plugin during build
         if (!ctx || !ctx.bundle) return html;
         // Get the bundle
@@ -27,4 +26,3 @@ function viteSingleFile() {
     },
   };
 }
-exports.viteSingleFile = viteSingleFile;

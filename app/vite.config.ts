@@ -3,7 +3,7 @@ import { defineConfig, UserConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import checker from 'vite-plugin-checker';
 import purgecss from '@fullhuman/postcss-purgecss';
-import { viteSingleFile } from './vite-plugin-singlefile';
+import viteSingleFile from './vite-plugin-singlefile';
 
 const purge = purgecss({
   content: ['./index.html', './src/**/*.tsx'],
@@ -17,12 +17,13 @@ export default defineConfig(({ mode }) => {
     },
     plugins: [
       react(),
-      checker({
-        typescript: true,
-        eslint: {
-          lintCommand: 'eslint "./src/**/*.{ts,tsx}"',
-        },
-      }),
+      mode !== 'test' &&
+        checker({
+          typescript: true,
+          eslint: {
+            lintCommand: 'eslint "./src/**/*.{ts,tsx}"',
+          },
+        }),
       viteSingleFile(),
     ],
     build: {
