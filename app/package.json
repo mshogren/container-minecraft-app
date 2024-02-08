@@ -12,7 +12,7 @@
   "dependencies": {
     "@fortawesome/fontawesome-free": "6.5.1",
     "graphql": "16.8.1",
-    "oidc-client-ts": "2.4.0",
+    "oidc-client-ts": "3.0.1",
     "purecss": "3.0.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
