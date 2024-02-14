@@ -16,8 +16,8 @@
   },
   "homepage": "https://github.com/mshogren/container-minecraft-app#readme",
   "devDependencies": {
-    "@commitlint/cli": "18.6.0",
-    "@commitlint/config-conventional": "18.6.0",
+    "@commitlint/cli": "18.6.1",
+    "@commitlint/config-conventional": "18.6.2",
     "graphql-schema-linter": "3.0.1",
     "husky": "9.0.10",
     "lint-staged": "15.2.2",
