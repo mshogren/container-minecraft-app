@@ -157,7 +157,7 @@ jobs:
       - name: Conventional Changelog Action
         id: changelog
         if: github.event_name == 'push'
-        uses: TriPSs/conventional-changelog-action@ebc124553a706189378cccb6a34fa836ebff7bc1 # v5
+        uses: TriPSs/conventional-changelog-action@f04dac1fd07687cec8ea302937ca588b33786e98 # v5
         with:
           github-token: ${{ secrets.github_token }}
           output-file: "false"
