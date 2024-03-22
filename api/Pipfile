@@ -6,7 +6,7 @@ name = "pypi"
 [packages]
 cachetools = "==5.3.3"
 docker = "==7.0.0"
-kubernetes = "==27.2.0"
+kubernetes = "==29.0.0"
 packaging = "==23.2"
 pydantic = "==2.6.4"
 pydantic-settings = "==2.2.1"
