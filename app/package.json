@@ -50,7 +50,7 @@
     "ts-node": "10.9.2",
     "tsc-files": "1.1.4",
     "typescript": "5.4.3",
-    "vite": "5.2.3",
+    "vite": "5.2.4",
     "vite-plugin-checker": "0.6.4",
     "vitest": "1.4.0",
     "wonka": "6.3.4"
