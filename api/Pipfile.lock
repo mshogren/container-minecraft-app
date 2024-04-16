@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "7c070a4b2d0a881df32429131de625c34077bd7034d722c2037be156756a6718"
+            "sha256": "3a535faf1a980632e47c7ccf976d4ff0eec7fbe4e46e4f7f3c7781fd4625678a"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -556,7 +556,7 @@
                 "sha256:37dd54208da7e1cd875388217d5e00ebd4179249f90fb72437e91a35459a0ad3",
                 "sha256:a8b2bc7bffae282281c8140a97d3aa9c14da0b136dfe83f850eea9a5f7470427"
             ],
-            "markers": "python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2'",
+            "markers": "python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3'",
             "version": "==2.9.0.post0"
         },
         "python-dotenv": {
@@ -685,7 +685,7 @@
                 "sha256:1e61c37477a1626458e36f7b1d82aa5c9b094fa4802892072e49de9c60c4c926",
                 "sha256:8abb2f1d86890a2dfb989f9a77cfcfd3e47c2a354b01111771326f8aa26e0254"
             ],
-            "markers": "python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2'",
+            "markers": "python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3'",
             "version": "==1.16.0"
         },
         "sniffio": {
@@ -710,11 +710,11 @@
                 "fastapi"
             ],
             "hashes": [
-                "sha256:795e5bc38a03c090f591305ec7b66fcaf524b4a5d6e30702fd6fd1b1a2e1e6be",
-                "sha256:e8d0604dbba0067d04f2f5075c38186646383bc64600c4437a3ac7e9eab0a395"
+                "sha256:b330e7041815db32c6706a30557b936d042472fa0da18c78149aa6ed76ec95de",
+                "sha256:d51f4b04cc2f44453f72791f05b386859922f6ea5244399487b9e716d45c7b6e"
             ],
             "markers": "python_version >= '3.8' and python_version < '4.0'",
-            "version": "==0.225.0"
+            "version": "==0.225.1"
         },
         "typer": {
             "hashes": [
