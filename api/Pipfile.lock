@@ -290,11 +290,11 @@
         },
         "fastapi-cli": {
             "hashes": [
-                "sha256:589565ba758432632eadcf7b950e0ec76bb283b549784d9df17f261a8a9de476",
-                "sha256:d7a8ec89fd52ad16c52de9fe7299e4b22c7a32e1bf28aa886e5517e4927423dd"
+                "sha256:3b6e4d2c4daee940fb8db59ebbfd60a72c4b962bcf593e263e4cc69da4ea3d7f",
+                "sha256:ae233115f729945479044917d949095e829d2d84f56f55ce1ca17627872825a5"
             ],
             "markers": "python_version >= '3.8'",
-            "version": "==0.0.2"
+            "version": "==0.0.3"
         },
         "google-auth": {
             "hashes": [
