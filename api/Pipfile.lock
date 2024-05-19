@@ -1287,12 +1287,12 @@
         },
         "pylint": {
             "hashes": [
-                "sha256:9f20c05398520474dac03d7abb21ab93181f91d4c110e1e0b32bc0d016c34fa4",
-                "sha256:ad8baf17c8ea5502f23ae38d7c1b7ec78bd865ce34af9a0b986282e2611a8ff2"
+                "sha256:93643d4caa0f5ca3c24e16ed0cc835e9a1481870c3abcb481aad0cb4cb121243",
+                "sha256:c4ab2acdffeb1bead50ecf41b15b38ebe61a173e4234d5545bddd732f1f3380a"
             ],
             "index": "pypi",
             "markers": "python_full_version >= '3.8.0'",
-            "version": "==3.2.0"
+            "version": "==3.2.1"
         },
         "pytest": {
             "hashes": [
