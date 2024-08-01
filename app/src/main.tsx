@@ -24,7 +24,7 @@ function AuthProviderWithNavigate({ children }: PropsWithChildren) {
 
   useEffect(() => {
     const loadAuthConfig = async () => {
-      const response = await fetch(import.meta.env.VITE_CONFIG_ENDPOINT);
+      const response = await fetch(import.meta.env.VITE_CONFIG_ENDPOINT || '');
       setAuthConfig(await response.json());
     };
 
@@ -51,7 +51,7 @@ function AuthorizedUrqlProvider({ children }: PropsWithChildren) {
   const auth = useAuth();
 
   const client = createClient({
-    url: import.meta.env.VITE_GRAPHQL_ENDPOINT,
+    url: import.meta.env.VITE_GRAPHQL_ENDPOINT || '',
     fetchOptions: () => {
       if (auth.user)
         return {
