@@ -12,7 +12,7 @@ pydantic = "==2.8.2"
 pydantic-settings = "==2.4.0"
 python-jose = {extras = ["cryptography"], version = "==3.3.0"}
 strawberry-graphql = {extras = ["cli", "fastapi"], version = "==0.237.3"}
-uvicorn = {extras = ["standard"], version = "==0.30.5"}
+uvicorn = {extras = ["standard"], version = "==0.30.6"}
 
 [dev-packages]
 autopep8 = "*"
