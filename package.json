@@ -20,7 +20,7 @@
     "@commitlint/config-conventional": "19.2.2",
     "graphql-schema-linter": "3.0.1",
     "husky": "9.1.4",
-    "lint-staged": "15.2.8",
+    "lint-staged": "15.2.9",
     "madr": "3.0.0"
   },
   "scripts": {
