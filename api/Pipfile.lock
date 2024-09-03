@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "677982a5fc755139e1fb66838db036c91f21b2c983cb55392e6544c7c3492f65"
+            "sha256": "26430ad3de0a65d1c8f0fcf997e68b760a95880fd68299420be16a30870a5662"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -576,7 +576,7 @@
                 "sha256:37dd54208da7e1cd875388217d5e00ebd4179249f90fb72437e91a35459a0ad3",
                 "sha256:a8b2bc7bffae282281c8140a97d3aa9c14da0b136dfe83f850eea9a5f7470427"
             ],
-            "markers": "python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2'",
+            "markers": "python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3'",
             "version": "==2.9.0.post0"
         },
         "python-dotenv": {
@@ -707,7 +707,7 @@
                 "sha256:1e61c37477a1626458e36f7b1d82aa5c9b094fa4802892072e49de9c60c4c926",
                 "sha256:8abb2f1d86890a2dfb989f9a77cfcfd3e47c2a354b01111771326f8aa26e0254"
             ],
-            "markers": "python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2'",
+            "markers": "python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3'",
             "version": "==1.16.0"
         },
         "sniffio": {
@@ -732,11 +732,11 @@
                 "fastapi"
             ],
             "hashes": [
-                "sha256:1e69a4955da27fd18faaf80b88f42ffc808cc6012b701d7164bb06625d5c5301",
-                "sha256:890abaf5a249c97fc78514d80a4221ddcb4b45d50c8a7d2b07ab859fd95b0b72"
+                "sha256:b01aa2f50889da60b1b88fc49652684dca5bbe95562280d82dd84734f0604af7",
+                "sha256:bcafbfe8d201051b5c191d206bb7d1b73f42b85085fd3e9f2a7b1fe196fb7fdf"
             ],
             "markers": "python_version >= '3.8' and python_version < '4.0'",
-            "version": "==0.239.0"
+            "version": "==0.239.1"
         },
         "typer": {
             "hashes": [
@@ -750,7 +750,7 @@
                 "sha256:04e5ca0351e0f3f85c6853954072df659d0d13fac324d0072316b67d7794700d",
                 "sha256:1a7ead55c7e559dd4dee8856e3a88b41225abfe1ce8df57b7c13915fe121ffb8"
             ],
-            "markers": "python_version < '3.13'",
+            "markers": "python_version >= '3.8'",
             "version": "==4.12.2"
         },
         "urllib3": {
