@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "aa67c1867f02f9503c764bd031b6070922942d375a164b0ecdd3cc1f95f000d4"
+            "sha256": "b3ee114181a306d683772d189431f82dbdfccb9e16f9c12e1501bc4b449ec5b5"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -277,10 +277,10 @@
         },
         "fastapi": {
             "hashes": [
-                "sha256:9908f2a5cc733004de6ca5e1412698f35085cefcbfd41d539245b9edf87b73c1",
-                "sha256:fee75aa1b1d3d73f79851c432497e4394e413e1dece6234f68d3ce250d12760a"
+                "sha256:1d7bbbeabbaae0acb0c22f0ab0b040f642d3093ca3645f8c876b6f91391861d8",
+                "sha256:5d4746f6e4b7dff0b4f6b6c6d5445645285f662fe75886e99af7ee2d6b58bb3e"
             ],
-            "version": "==0.114.0"
+            "version": "==0.114.1"
         },
         "google-auth": {
             "hashes": [
@@ -429,6 +429,7 @@
         },
         "pyasn1": {
             "hashes": [
+                "sha256:0d632f46f2ba09143da3a8afe9e33fb6f92fa2320ab7e886e2d0f7672af84629",
                 "sha256:6f580d2bdd84365380830acf45550f2511469f673cb4a5ae3857a3170128b034"
             ],
             "markers": "python_version >= '3.8'",
@@ -436,6 +437,7 @@
         },
         "pyasn1-modules": {
             "hashes": [
+                "sha256:49bfa96b45a292b711e986f222502c1c9a5e1f4e568fc30e2574a6c7d07838fd",
                 "sha256:c28e2dbf9c06ad61c71a075c7e0f9fd0f1b0bb2d2ad4377f240d33ac2ab60a7c"
             ],
             "markers": "python_version >= '3.8'",
@@ -555,12 +557,12 @@
         },
         "pydantic-settings": {
             "hashes": [
-                "sha256:204828c02481a2e7135466b26a7d65d9e15a17d52d1d8f59cacdf9ad625e1140",
-                "sha256:eae04a3dd9adf521a4c959dcefb984e0f3b1d841999daf02f961dcc4d31d2f7f"
+                "sha256:2c912e55fd5794a59bf8c832b9de832dcfdf4778d79ff79b708744eed499a907",
+                "sha256:f90b139682bee4d2065273d5185d71d37ea46cfe57e1b5ae184fc6a0b2484ca0"
             ],
             "index": "pypi",
             "markers": "python_version >= '3.8'",
-            "version": "==2.5.0"
+            "version": "==2.5.2"
         },
         "pygments": {
             "hashes": [
@@ -748,7 +750,7 @@
                 "sha256:04e5ca0351e0f3f85c6853954072df659d0d13fac324d0072316b67d7794700d",
                 "sha256:1a7ead55c7e559dd4dee8856e3a88b41225abfe1ce8df57b7c13915fe121ffb8"
             ],
-            "markers": "python_version >= '3.8'",
+            "markers": "python_version < '3.13'",
             "version": "==4.12.2"
         },
         "urllib3": {
