@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "de1286dd69177dd0725576063ded23845dd6d80e2e9d5ecf1442539f16578159"
+            "sha256": "fb694348038375f4a987c3ecfb5224ad38a09eb2b1c70d2761b3bcd1dcae1060"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -357,12 +357,12 @@
         },
         "kubernetes": {
             "hashes": [
-                "sha256:0f9376329c85cf07615ed6886bf9bf21eb1cbfc05e14ec7b0f74ed8153cd2815",
-                "sha256:d479931c6f37561dbfdf28fc5f46384b1cb8b28f9db344ed4a232ce91990825a"
+                "sha256:41e4c77af9f28e7a6c314e3bd06a8c6229ddd787cad684e0ab9f69b498e98ebc",
+                "sha256:e212e8b7579031dd2e512168b617373bc1e03888d41ac4e04039240a292d478d"
             ],
             "index": "pypi",
             "markers": "python_version >= '3.6'",
-            "version": "==27.2.0"
+            "version": "==30.1.0"
         },
         "libcst": {
             "hashes": [
@@ -750,7 +750,7 @@
                 "sha256:04e5ca0351e0f3f85c6853954072df659d0d13fac324d0072316b67d7794700d",
                 "sha256:1a7ead55c7e559dd4dee8856e3a88b41225abfe1ce8df57b7c13915fe121ffb8"
             ],
-            "markers": "python_version < '3.13'",
+            "markers": "python_version >= '3.8'",
             "version": "==4.12.2"
         },
         "urllib3": {
