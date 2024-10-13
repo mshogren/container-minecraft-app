@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "6d71b4b8339e8615c927c78b366ad480c35e32c98a5af0a6d8f45046c28605b8"
+            "sha256": "c74ebfcf3665e40b24c5e37e64758a4a8775c87e1dbb5b93c5439b0f4c7104ce"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -292,10 +292,10 @@
         },
         "fastapi": {
             "hashes": [
-                "sha256:17ea427674467486e997206a5ab25760f6b09e069f099b96f5b55a32fb6f1631",
-                "sha256:f93b4ca3529a8ebc6fc3fcf710e5efa8de3df9b41570958abf1d97d843138004"
+                "sha256:3995739e0b09fa12f984bce8fa9ae197b35d433750d3d312422d846e283697ee",
+                "sha256:61704c71286579cc5a598763905928f24ee98bfcc07aabe84cfefb98812bbc86"
             ],
-            "version": "==0.115.0"
+            "version": "==0.115.2"
         },
         "google-auth": {
             "hashes": [
@@ -741,11 +741,11 @@
         },
         "starlette": {
             "hashes": [
-                "sha256:4517a1409e2e73ee4951214ba012052b9e16f60e90d73cfb06192c19203bbb05",
-                "sha256:863a1588f5574e70a821dadefb41e4881ea451a47a3cd1b4df359d4ffefe5ead"
+                "sha256:134dd6deb655a9775991d352312d53f1879775e5cc8a481f966e83416a2c3f71",
+                "sha256:caaa3b87ef8518ef913dac4f073dea44e85f73343ad2bdc17941931835b2a26a"
             ],
             "markers": "python_version >= '3.8'",
-            "version": "==0.38.6"
+            "version": "==0.39.2"
         },
         "strawberry-graphql": {
             "extras": [
@@ -753,11 +753,11 @@
                 "fastapi"
             ],
             "hashes": [
-                "sha256:4d2e7dd7b4f0776a31aefd60bb30430e28c9431bd5fe851637c328416cd1a413",
-                "sha256:f6eecca7eb823e55da9c20a9d4408c4fa029aac7ada83a0414e9fec1c11644a9"
+                "sha256:a18d6404ac982b6ddca937c34e2832910fbdb38945bce656498c8d30c341277b",
+                "sha256:ab3908014493cc0b98e45a8af2acd9980d18bd92a13d0c16811b1f49f3c62977"
             ],
             "markers": "python_version >= '3.8' and python_version < '4.0'",
-            "version": "==0.246.1"
+            "version": "==0.246.2"
         },
         "typer": {
             "hashes": [
