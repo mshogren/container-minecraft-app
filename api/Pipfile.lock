@@ -26,11 +26,11 @@
         },
         "anyio": {
             "hashes": [
-                "sha256:137b4559cbb034c477165047febb6ff83f390fc3b20bf181c1fc0a728cb8beeb",
-                "sha256:c7d2e9d63e31599eeb636c8c5c03a7e108d73b345f064f1c19fdc87b79036a9a"
+                "sha256:6caec6b1391f6f6d7b2ef2258d2902d36753149f67478f7df4be8e54d03a8f54",
+                "sha256:f72a7bb3dd0752b3bd8b17a844a019d7fbf6ae218c588f4f9ba1b2f600b12347"
             ],
-            "markers": "python_version >= '3.9'",
-            "version": "==4.6.0"
+            "markers": "python_version >= '3.8'",
+            "version": "==4.6.2"
         },
         "cachetools": {
             "hashes": [
@@ -307,11 +307,11 @@
         },
         "graphql-core": {
             "hashes": [
-                "sha256:1604f2042edc5f3114f49cac9d77e25863be51b23a54a61a23245cf32f6476f0",
-                "sha256:acbe2e800980d0e39b4685dd058c2f4042660b89ebca38af83020fd872ff1264"
+                "sha256:2f150d5096448aa4f8ab26268567bbfeef823769893b39c1a2e1409590939c8a",
+                "sha256:e671b90ed653c808715645e3998b7ab67d382d55467b7e2978549111bbabf8d5"
             ],
             "markers": "python_version >= '3.6' and python_version < '4'",
-            "version": "==3.2.4"
+            "version": "==3.2.5"
         },
         "h11": {
             "hashes": [
