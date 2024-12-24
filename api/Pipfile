@@ -11,7 +11,7 @@ packaging = "==24.2"
 pydantic = "==2.10.4"
 pydantic-settings = "==2.7.0"
 python-jose = {extras = ["cryptography"], version = "==3.3.0"}
-strawberry-graphql = {extras = ["cli", "fastapi"], version = "==0.253.0"}
+strawberry-graphql = {extras = ["cli", "fastapi"], version = "==0.256.1"}
 uvicorn = {extras = ["standard"], version = "==0.32.1"}
 
 [dev-packages]
