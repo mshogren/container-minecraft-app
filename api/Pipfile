@@ -8,7 +8,7 @@ cachetools = "==5.5.0"
 docker = "==7.1.0"
 kubernetes = "==27.2.0"
 packaging = "==24.2"
-pydantic = "==2.10.4"
+pydantic = "==2.10.5"
 pydantic-settings = "==2.7.0"
 python-jose = {extras = ["cryptography"], version = "==3.3.0"}
 strawberry-graphql = {extras = ["cli", "fastapi"], version = "==0.256.1"}
