@@ -19,7 +19,7 @@
     "react-oidc-context": "3.2.0",
     "react-router-dom": "6.28.2",
     "react-window": "1.8.11",
-    "react-window-infinite-loader": "1.0.9",
+    "react-window-infinite-loader": "1.0.10",
     "urql": "4.2.1"
   },
   "devDependencies": {
