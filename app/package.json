@@ -23,7 +23,7 @@
     "urql": "4.2.2"
   },
   "devDependencies": {
-    "@fullhuman/postcss-purgecss": "6.0.0",
+    "@fullhuman/postcss-purgecss": "7.0.2",
     "@testing-library/react": "16.3.0",
     "@testing-library/user-event": "14.6.1",
     "@types/node": "20.17.30",
