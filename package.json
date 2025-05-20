@@ -21,7 +21,7 @@
     "graphql-schema-linter": "3.0.1",
     "husky": "9.1.7",
     "lint-staged": "15.5.2",
-    "madr": "3.0.0"
+    "madr": "4.0.0"
   },
   "scripts": {
     "prepare": "husky"
