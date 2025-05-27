@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "ba11d64fbcaa9effa79b85436e520d512b801bf0ef490939221e3054ac467879"
+            "sha256": "98a6c1f44969a5d3b68915b42010dd59bac5071614a5448afbd41ee5c79a7bfd"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -34,12 +34,12 @@
         },
         "cachetools": {
             "hashes": [
-                "sha256:1a661caa9175d26759571b2e19580f9d6393969e5dfca11fdb1f947a23e640d4",
-                "sha256:d26a22bcc62eb95c3beabd9f1ee5e820d3d2704fe2967cbe350e20c8ffcd3f0a"
+                "sha256:82e73ba88f7b30228b5507dce1a1f878498fc669d972aef2dde4f3a3c24f103e",
+                "sha256:f225782b84438f828328fc2ad74346522f27e5b1440f4e9fd18b20ebfd1aa2cf"
             ],
             "index": "pypi",
-            "markers": "python_version >= '3.7'",
-            "version": "==5.5.2"
+            "markers": "python_version >= '3.9'",
+            "version": "==6.0.0"
         },
         "certifi": {
             "hashes": [
@@ -298,11 +298,11 @@
         },
         "google-auth": {
             "hashes": [
-                "sha256:a33cde547a2134273226fa4b853883559947ebe9207521f7afc707efbf690f58",
-                "sha256:f7e568d42eedfded58734f6a60c58321896a621f7c116c411550a4b4a13da90b"
+                "sha256:0f7c6a64927d34c1a474da92cfc59e552a5d3b940d3266606c6a28b72888b9e4",
+                "sha256:20705f6803fd2c4d1cc2dcb0df09d4dfcb9a7d51fd59e94a3a28231fd93119ed"
             ],
-            "markers": "python_version >= '3.7'",
-            "version": "==2.40.2"
+            "markers": "python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3'",
+            "version": "==1.6.3"
         },
         "graphql-core": {
             "hashes": [
