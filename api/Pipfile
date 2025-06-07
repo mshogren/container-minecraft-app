@@ -10,7 +10,7 @@ kubernetes = "==27.2.0"
 packaging = "==25.0"
 pydantic = "==2.11.5"
 pydantic-settings = "==2.9.1"
-python-jose = {extras = ["cryptography"], version = "==3.4.0"}
+python-jose = {extras = ["cryptography"], version = "==3.5.0"}
 strawberry-graphql = {extras = ["cli", "fastapi"], version = "==0.271.0"}
 uvicorn = {extras = ["standard"], version = "==0.34.3"}
 
