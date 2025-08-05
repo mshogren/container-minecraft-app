@@ -1,4 +1,9 @@
-import React, { PropsWithChildren, useEffect, useState } from 'react';
+import React, {
+  PropsWithChildren,
+  ReactElement,
+  useEffect,
+  useState,
+} from 'react';
 import { createRoot } from 'react-dom/client';
 import { BrowserRouter, useNavigate } from 'react-router-dom';
 import { AuthProvider, useAuth } from 'react-oidc-context';
@@ -44,7 +49,7 @@ function AuthProviderWithNavigate({ children }: PropsWithChildren) {
       {children}
     </AuthProvider>
     // eslint-disable-next-line no-undef
-  )) as JSX.Element;
+  )) as ReactElement;
 }
 
 function AuthorizedUrqlProvider({ children }: PropsWithChildren) {

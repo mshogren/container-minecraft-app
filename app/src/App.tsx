@@ -1,11 +1,11 @@
-import { PropsWithChildren, useEffect } from 'react';
+import { PropsWithChildren, ReactElement, useEffect } from 'react';
 import { Routes, Route, Outlet, Link, useNavigate } from 'react-router-dom';
 import { useAuth, hasAuthParams } from 'react-oidc-context';
 import './App.css';
 import Servers from './Servers';
 
 // eslint-disable-next-line no-undef
-function ProtectedRoute({ children }: PropsWithChildren): JSX.Element {
+function ProtectedRoute({ children }: PropsWithChildren): ReactElement {
   const navigate = useNavigate();
 
   const handleClick = () => {
@@ -48,7 +48,7 @@ function ProtectedRoute({ children }: PropsWithChildren): JSX.Element {
   }
 
   // eslint-disable-next-line no-undef
-  return children as JSX.Element;
+  return children as ReactElement;
 }
 
 function Layout() {
