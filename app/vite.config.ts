@@ -24,7 +24,10 @@ export default defineConfig(({ mode }) => {
             lintCommand: 'eslint "./src/**/*.{ts,tsx}"',
           },
         }),
-      viteSingleFile({ inlinePattern: ['*.css'] }),
+      viteSingleFile({
+        inlinePattern: ['**/*.css'],
+        useRecommendedBuildConfig: false,
+      }),
     ],
     build: {
       cssCodeSplit: false,
