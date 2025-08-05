@@ -1,14 +1,16 @@
-const purgecss = require('@fullhuman/postcss-purgecss')({
-  content: [ './hugo_stats.json' ],
+import { purgeCSSPlugin } from '@fullhuman/postcss-purgecss';
+
+const purgecss = purgeCSSPlugin({
+  content: ["./hugo_stats.json"],
   defaultExtractor: (content) => {
-    let els = JSON.parse(content).htmlElements;
-    return els.tags.concat(els.classes, els.ids);
+    const els = JSON.parse(content).htmlElements;
+    return [...(els.tags || []), ...(els.classes || []), ...(els.ids || [])];
   },
   safelist: ['hide', 'show']
 });
 
-module.exports = {
+export default {
   plugins: [
     ...([ purgecss ])
-   ]
+  ],
 };

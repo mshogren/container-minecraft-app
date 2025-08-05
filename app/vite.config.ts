@@ -2,10 +2,10 @@
 import { defineConfig, UserConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import checker from 'vite-plugin-checker';
-import purgecss from '@fullhuman/postcss-purgecss';
-import viteSingleFile from './vite-plugin-singlefile';
+import { purgeCSSPlugin } from '@fullhuman/postcss-purgecss';
+import { viteSingleFile } from 'vite-plugin-singlefile';
 
-const purge = purgecss({
+const purge = purgeCSSPlugin({
   content: ['./index.html', './src/**/*.tsx'],
 });
 
@@ -24,15 +24,10 @@ export default defineConfig(({ mode }) => {
             lintCommand: 'eslint "./src/**/*.{ts,tsx}"',
           },
         }),
-      viteSingleFile(),
+      viteSingleFile({ inlinePattern: ['*.css'] }),
     ],
     build: {
       cssCodeSplit: false,
-      rollupOptions: {
-        output: {
-          manualChunks: () => 'everything.js',
-        },
-      },
       sourcemap: true,
     },
     css: {
