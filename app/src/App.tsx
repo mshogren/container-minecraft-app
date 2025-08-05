@@ -4,7 +4,6 @@ import { useAuth, hasAuthParams } from 'react-oidc-context';
 import './App.css';
 import Servers from './Servers';
 
-// eslint-disable-next-line no-undef
 function ProtectedRoute({ children }: PropsWithChildren): ReactElement {
   const navigate = useNavigate();
 
@@ -47,7 +46,6 @@ function ProtectedRoute({ children }: PropsWithChildren): ReactElement {
     );
   }
 
-  // eslint-disable-next-line no-undef
   return children as ReactElement;
 }
 

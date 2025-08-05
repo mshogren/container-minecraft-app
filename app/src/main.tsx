@@ -48,7 +48,6 @@ function AuthProviderWithNavigate({ children }: PropsWithChildren) {
     >
       {children}
     </AuthProvider>
-    // eslint-disable-next-line no-undef
   )) as ReactElement;
 }
 

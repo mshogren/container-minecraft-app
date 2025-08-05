@@ -9,7 +9,6 @@ import {
 import { ServerError } from './ServerQueries';
 
 interface RenderFunction<Data> {
-  // eslint-disable-next-line no-unused-vars, no-undef
   (data: Data): ReactElement;
 }
 
@@ -33,7 +32,6 @@ export interface MutationConfiguration extends GraphQLHookConfiguration<never> {
 }
 
 export interface GraphQLComponentProps<Data, Variables extends AnyVariables> {
-  // eslint-disable-next-line no-unused-vars, no-undef
   content: QueryConfiguration<Data, Variables> | ReactElement;
   // eslint-disable-next-line react/require-default-props
   mutations?: MutationConfiguration[];
@@ -130,6 +128,5 @@ export function GraphQLComponent<Data, Variables extends AnyVariables>(
   if (loading !== '') return <div className="loader">{loading}</div>;
 
   if (successRenderer) return successRenderer(data as Data);
-  // eslint-disable-next-line no-unused-vars, no-undef
   return content as ReactElement;
 }
