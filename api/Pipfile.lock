@@ -388,11 +388,11 @@
         },
         "lia-web": {
             "hashes": [
-                "sha256:1dd8630e02c71f74b2eb797d65129ab4763758c771e2807cf2f2df83de683901",
-                "sha256:2ef5a10c43bd6e4270038a4bc594d49efcde9a4d8b5ad0439eb2133ddec3e381"
+                "sha256:5963767663891d8e776550df45ae49e8faf7a220be743989c6719f36801e8985",
+                "sha256:dd4d4efe5f4186142c2f104d734dc4c06fa6f1163d87b824e275e620df18921f"
             ],
             "markers": "python_version >= '3.9'",
-            "version": "==0.2.1"
+            "version": "==0.2.2"
         },
         "libcst": {
             "hashes": [
