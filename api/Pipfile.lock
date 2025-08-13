@@ -375,11 +375,11 @@
         },
         "lia-web": {
             "hashes": [
-                "sha256:5963767663891d8e776550df45ae49e8faf7a220be743989c6719f36801e8985",
-                "sha256:dd4d4efe5f4186142c2f104d734dc4c06fa6f1163d87b824e275e620df18921f"
+                "sha256:237c779c943cd4341527fc0adfcc3d8068f992ee051f4ef059b8474ee087f641",
+                "sha256:ccc9d24cdc200806ea96a20b22fb68f4759e6becdb901bd36024df7921e848d7"
             ],
             "markers": "python_version >= '3.9'",
-            "version": "==0.2.2"
+            "version": "==0.2.3"
         },
         "libcst": {
             "hashes": [
@@ -450,11 +450,11 @@
         },
         "markdown-it-py": {
             "hashes": [
-                "sha256:355216845c60bd96232cd8d8c40e8f9765cc86f46880e43a8fd22dc1a1a8cab1",
-                "sha256:e3f60a94fa066dc52ec76661e37c851cb232d92f9886b15cb560aaada2df8feb"
+                "sha256:87327c59b172c5011896038353a81343b6754500a08cd7a4973bb48c6d578147",
+                "sha256:cb0a2b4aa34f932c007117b194e945bd74e0ec24133ceb5bac59009cda1cb9f3"
             ],
-            "markers": "python_version >= '3.8'",
-            "version": "==3.0.0"
+            "markers": "python_version >= '3.10'",
+            "version": "==4.0.0"
         },
         "mdurl": {
             "hashes": [
