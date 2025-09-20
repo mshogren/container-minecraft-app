@@ -869,11 +869,11 @@
         },
         "typer": {
             "hashes": [
-                "sha256:015534a6edaa450e7007eba705d5c18c3349dcea50a6ad79a5ed530967575824",
-                "sha256:b77dc07d849312fd2bb5e7f20a7af8985c7ec360c45b051ed5412f64d8dc1580"
+                "sha256:342049be1a608c972b0f77dd2b2573e74366b83465cfd5ebd3fede187e1f885e",
+                "sha256:e0f91cc4bc0761f739c74ffd92aab3c8df279c4cab271b0dba1f302afa0b5a84"
             ],
             "markers": "python_version >= '3.7'",
-            "version": "==0.17.4"
+            "version": "==0.18.0"
         },
         "typing-extensions": {
             "hashes": [
