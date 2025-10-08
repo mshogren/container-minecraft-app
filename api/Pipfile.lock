@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "0103b5cc35c52109108efea6b32c5f7ac77f9e3c09a84922cf873014c81e7a33"
+            "sha256": "628e110d08f5acfe9cd684c24e9e3564fea3b727a6d98b105698311d1010ab3c"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -881,11 +881,11 @@
                 "fastapi"
             ],
             "hashes": [
-                "sha256:448a2b54e44f70ff87639d31db8b771e53cb77981cb46e50f52837aec34e0b05",
-                "sha256:bad50828495dd22c35a19831cb9c4aeced274719f2ee2282591633e9c766f1be"
+                "sha256:2442ab07ad408dc05c41a90685aa14038e617285e9b1abd6c73a8c43fb7ea399",
+                "sha256:d8e63dcc0472e59d57e00c39de4d620699288127bc571698d82ab292498c744e"
             ],
             "markers": "python_version >= '3.9' and python_version < '4.0'",
-            "version": "==0.283.1"
+            "version": "==0.283.2"
         },
         "typer": {
             "hashes": [
@@ -1087,11 +1087,11 @@
         },
         "websocket-client": {
             "hashes": [
-                "sha256:17b44cc997f5c498e809b22cdf2d9c7a9e71c02c8cc2b6c56e7c2d1239bfa526",
-                "sha256:3239df9f44da632f96012472805d40a23281a991027ce11d2f45a6f24ac4c3da"
+                "sha256:9e813624b6eb619999a97dc7958469217c3176312b3a16a4bd1bc7e08a46ec98",
+                "sha256:af248a825037ef591efbf6ed20cc5faa03d3b47b9e5a2230a529eeee1c1fc3ef"
             ],
-            "markers": "python_version >= '3.8'",
-            "version": "==1.8.0"
+            "markers": "python_version >= '3.9'",
+            "version": "==1.9.0"
         },
         "websockets": {
             "hashes": [
