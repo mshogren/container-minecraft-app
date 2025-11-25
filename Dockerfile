@@ -18,7 +18,7 @@ COPY api/Pipfile.lock .
 RUN PIPENV_VENV_IN_PROJECT=1 pipenv install --deploy
 
 
-FROM node:22 AS node-deps
+FROM node:24 AS node-deps
 
 WORKDIR /app
 COPY app/package*.json ./
