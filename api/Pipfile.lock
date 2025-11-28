@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "8a54dfab1e065b760f43d226563aba25ef6fbb49bc985c32c0421c179f0a37e7"
+            "sha256": "2c1d59f16629d11ed319c3be53b2c0b0363165ad63712d3cf92ce02b2cfb3dc8"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -353,11 +353,11 @@
         },
         "fastapi": {
             "hashes": [
-                "sha256:0055bc24fe53e56a40e9e0ad1ae2baa81622c406e548e501e717634e2dfbc40b",
-                "sha256:0c78fc87587fcd910ca1bbf5bc8ba37b80e119b388a7206b39f0ecc95ebf53e9"
+                "sha256:a456e8915dfc6c8914a50d9651133bd47ec96d331c5b44600baa635538a30d67",
+                "sha256:cd9b5352031f93773228af8b4c443eedc2ac2aa74b27780387b853c3726fb94b"
             ],
             "markers": "python_version >= '3.8'",
-            "version": "==0.121.3"
+            "version": "==0.122.0"
         },
         "google-auth": {
             "hashes": [
@@ -587,12 +587,12 @@
         },
         "pydantic": {
             "hashes": [
-                "sha256:0f8cb9555000a4b5b617f66bfd2566264c4984b27589d3b845685983e8ea85ac",
-                "sha256:92d3d202a745d46f9be6df459ac5a064fdaa3c1c4cd8adcfa332ccf3c05f871e"
+                "sha256:4d351024c75c0f085a9febbb665ce8c0c6ec5d30e903bdb6394b7ede26aebb49",
+                "sha256:e561593fccf61e8a20fc46dfc2dfe075b8be7d0188df33f221ad1f0139180f9d"
             ],
             "index": "pypi",
             "markers": "python_version >= '3.9'",
-            "version": "==2.12.4"
+            "version": "==2.12.5"
         },
         "pydantic-core": {
             "hashes": [
