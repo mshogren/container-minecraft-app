@@ -28,6 +28,7 @@ function ProtectedRoute({ children }: PropsWithChildren): ReactElement {
     auth.activeNavigator,
     auth.isLoading,
     auth.signinRedirect,
+    auth,
   ]);
 
   if (auth.activeNavigator) {

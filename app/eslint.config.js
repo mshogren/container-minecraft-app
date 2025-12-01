@@ -7,7 +7,6 @@ import importPlugin from 'eslint-plugin-import';
 import reactPlugin from 'eslint-plugin-react';
 import reactHooksPlugin from 'eslint-plugin-react-hooks';
 import eslintPluginJsxA11y from 'eslint-plugin-jsx-a11y';
-import cypressPlugin from 'eslint-plugin-cypress';
 import js from '@eslint/js';
 
 export default defineConfig([
@@ -19,7 +18,6 @@ export default defineConfig([
   eslintPluginJsxA11y.flatConfigs.recommended,
   importPlugin.flatConfigs.recommended,
   importPlugin.flatConfigs.typescript,
-  cypressPlugin.configs.recommended,
   {
     languageOptions: {
       globals: {
@@ -72,7 +70,9 @@ export default defineConfig([
       'import/resolver': {
         typescript: {},
       },
+      react: {
+        version: 'detect',
+      },
     },
-    // }, globalIgnores(["**/node_modules", "**/vite-plugin-singlefile"])]);
   },
 ]);

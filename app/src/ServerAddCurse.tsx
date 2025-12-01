@@ -18,7 +18,6 @@ import {
 import { InfiniteListbox, ServerNameInput } from './utils';
 
 interface ModpackClickHandler {
-  // eslint-disable-next-line no-unused-vars
   (event: MouseEvent<HTMLOptionElement>, modpacks: ModpackData[]): void;
 }
 

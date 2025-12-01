@@ -19,8 +19,10 @@ interface GraphQLHookConfiguration<Data> {
   successRenderer?: RenderFunction<Data>;
 }
 
-export interface QueryConfiguration<Data, Variables extends AnyVariables>
-  extends GraphQLHookConfiguration<Data> {
+export interface QueryConfiguration<
+  Data,
+  Variables extends AnyVariables,
+> extends GraphQLHookConfiguration<Data> {
   response: UseQueryResponse<Data, Variables>;
   successRenderer: RenderFunction<Data>;
 }
@@ -33,7 +35,6 @@ export interface MutationConfiguration extends GraphQLHookConfiguration<never> {
 
 export interface GraphQLComponentProps<Data, Variables extends AnyVariables> {
   content: QueryConfiguration<Data, Variables> | ReactElement;
-  // eslint-disable-next-line react/require-default-props
   mutations?: MutationConfiguration[];
 }
 
