@@ -3,7 +3,6 @@ import {
   FormEvent,
   KeyboardEvent,
   MouseEvent,
-  useEffect,
   useState,
 } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -42,10 +41,6 @@ function ModpackListbox(props: {
     { hasNextPage, isNextPageLoading, hasError, items, page },
     setListboxState,
   ] = useState(initialState);
-
-  useEffect(() => {
-    setListboxState(initialState);
-  }, [initialState]);
 
   const client = useClient();
 
