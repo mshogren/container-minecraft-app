@@ -45,7 +45,7 @@ function ModpackListbox(props: {
 
   useEffect(() => {
     setListboxState(initialState);
-  }, [search]);
+  }, [initialState]);
 
   const client = useClient();
 
