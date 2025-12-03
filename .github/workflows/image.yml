@@ -19,7 +19,7 @@ on:
   workflow_dispatch:
 
 env:
-  NODE_VERSION: '22'
+  NODE_VERSION: '24'
   PYTHON_VERSION: '3.13'
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository }}
