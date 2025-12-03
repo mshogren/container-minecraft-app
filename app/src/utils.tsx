@@ -114,12 +114,12 @@ export function InfiniteListbox(props: {
     <div className={`list-container ${className}`}>
       <List
         className={`input-container${validated && !selected ? ' invalid' : ''}`}
-        defaultHeight={150}
         rowComponent={ListboxRow}
         rowCount={itemCount}
         rowHeight={30}
         rowProps={{ ...props }}
         onRowsRendered={onRowsRendered}
+        style={{ height: '150px' }}
       />
       <input
         className="list-container-hidden-input"
@@ -175,11 +175,11 @@ export function Listbox(props: {
     <div className={`list-container ${className}`}>
       <List
         className={`input-container${validated && !selected ? ' invalid' : ''}`}
-        defaultHeight={150}
         rowComponent={ListboxRow}
         rowCount={items.length}
         rowHeight={30}
         rowProps={{ items, selected, handleClick }}
+        style={{ height: '150px' }}
         // initialScrollOffset={initialScrollOffset}
       ></List>
       <input
