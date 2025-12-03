@@ -1,26 +1,10 @@
-import { describe, expect, it, vi } from 'vitest';
+import { describe, expect, it } from 'vitest';
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { BrowserRouter } from 'react-router-dom';
 import { Client, CombinedError, Provider } from 'urql';
 import { fromValue, makeSubject, never, pipe, take, toPromise } from 'wonka';
 import ServerAddCurse from './ServerAddCurse';
-
-const ResizeObserverMock = vi.fn(
-  class {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
-    callback: Function;
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
-    constructor(callback: Function) {
-      this.callback = callback;
-    }
-    observe = vi.fn();
-    unobserve = vi.fn();
-    disconnect = vi.fn();
-  }
-);
-
-vi.stubGlobal('ResizeObserver', ResizeObserverMock);
 
 function createMockClient(
   executeQuery: CallableFunction,

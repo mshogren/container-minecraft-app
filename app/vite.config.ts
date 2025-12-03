@@ -14,6 +14,7 @@ export default defineConfig(({ mode }) => {
     test: {
       globals: true,
       environment: 'jsdom',
+      setupFiles: ['./src/setup.ts'],
     },
     plugins: [
       react(),

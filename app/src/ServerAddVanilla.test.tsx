@@ -1,4 +1,5 @@
 import { describe, expect, it } from 'vitest';
+import '@testing-library/jest-dom/vitest';
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { BrowserRouter } from 'react-router-dom';
@@ -77,6 +78,7 @@ describe('Submitting the vanilla server form', () => {
   const submitForm = async () => {
     const textbox = await screen.findByTitle(/A name must be valid ASCII/);
     await userEvent.type(textbox, serverName);
+    expect(textbox).toBeRequired();
     const option = await screen.findByText(serverVersion);
     await userEvent.click(option);
     const button = await screen.findByText('Add');
