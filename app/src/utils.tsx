@@ -1,6 +1,6 @@
 import { ChangeEventHandler, MouseEventHandler, useState } from 'react';
-import { FixedSizeList } from 'react-window';
-import InfiniteLoader from 'react-window-infinite-loader';
+import { List, type RowComponentProps } from 'react-window';
+import { useInfiniteLoader } from 'react-window-infinite-loader';
 
 // eslint-disable-next-line @typescript-eslint/no-empty-function
 export function noop() {}
@@ -48,7 +48,7 @@ export function InfiniteListbox(props: {
   isNextPageLoading: boolean;
   hasError: boolean;
   items: ListBoxItem[];
-  loadNextPage: () => void;
+  loadNextPage: () => Promise<void>;
   selected: string;
   handleClick: MouseEventHandler<HTMLOptionElement>;
   className: string;
@@ -65,7 +65,8 @@ export function InfiniteListbox(props: {
   } = props;
 
   const itemCount = hasNextPage ? items.length + 1 : items.length;
-  const loadMoreItems = isNextPageLoading ? noop : loadNextPage;
+  const loadMoreItems = () =>
+    isNextPageLoading ? new Promise<void>(() => {}) : loadNextPage();
   const isItemLoaded = (index: number) => !hasNextPage || index < items.length;
 
   const [validated, setValidated] = useState(false as boolean);
@@ -74,66 +75,62 @@ export function InfiniteListbox(props: {
     setValidated(true);
   };
 
-  return (
-    <InfiniteLoader
-      isItemLoaded={isItemLoaded}
-      itemCount={itemCount}
-      loadMoreItems={loadMoreItems}
-    >
-      {({ onItemsRendered, ref }) => (
-        <div className={`list-container ${className}`}>
-          <FixedSizeList
-            className={`input-container${
-              validated && !selected ? ' invalid' : ''
-            }`}
-            height={150}
-            itemCount={itemCount}
-            itemSize={30}
-            onItemsRendered={onItemsRendered}
-            ref={ref}
-            width="100%"
-          >
-            {({ index, style }) => {
-              if (hasError) return <div style={style}>Error :(</div>;
-              if (!isItemLoaded(index))
-                return (
-                  <div style={style}>
-                    <div className="loader-sm">Loading...</div>
-                  </div>
-                );
-
-              const { key, value, text } = items[index];
-              const backgroundColor =
-                value === selected ? 'lightblue' : style.backgroundColor;
-              return (
-                <option
-                  key={key}
-                  value={value}
-                  style={{
-                    ...style,
-                    paddingLeft: '0.5em',
-                    backgroundColor,
-                    cursor: 'default',
-                  }}
-                  onClick={handleClick}
-                >
-                  {text}
-                </option>
-              );
-            }}
-          </FixedSizeList>
-          <input
-            className="list-container-hidden-input"
-            title="hidden"
-            type="text"
-            value={selected}
-            required
-            onFocus={handleFocus}
-            onChange={noop}
-          />
+  function ListboxRow({ index, style }: RowComponentProps) {
+    if (hasError) return <div style={style}>Error :(</div>;
+    if (!isItemLoaded(index))
+      return (
+        <div style={style}>
+          <div className="loader-sm">Loading...</div>
         </div>
-      )}
-    </InfiniteLoader>
+      );
+
+    const { key, value, text } = items[index];
+    const backgroundColor =
+      value === selected ? 'lightblue' : style.backgroundColor;
+    return (
+      <option
+        key={key}
+        value={value}
+        style={{
+          ...style,
+          paddingLeft: '0.5em',
+          backgroundColor,
+          cursor: 'default',
+        }}
+        onClick={handleClick}
+      >
+        {text}
+      </option>
+    );
+  }
+
+  const onRowsRendered = useInfiniteLoader({
+    isRowLoaded: isItemLoaded,
+    loadMoreRows: loadMoreItems,
+    rowCount: itemCount,
+  });
+
+  return (
+    <div className={`list-container ${className}`}>
+      <List
+        className={`input-container${validated && !selected ? ' invalid' : ''}`}
+        defaultHeight={150}
+        rowComponent={ListboxRow}
+        rowCount={itemCount}
+        rowHeight={30}
+        rowProps={{ ...props }}
+        onRowsRendered={onRowsRendered}
+      />
+      <input
+        className="list-container-hidden-input"
+        title="hidden"
+        type="text"
+        value={selected}
+        required
+        onFocus={handleFocus}
+        onChange={noop}
+      />
+    </div>
   );
 }
 
@@ -150,40 +147,41 @@ export function Listbox(props: {
     setValidated(true);
   };
 
-  const selectedIndex = items.findIndex((item) => item.value === selected);
-  const initialScrollOffset = selectedIndex > 4 ? (selectedIndex - 4) * 30 : 0;
+  // const selectedIndex = items.findIndex((item) => item.value === selected);
+  // const initialScrollOffset = selectedIndex > 4 ? (selectedIndex - 4) * 30 : 0;
+
+  function ListboxRow({ index, style }: RowComponentProps) {
+    const { key, value, text } = items[index];
+    const backgroundColor =
+      value === selected ? 'lightblue' : style.backgroundColor;
+    return (
+      <option
+        key={key}
+        value={value}
+        style={{
+          ...style,
+          paddingLeft: '0.5em',
+          backgroundColor,
+          cursor: 'default',
+        }}
+        onClick={handleClick}
+      >
+        {text}
+      </option>
+    );
+  }
 
   return (
     <div className={`list-container ${className}`}>
-      <FixedSizeList
+      <List
         className={`input-container${validated && !selected ? ' invalid' : ''}`}
-        height={150}
-        itemCount={items.length}
-        itemSize={30}
-        initialScrollOffset={initialScrollOffset}
-        width="100%"
-      >
-        {({ index, style }) => {
-          const { key, value, text } = items[index];
-          const backgroundColor =
-            value === selected ? 'lightblue' : style.backgroundColor;
-          return (
-            <option
-              key={key}
-              value={value}
-              style={{
-                ...style,
-                paddingLeft: '0.5em',
-                backgroundColor,
-                cursor: 'default',
-              }}
-              onClick={handleClick}
-            >
-              {text}
-            </option>
-          );
-        }}
-      </FixedSizeList>
+        defaultHeight={150}
+        rowComponent={ListboxRow}
+        rowCount={items.length}
+        rowHeight={30}
+        rowProps={{ items, selected, handleClick }}
+        // initialScrollOffset={initialScrollOffset}
+      ></List>
       <input
         className="list-container-hidden-input"
         title="hidden"

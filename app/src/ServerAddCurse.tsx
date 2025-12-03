@@ -95,7 +95,7 @@ function ModpackListbox(props: {
         value: m.id,
         text: m.name,
       }))}
-      loadNextPage={getModpacks}
+      loadNextPage={() => new Promise<void>(getModpacks)}
       className="pure-input-1"
       selected={modpackId}
       handleClick={(e) => handleModpackClick(e, items)}
