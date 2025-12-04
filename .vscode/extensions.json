@@ -6,9 +6,11 @@
 	"recommendations": [
     "vivaxy.vscode-conventional-commits",
     "dbaeumer.vscode-eslint",
-    "esbenp.prettier-vscode",
     "ms-python.python",
-    "ms-python.vscode-pylance"
+	"ms-python.vscode-pylance",
+	"ms-python.autopep8",
+	"streetsidesoftware.code-spell-checker",
+	"ms-python.pylint"
   ],
 	// List of extensions recommended by VS Code that should not be recommended for users of this workspace.
 	"unwantedRecommendations": [
