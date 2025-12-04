@@ -22,7 +22,7 @@ class CustomContext(BaseContext):
     def server_helper(self):
         user = None
         if Settings().authority and self.request:
-            token = get_token(self.request)
+            token = get_token(self.request.headers.get('Authorization', None))
             user = get_payload(token, Settings().authority,
                                Settings().client_id)
         is_kubernetes = bool(Settings().kubernetes_service_host)
@@ -58,8 +58,8 @@ app.include_router(graphql_app, prefix="/graphql")
 def config():
     authority = f"\"authority\": \"{Settings().authority}\""
     client_id = f"\"client_id\": \"{Settings().client_id}\""
-    client_secret = f"\"client_secret\": \"{Settings().client_secret}\"" if Settings(
-    ).client_secret else None
+    client_secret = f"\"client_secret\": \"{
+        Settings().client_secret} \""if Settings().client_secret else None
     runtime = ", ".join(
         [x for x in [authority, client_id, client_secret] if not x is None])
     return Response(

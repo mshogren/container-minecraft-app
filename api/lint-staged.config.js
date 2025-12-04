@@ -1,7 +1,7 @@
-{
+export default {
   "**/*.py": [
     ".venv/bin/autopep8 --experimental --in-place",
     ".venv/bin/pylint --rcfile=.pylintrc",
-    ".venv/bin/strawberry export-schema src.schema | npx graphql-schema-linter -s -e relay-page-info-spec"
+    () => "./lint-schema.sh",
   ]
 }

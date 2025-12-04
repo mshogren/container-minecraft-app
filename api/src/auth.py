@@ -1,14 +1,12 @@
 import builtins
 import json
-from typing import Any, List, Union
+from typing import Any, List
 from urllib.error import HTTPError
 from urllib.parse import urljoin
 from urllib.request import urlopen
 
 import strawberry
 from jose import exceptions, jwt
-from starlette.requests import Request
-from starlette.websockets import WebSocket
 from strawberry.types import Info
 
 from .settings import Settings
@@ -20,8 +18,7 @@ class AuthError(Exception):
         self.status_code = status_code
 
 
-def get_token(request: Union[Request, WebSocket]) -> str:
-    auth = request.headers.get("Authorization", None)
+def get_token(auth: str | None) -> str:
     if not auth:
         raise AuthError({"code": "authorization_header_missing",
                         "description":

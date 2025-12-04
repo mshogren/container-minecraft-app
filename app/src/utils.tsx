@@ -2,7 +2,6 @@ import { ChangeEventHandler, MouseEventHandler, useState } from 'react';
 import { List, type RowComponentProps } from 'react-window';
 import { useInfiniteLoader } from 'react-window-infinite-loader';
 
-// eslint-disable-next-line @typescript-eslint/no-empty-function
 export function noop() {}
 
 export function getEnumKeyByEnumValue<T extends { [index: string]: string }>(

@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from datetime import datetime
-from typing import List, TypeAlias
+from typing import Annotated, List, Union
 
 import strawberry
 from ..settings import SchemaLabels as labels
@@ -98,7 +98,6 @@ class ServerError:
         description=labels.SERVERERROR_ERROR_FIELD_DESCRIPTION)
 
 
-ServerResponse: TypeAlias = strawberry.union(
+ServerResponse = Annotated[Union[ServerSuccess, ServerError], strawberry.union(
     name=labels.SERVERRESPONSE_TYPE_NAME,
-    types=[ServerSuccess, ServerError],
-    description=labels.SERVERRESPONSE_TYPE_DESCRIPTION)  # type: ignore
+    description=labels.SERVERRESPONSE_TYPE_DESCRIPTION)]
