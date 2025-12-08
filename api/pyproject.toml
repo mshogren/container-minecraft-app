@@ -1,0 +1,29 @@
+[project]
+name = ""
+version = "0.0.1"
+requires-python = "==3.14.*"
+dependencies = [
+    "cachetools==6.2.2",
+    "docker==7.1.0",
+    "kubernetes==27.2.0",
+    "packaging==25.0",
+    "pydantic==2.12.5",
+    "pydantic-settings==2.12.0",
+    "python-jose[cryptography]==3.5.0",
+    "strawberry-graphql[cli, fastapi]==0.287.2",
+    "uvicorn[standard]==0.38.0",
+]
+
+[dependency-groups]
+dev = [
+    "autopep8",
+    "pylint",
+    "pytest",
+]
+
+[tool.uv]
+package = false
+
+[[tool.uv.index]]
+name = "pypi"
+url = "https://pypi.org/simple"

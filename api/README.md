@@ -1,9 +1,8 @@
+This project uses [uv](https://docs.astral.sh/uv/) to manage Python versions and package dependencies
+
 To install dependencies
 ```
-pip install --user pipenv 
-python3 -m venv .venv
-source .venv/bin/activate
-pipenv install --dev
+uv sync
 ```
 
 To run the api for development

@@ -20,7 +20,6 @@ on:
 
 env:
   NODE_VERSION: '24'
-  PYTHON_VERSION: '3.13'
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository }}
 
@@ -64,16 +63,17 @@ jobs:
       - name: install dependencies
         run: npm ci
 
-      - name: install pipenv
-        run: pip install pipenv
-
       - uses: actions/setup-python@83679a892e2d95755f2dac6acb0bfd1e9ac5d548 # v6
         with:
-          python-version: ${{ env.PYTHON_VERSION }}
-          cache: 'pipenv'
+          python-version-file: "pyproject.toml"
+
+      - name: install uv
+        uses: astral-sh/setup-uv@v7
+        with:
+          enable-cache: true
 
       - name: install dependencies
-        run: pipenv install --dev --deploy
+        run: uv sync --locked
 
       - name: lint with pylint
         run: pipenv run pylint *.py **/*.py
