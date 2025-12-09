@@ -1,5 +1,7 @@
 # Use Pipenv to manage python package dependencies
 
+* Status: superseded by [ADR-0026](0026-use-uv-to-manage-python-package-dependencies.md) - Use uv to manage python package dependencies.
+
 ## Context and Problem Statement
 
 We need to pick a package dependency management tool for our Python projects.

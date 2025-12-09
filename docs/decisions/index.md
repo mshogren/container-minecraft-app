@@ -30,6 +30,7 @@ This log lists the architectural decisions for container-minecraft-app.
 * [ADR-0023](0023-use-react-hooks.md) - Use React hooks
 * [ADR-0024](0024-do-not-use-ui-framework.md) - Do not use a UI framework
 * [ADR-0025](0025-use-cypress-for-end-to-end-tests.md) - Use cypress for end-to-end tests
+* [ADR-0026](decisions/0026-use-uv-to-manage-python-package-dependencies.md) - Use uv to manage python package dependencies
 
 <!-- adrlogstop -->
 
