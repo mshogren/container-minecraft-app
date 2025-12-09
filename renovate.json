@@ -13,7 +13,7 @@
   "packageRules": [
     {
       "matchManagers": [
-        "pipenv"
+        "pep723"
       ],
       "matchUpdateTypes": [
         "minor",
