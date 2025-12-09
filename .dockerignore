@@ -2,8 +2,8 @@
 **
 
 # ... except for dependencies and source
-!api/Pipfile
-!api/Pipfile.lock
+!api/pyproject.toml
+!api/uv.lock
 !api/*.py
 !api/src/*.py
 !api/src/modpack/*.py

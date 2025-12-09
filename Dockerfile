@@ -1,4 +1,4 @@
-FROM python:3.13-slim AS base
+FROM python:3.14-slim AS base
 
 # Setup env
 ENV LANG=C.UTF-8
@@ -9,13 +9,13 @@ ENV PYTHONFAULTHANDLER=1
 
 FROM base AS python-deps
 
-# Install pipenv and compilation dependencies
-RUN pip install pipenv
+# Install uv
+COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /bin/
 
 # Install python dependencies in /.venv
-COPY api/Pipfile .
-COPY api/Pipfile.lock .
-RUN PIPENV_VENV_IN_PROJECT=1 pipenv install --deploy
+COPY api/pyproject.toml .
+COPY api/uv.lock .
+RUN uv sync --locked --no-dev
 
 
 FROM node:24 AS node-deps
