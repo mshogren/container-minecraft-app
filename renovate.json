@@ -13,7 +13,7 @@
   "packageRules": [
     {
       "matchManagers": [
-        "pep723"
+        "pep621"
       ],
       "matchUpdateTypes": [
         "minor",
