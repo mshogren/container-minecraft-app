@@ -17,7 +17,7 @@
     "react": "19.2.3",
     "react-dom": "19.2.3",
     "react-oidc-context": "3.3.0",
-    "react-router-dom": "7.11.0",
+    "react-router-dom": "7.12.0",
     "react-window": "2.2.4",
     "react-window-infinite-loader": "2.0.0",
     "urql": "5.0.1"
