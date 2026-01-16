@@ -18,7 +18,7 @@ from .schema import ModpackSchemaType
 
 API_BASE_URL = "https://api.curseforge.com/v1/mods/"
 DOWNLOADS_BASE_URL = "https://edge.forgecdn.net/files/"
-QUERY_STRING_BASE = "gameId=432&categoryId=0&classId=4471&sortField=2&sortOrder=desc"
+QUERY_STRING_BASE = "gameId=432&classId=4471&sortField=2&sortOrder=desc"
 API_KEY = Settings().curseforge_api_key
 
 
@@ -117,7 +117,8 @@ class Modpack:
     def get_modpacks(
             self, page: int = 0, search: str = "") -> List[ModpackSchemaType]:
         page_size = 50
-        filters = f"&pageSize={page_size}&index={page * page_size}&searchFilter={search}"
+        filters = f"&pageSize={page_size} &index={
+            page * page_size} &searchFilter={search} "
         url = f"{API_BASE_URL}search?{QUERY_STRING_BASE}{filters}"
         request = Request(url=url)
         request.add_header("X-API-KEY", API_KEY)
