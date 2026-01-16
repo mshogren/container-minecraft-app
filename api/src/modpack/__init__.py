@@ -117,8 +117,7 @@ class Modpack:
     def get_modpacks(
             self, page: int = 0, search: str = "") -> List[ModpackSchemaType]:
         page_size = 50
-        filters = f"&pageSize={page_size} &index={
-            page * page_size} &searchFilter={search} "
+        filters = f"&pageSize={page_size}&index={page * page_size}&searchFilter={search}"
         url = f"{API_BASE_URL}search?{QUERY_STRING_BASE}{filters}"
         request = Request(url=url)
         request.add_header("X-API-KEY", API_KEY)
