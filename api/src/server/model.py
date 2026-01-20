@@ -1,6 +1,6 @@
 from datetime import datetime
 from enum import Enum
-from typing import List
+from typing import List, Optional
 
 import strawberry
 from pydantic import BaseModel, Field
@@ -52,7 +52,7 @@ class StateModel(BaseModel):
 
 
 class VolumeModel(BaseModel):
-    Name: str
+    Name: Optional[str] = '(Unknown)'
     Source: str
 
 
