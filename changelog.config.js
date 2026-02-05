@@ -1,8 +1,7 @@
-'use strict'
-const config = require('conventional-changelog-conventionalcommits');
+import createPreset from 'conventional-changelog-conventionalcommits';
 
-module.exports = config({
-    "types": [
+createPreset().then(config =>
+    config.types = [
         { type: 'feat', section: 'Features' },
         { type: 'fix', section: 'Bug Fixes' },
         { type: 'perf', section: 'Performance' },
@@ -18,4 +17,4 @@ module.exports = config({
         { type: 'hide', section: 'Hidden', hidden: true },
         { type: 'release', section: 'Releases', hidden: true },
     ]
-})
+)
