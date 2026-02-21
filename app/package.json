@@ -23,7 +23,7 @@
     "urql": "5.0.1"
   },
   "devDependencies": {
-    "@eslint/js": "9.39.2",
+    "@eslint/js": "9.39.3",
     "@fullhuman/postcss-purgecss": "7.0.2",
     "@testing-library/jest-dom": "^6.9.1",
     "@testing-library/react": "16.3.2",
@@ -35,7 +35,7 @@
     "@typescript-eslint/parser": "8.56.0",
     "@vitejs/plugin-react": "5.1.4",
     "cypress": "15.10.0",
-    "eslint": "9.39.2",
+    "eslint": "9.39.3",
     "eslint-config-prettier": "10.1.8",
     "eslint-import-resolver-typescript": "4.4.4",
     "eslint-plugin-cypress": "5.3.0",
