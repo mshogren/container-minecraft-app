@@ -5,7 +5,7 @@ requires-python = "==3.14.*"
 dependencies = [
     "cachetools==7.0.1",
     "docker==7.1.0",
-    "kubernetes==27.2.0",
+    "kubernetes==35.0.0",
     "packaging==26.0",
     "pydantic==2.12.5",
     "pydantic-settings==2.13.1",
