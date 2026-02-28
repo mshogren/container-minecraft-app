@@ -19,7 +19,7 @@
     "purecss": "3.0.0"
   },
   "devDependencies": {
-    "@fullhuman/postcss-purgecss": "7.0.2",
+    "@fullhuman/postcss-purgecss": "8.0.0",
     "postcss-cli": "11.0.1"
   }
 }
