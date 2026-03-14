@@ -16,7 +16,7 @@
     "purecss": "3.0.0",
     "react": "19.2.4",
     "react-dom": "19.2.4",
-    "react-oidc-context": "3.3.0",
+    "react-oidc-context": "3.3.1",
     "react-router-dom": "7.13.1",
     "react-window": "2.2.7",
     "react-window-infinite-loader": "2.0.1",
