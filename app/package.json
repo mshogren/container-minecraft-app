@@ -20,7 +20,7 @@
     "react-router-dom": "7.14.1",
     "react-window": "2.2.7",
     "react-window-infinite-loader": "2.0.1",
-    "urql": "5.0.1"
+    "urql": "5.0.2"
   },
   "devDependencies": {
     "@eslint/js": "9.39.4",
