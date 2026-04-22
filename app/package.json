@@ -54,7 +54,7 @@
     "vite": "8.0.9",
     "vite-plugin-checker": "0.13.0",
     "vite-plugin-singlefile": "2.3.3",
-    "vitest": "4.1.4",
+    "vitest": "4.1.5",
     "wonka": "6.3.6"
   }
 }
