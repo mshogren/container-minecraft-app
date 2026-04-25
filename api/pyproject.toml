@@ -6,7 +6,7 @@ dependencies = [
     "cachetools==7.0.6",
     "docker==7.1.0",
     "kubernetes==27.2.0",
-    "packaging==26.1",
+    "packaging==26.2",
     "pydantic==2.13.3",
     "pydantic-settings==2.14.0",
     "python-jose[cryptography]==3.5.0",
