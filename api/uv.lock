@@ -3,49 +3,6 @@ revision = 3
 requires-python = "==3.14.*"
 
 [[package]]
-name = "container-minecraft-app"
-version = "0.0.1"
-source = { virtual = "." }
-dependencies = [
-    { name = "cachetools" },
-    { name = "docker" },
-    { name = "kubernetes" },
-    { name = "packaging" },
-    { name = "pydantic" },
-    { name = "pydantic-settings" },
-    { name = "python-jose", extra = ["cryptography"] },
-    { name = "strawberry-graphql", extra = ["cli", "fastapi"] },
-    { name = "uvicorn", extra = ["standard"] },
-]
-
-[package.dev-dependencies]
-dev = [
-    { name = "autopep8" },
-    { name = "pylint" },
-    { name = "pytest" },
-]
-
-[package.metadata]
-requires-dist = [
-    { name = "cachetools", specifier = "==7.1.1" },
-    { name = "docker", specifier = "==7.1.0" },
-    { name = "kubernetes", specifier = "==27.2.0" },
-    { name = "packaging", specifier = "==26.2" },
-    { name = "pydantic", specifier = "==2.13.4" },
-    { name = "pydantic-settings", specifier = "==2.14.0" },
-    { name = "python-jose", extras = ["cryptography"], specifier = "==3.5.0" },
-    { name = "strawberry-graphql", extras = ["cli", "fastapi"], specifier = "==0.315.3" },
-    { name = "uvicorn", extras = ["standard"], specifier = "==0.46.0" },
-]
-
-[package.metadata.requires-dev]
-dev = [
-    { name = "autopep8" },
-    { name = "pylint" },
-    { name = "pytest" },
-]
-
-[[package]]
 name = "annotated-doc"
 version = "0.0.4"
 source = { registry = "https://pypi.org/simple" }
@@ -98,11 +55,11 @@ wheels = [
 
 [[package]]
 name = "cachetools"
-version = "7.1.1"
+version = "7.1.3"
 source = { registry = "https://pypi.org/simple" }
-sdist = { url = "https://files.pythonhosted.org/packages/ff/e2/85f227594656000ff4d8adadae91a21f536d4a84c6c716a86bd6685874be/cachetools-7.1.1.tar.gz", hash = "sha256:27bdf856d68fd3c71c26c01b5edc312124ed427524d1ddb31aa2b7746fe20d4b", size = 40202, upload-time = "2026-05-03T20:00:29.391Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/8f/c1/67cfb86aa21144796ff51068326d467fbef8ee42f8d08a3a8a926106cf0c/cachetools-7.1.3.tar.gz", hash = "sha256:135cfe944bc3c1e805505f65dae0bef375a2f96261171ab66c79ef77d0bda39d", size = 45780, upload-time = "2026-05-18T18:21:03.819Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/bf/0f/f897abe4ea0a8c408ae65c8c83bffab4936ad65d6032d4fb4cd35bbdc3ee/cachetools-7.1.1-py3-none-any.whl", hash = "sha256:0335cd7a0952d2b22327441fb0628139e234c565559eeb91a8a4ac7551c5353d", size = 16775, upload-time = "2026-05-03T20:00:27.857Z" },
+    { url = "https://files.pythonhosted.org/packages/68/52/8ff5c1a3b2e821ced9b2998fba3ee29aa4525c0bf51e5ee55dd6f61a4ed5/cachetools-7.1.3-py3-none-any.whl", hash = "sha256:9876787e2346e20584d5cca236cb5d49d04e7193de91646f230725b2e1e8b804", size = 16763, upload-time = "2026-05-18T18:21:02.386Z" },
 ]
 
 [[package]]
@@ -207,6 +164,49 @@ source = { registry = "https://pypi.org/simple" }
 sdist = { url = "https://files.pythonhosted.org/packages/d8/53/6f443c9a4a8358a93a6792e2acffb9d9d5cb0a5cfd8802644b7b1c9a02e4/colorama-0.4.6.tar.gz", hash = "sha256:08695f5cb7ed6e0531a20572697297273c47b8cae5a63ffc6d6ed5c201be6e44", size = 27697, upload-time = "2022-10-25T02:36:22.414Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/d1/d6/3965ed04c63042e047cb6a3e6ed1a63a35087b6a609aa3a15ed8ac56c221/colorama-0.4.6-py2.py3-none-any.whl", hash = "sha256:4f1d9991f5acc0ca119f9d443620b77f9d6b33703e51011c16baf57afb285fc6", size = 25335, upload-time = "2022-10-25T02:36:20.889Z" },
+]
+
+[[package]]
+name = "container-minecraft-app"
+version = "0.0.1"
+source = { virtual = "." }
+dependencies = [
+    { name = "cachetools" },
+    { name = "docker" },
+    { name = "kubernetes" },
+    { name = "packaging" },
+    { name = "pydantic" },
+    { name = "pydantic-settings" },
+    { name = "python-jose", extra = ["cryptography"] },
+    { name = "strawberry-graphql", extra = ["cli", "fastapi"] },
+    { name = "uvicorn", extra = ["standard"] },
+]
+
+[package.dev-dependencies]
+dev = [
+    { name = "autopep8" },
+    { name = "pylint" },
+    { name = "pytest" },
+]
+
+[package.metadata]
+requires-dist = [
+    { name = "cachetools", specifier = "==7.1.3" },
+    { name = "docker", specifier = "==7.1.0" },
+    { name = "kubernetes", specifier = "==27.2.0" },
+    { name = "packaging", specifier = "==26.2" },
+    { name = "pydantic", specifier = "==2.13.4" },
+    { name = "pydantic-settings", specifier = "==2.14.0" },
+    { name = "python-jose", extras = ["cryptography"], specifier = "==3.5.0" },
+    { name = "strawberry-graphql", extras = ["cli", "fastapi"], specifier = "==0.315.3" },
+    { name = "uvicorn", extras = ["standard"], specifier = "==0.46.0" },
+]
+
+[package.metadata.requires-dev]
+dev = [
+    { name = "autopep8" },
+    { name = "pylint" },
+    { name = "pytest" },
 ]
 
 [[package]]
