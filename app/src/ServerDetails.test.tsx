@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest';
 import { render, screen, waitFor } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
 import { Client, CombinedError, Provider } from 'urql';
-import { fromValue, never } from 'wonka';
+import { make, never } from 'wonka';
 import userEvent from '@testing-library/user-event';
 import ServerDetails from './ServerDetails';
 
@@ -14,6 +14,13 @@ function createMockClient(
     executeQuery,
     executeMutation,
   } as unknown as Client;
+}
+
+function mockStream(data: unknown): ReturnType<typeof make> {
+  return make((observer) => {
+    observer.next(data);
+    return () => {};
+  });
 }
 
 function renderElement(mockClient: Client): void {
@@ -50,7 +57,7 @@ describe('The server details page', () => {
 
   it('shows a network error message', async () => {
     const mockClient = createMockClient(() => {
-      return fromValue({
+      return mockStream({
         error: new CombinedError({
           networkError: Error('network error'),
         }),
@@ -64,7 +71,7 @@ describe('The server details page', () => {
 
   it('shows an application error message', async () => {
     const mockClient = createMockClient(() => {
-      return fromValue({
+      return mockStream({
         error: new CombinedError({
           graphQLErrors: [Error('application error')],
         }),
@@ -77,7 +84,7 @@ describe('The server details page', () => {
   });
 
   it('renders correctly', async () => {
-    const mockClient = createMockClient(() => fromValue(testData));
+    const mockClient = createMockClient(() => mockStream(testData));
 
     renderElement(mockClient);
 
@@ -93,7 +100,7 @@ describe('The server details page', () => {
         testData.data.server.status =
           action === 'start' ? 'UNAVAILABLE' : 'AVAILABLE';
         const transientStatus = action === 'start' ? /starting/ : /stopping/;
-        const mockClient = createMockClient(() => fromValue(testData));
+        const mockClient = createMockClient(() => mockStream(testData));
 
         renderElement(mockClient);
 
@@ -105,9 +112,9 @@ describe('The server details page', () => {
 
       it('shows a network error message', async () => {
         const mockClient = createMockClient(
-          () => fromValue(testData),
+          () => mockStream(testData),
           () => {
-            return fromValue({
+            return mockStream({
               error: new CombinedError({
                 networkError: Error('network error'),
               }),
@@ -128,9 +135,9 @@ describe('The server details page', () => {
 
       it('shows an application error message', async () => {
         const mockClient = createMockClient(
-          () => fromValue(testData),
+          () => mockStream(testData),
           () => {
-            return fromValue({
+            return mockStream({
               error: new CombinedError({
                 graphQLErrors: [Error('application error')],
               }),
@@ -151,9 +158,9 @@ describe('The server details page', () => {
 
       it('shows an api error message', async () => {
         const mockClient = createMockClient(
-          () => fromValue(testData),
+          () => mockStream(testData),
           () => {
-            return fromValue({
+            return mockStream({
               data: {
                 mutateServer: {
                   error: 'api error',
@@ -176,9 +183,9 @@ describe('The server details page', () => {
 
       it('rerenders the page when clicking OK on the error page', async () => {
         const mockClient = createMockClient(
-          () => fromValue(testData),
+          () => mockStream(testData),
           () => {
-            return fromValue({
+            return mockStream({
               data: {
                 mutateServer: {
                   error: 'api error',

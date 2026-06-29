@@ -4,7 +4,7 @@ import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { BrowserRouter } from 'react-router-dom';
 import { Client, CombinedError, Provider, TypedDocumentNode } from 'urql';
-import { fromValue, never } from 'wonka';
+import { make, never } from 'wonka';
 import { AuthProvider } from 'react-oidc-context';
 import Servers from './Servers';
 import { GET_SERVERS } from './ServerQueries';
@@ -24,6 +24,13 @@ function createMockClient(executeQuery: CallableFunction): Client {
   return {
     executeQuery,
   } as unknown as Client;
+}
+
+function mockStream(data: unknown): ReturnType<typeof make> {
+  return make((observer) => {
+    observer.next(data);
+    return () => {};
+  });
 }
 
 function renderElement(mockClient: Client): void {
@@ -66,7 +73,7 @@ describe('The servers page', () => {
 
   it('shows a network error message', async () => {
     const mockClient = createMockClient(() => {
-      return fromValue({
+      return mockStream({
         error: new CombinedError({
           networkError: Error('network error'),
         }),
@@ -80,7 +87,7 @@ describe('The servers page', () => {
 
   it('shows an application error message', async () => {
     const mockClient = createMockClient(() => {
-      return fromValue({
+      return mockStream({
         error: new CombinedError({
           graphQLErrors: [Error('application error')],
         }),
@@ -97,7 +104,7 @@ describe('The servers page', () => {
       window.history.replaceState({}, '', `/${path}`);
 
       const mockClient = createMockClient(() => {
-        return fromValue({
+        return mockStream({
           error: new CombinedError({
             graphQLErrors: [Error('application error')],
           }),
@@ -123,7 +130,7 @@ describe('The servers page', () => {
 
   it('renders with empty data', async () => {
     const mockClient = createMockClient(() => {
-      return fromValue({
+      return mockStream({
         data: {
           servers: [],
         },
@@ -140,7 +147,7 @@ describe('The servers page', () => {
   });
 
   it('renders with data', async () => {
-    const mockClient = createMockClient(() => fromValue(testData));
+    const mockClient = createMockClient(() => mockStream(testData));
 
     renderElement(mockClient);
 
@@ -158,7 +165,7 @@ describe('The servers page', () => {
 
       const mockClient = createMockClient(
         ({ query }: { query: TypedDocumentNode }) => {
-          if (query === GET_SERVERS) return fromValue(testData);
+          if (query === GET_SERVERS) return mockStream(testData);
           return never;
         }
       );

@@ -4,7 +4,7 @@ import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { BrowserRouter } from 'react-router-dom';
 import { Client, CombinedError, Provider } from 'urql';
-import { fromValue, never } from 'wonka';
+import { make, never } from 'wonka';
 import ServerAddVanilla from './ServerAddVanilla';
 
 function createMockClient(
@@ -15,6 +15,13 @@ function createMockClient(
     executeQuery,
     executeMutation,
   } as unknown as Client;
+}
+
+function mockStream(data: unknown): ReturnType<typeof make> {
+  return make((observer) => {
+    observer.next(data);
+    return () => {};
+  });
 }
 
 function renderElement(mockClient: Client): void {
@@ -38,7 +45,7 @@ describe('The add vanilla server page', () => {
 
   it('shows a network error message', async () => {
     const mockClient = createMockClient(() => {
-      return fromValue({
+      return mockStream({
         error: new CombinedError({
           networkError: Error('network error'),
         }),
@@ -52,7 +59,7 @@ describe('The add vanilla server page', () => {
 
   it('shows an application error message', async () => {
     const mockClient = createMockClient(() => {
-      return fromValue({
+      return mockStream({
         error: new CombinedError({
           graphQLErrors: [Error('application error')],
         }),
@@ -86,7 +93,7 @@ describe('Submitting the vanilla server form', () => {
   };
 
   it('shows a loading message', async () => {
-    const mockClient = createMockClient(() => fromValue(testData));
+    const mockClient = createMockClient(() => mockStream(testData));
 
     renderElement(mockClient);
 
@@ -97,9 +104,9 @@ describe('Submitting the vanilla server form', () => {
 
   it('shows a network error message', async () => {
     const mockClient = createMockClient(
-      () => fromValue(testData),
+      () => mockStream(testData),
       () => {
-        return fromValue({
+        return mockStream({
           error: new CombinedError({
             networkError: Error('network error'),
           }),
@@ -119,9 +126,9 @@ describe('Submitting the vanilla server form', () => {
 
   it('shows an application error message', async () => {
     const mockClient = createMockClient(
-      () => fromValue(testData),
+      () => mockStream(testData),
       () => {
-        return fromValue({
+        return mockStream({
           error: new CombinedError({
             graphQLErrors: [Error('application error')],
           }),
@@ -141,9 +148,9 @@ describe('Submitting the vanilla server form', () => {
 
   it('shows an api error message', async () => {
     const mockClient = createMockClient(
-      () => fromValue(testData),
+      () => mockStream(testData),
       () => {
-        return fromValue({
+        return mockStream({
           data: {
             addVanillaServer: {
               error: 'api error',
@@ -165,9 +172,9 @@ describe('Submitting the vanilla server form', () => {
 
   it('shows a completion message', async () => {
     const mockClient = createMockClient(
-      () => fromValue(testData),
+      () => mockStream(testData),
       () => {
-        return fromValue({
+        return mockStream({
           data: {
             addVanillaServer: {
               server: {
@@ -190,9 +197,9 @@ describe('Submitting the vanilla server form', () => {
     window.history.replaceState({}, '', '/');
 
     const mockClient = createMockClient(
-      () => fromValue(testData),
+      () => mockStream(testData),
       () => {
-        return fromValue({
+        return mockStream({
           data: {
             addVanillaServer: {
               error: 'api error',
@@ -218,9 +225,9 @@ describe('Submitting the vanilla server form', () => {
     window.history.replaceState({}, '', '/');
 
     const mockClient = createMockClient(
-      () => fromValue(testData),
+      () => mockStream(testData),
       () => {
-        return fromValue({
+        return mockStream({
           data: {
             addVanillaServer: {
               server: {
