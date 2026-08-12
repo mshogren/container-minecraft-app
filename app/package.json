@@ -34,7 +34,7 @@
     "@typescript-eslint/eslint-plugin": "8.66.0",
     "@typescript-eslint/parser": "8.66.0",
     "@vitejs/plugin-react": "6.0.5",
-    "cypress": "15.20.0",
+    "cypress": "15.20.1",
     "eslint": "9.39.5",
     "eslint-config-prettier": "10.1.8",
     "eslint-import-resolver-typescript": "4.4.5",
