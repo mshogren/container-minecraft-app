@@ -3,7 +3,7 @@ name = "container-minecraft-app"
 version = "0.0.1"
 requires-python = "==3.14.*"
 dependencies = [
-    "cachetools==7.1.7",
+    "cachetools==7.1.8",
     "docker==7.2.0",
     "kubernetes==36.0.3",
     "packaging==26.3",
