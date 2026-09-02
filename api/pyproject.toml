@@ -10,7 +10,7 @@ dependencies = [
     "pydantic==2.13.5",
     "pydantic-settings==2.15.0",
     "python-jose[cryptography]==3.5.0",
-    "strawberry-graphql[cli, fastapi]==0.324.0",
+    "strawberry-graphql[cli, fastapi]==0.327.1",
     "uvicorn[standard]==0.52.4",
 ]
 
