@@ -14,7 +14,7 @@ describe('server add', () => {
   const stoppedText = 'Unavailable';
 
   const cleanup = (name: string) => {
-    if (Cypress.env('kubernetes')) {
+    if (Cypress.expose('kubernetes')) {
       cy.exec(`kubectl delete deployment ${name}`);
     } else {
       cy.exec(`docker rm ${name}`);
