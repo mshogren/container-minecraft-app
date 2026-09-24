@@ -24,6 +24,6 @@
 
   <style>{{ $css.Content | safeCSS }}</style>
 
-  <script async src="https://www.googletagmanager.com/gtag/js?id={{ .Site.GoogleAnalytics }}"></script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id={{ .Site.Config.Services.GoogleAnalytics.ID }}"></script>
   <script src="{{ $js.RelPermalink }}" defer></script>
 </head>
