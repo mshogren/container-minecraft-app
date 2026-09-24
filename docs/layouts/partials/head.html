@@ -1,17 +1,20 @@
-{{ with (templates.Defer (dict "key" "global-css")) }}
 {{- $title := print .Site.Title " | " .Title }}
 {{- if .IsHome }}{{ $title = .Site.Title }}{{ end }}
 {{- $jsTemplate := resources.Get "js/script.js" }}
 {{- $js := $jsTemplate | resources.ExecuteAsTemplate "/js/script.js" . }}
-{{- $css := partial "style.html" . }}
+{{ with (templates.Defer (dict "key" "global-css")) }}
+  {{- $css := partial "style.html" . }}
+{{ end }}
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description"
     content="A containerized app that provides a nifty interface for managing your containerized Minecraft servers.">
   {{- if not hugo.IsProduction }}
+  {{ with (templates.Defer (dict "key" "global-css")) }}
   <meta http-equiv="Content-Security-Policy"
     content="default-src 'none'; connect-src 'self' www.google-analytics.com; require-trusted-types-for 'script'; script-src-elem 'self' www.googletagmanager.com; style-src-elem 'self' '{{ $css.Data.Integrity }}'; img-src 'self' www.plantuml.com">
+  {{ end }}
   {{- end}}
   <meta name="google-site-verification" content="6huM0DdS4bl4Els_XhjqrJZ8ENQ6h1d1jPHpjZtKNPQ" />
   <title>{{ $title }}</title>
@@ -23,11 +26,11 @@
   <link rel="shortcut icon" href="/favicon.ico">
 
   <style>
+  {{ with (templates.Defer (dict "key" "global-css")) }}
     {{ $css.Content | safeCSS }}
+  {{ end }}
   </style>
 
   <script async src="https://www.googletagmanager.com/gtag/js?id={{ .Site.Config.Services.GoogleAnalytics.ID }}"></script>
   <script src="{{ $js.RelPermalink }}" defer></script>
 </head>
-
-{{ end }}
