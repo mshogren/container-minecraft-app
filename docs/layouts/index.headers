@@ -1,4 +1,6 @@
-{{- $css := partial "style.html" . | resources.PostProcess }}
+{{ with (templates.Defer (dict "key" "global-css")) }}
+  {{- $css := partial "style.html" . }}
+{{ end }}
 /*
   Strict-Transport-Security: max-age=31536000; includeSubDomains
   X-Frame-Options: DENY

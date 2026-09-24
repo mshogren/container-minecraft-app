@@ -1,6 +1,8 @@
 {{- $title := print .Site.Title " | " .Title }}
 {{- if .IsHome }}{{ $title = .Site.Title }}{{ end }}
-{{- $css := partial "style.html" . | resources.PostProcess }}
+{{ with (templates.Defer (dict "key" "global-css")) }}
+  {{- $css := partial "style.html" . }}
+{{ end }}
 {{- $jsTemplate := resources.Get "js/script.js" }}
 {{- $js := $jsTemplate | resources.ExecuteAsTemplate "/js/script.js" . }}
 
