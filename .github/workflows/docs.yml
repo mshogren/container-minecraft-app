@@ -36,7 +36,7 @@ jobs:
           extended: true
 
       - name: run hugo
-        run: hugo --debug
+        run: hugo --logLevel debug
 
       - name: Check HTML
         uses: anishathalye/proof-html@f060b7619c2410bd85d970459a60ef431cf47ed5 # v2
