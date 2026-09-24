@@ -3,6 +3,8 @@
 {{- $jsTemplate := resources.Get "js/script.js" }}
 {{- $js := $jsTemplate | resources.ExecuteAsTemplate "/js/script.js" . }}
 
+{{ with (templates.Defer (dict "key" "global-css")) }}
+{{- $css := partial "style.html" . }}
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -22,12 +24,11 @@
   <link rel="shortcut icon" href="/favicon.ico">
 
   <style>
-    {{ with (templates.Defer (dict "key" "global-css")) }}
-      {{- $css := partial "style.html" . }}
-      {{- $css.Content | safeCSS }}
-    {{ end }}
+    {{ $css.Content | safeCSS }}
   </style>
 
   <script async src="https://www.googletagmanager.com/gtag/js?id={{ .Site.Config.Services.GoogleAnalytics.ID }}"></script>
   <script src="{{ $js.RelPermalink }}" defer></script>
 </head>
+
+{{ end }}
