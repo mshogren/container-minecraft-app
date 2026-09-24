@@ -1,8 +1,5 @@
 {{- $title := print .Site.Title " | " .Title }}
 {{- if .IsHome }}{{ $title = .Site.Title }}{{ end }}
-{{ with (templates.Defer (dict "key" "global-css")) }}
-  {{- $css := partial "style.html" . }}
-{{ end }}
 {{- $jsTemplate := resources.Get "js/script.js" }}
 {{- $js := $jsTemplate | resources.ExecuteAsTemplate "/js/script.js" . }}
 
@@ -24,7 +21,12 @@
 
   <link rel="shortcut icon" href="/favicon.ico">
 
-  <style>{{ $css.Content | safeCSS }}</style>
+  <style>
+    {{ with (templates.Defer (dict "key" "global-css")) }}
+      {{- $css := partial "style.html" . }}
+      {{- $css.Content | safeCSS }}
+    {{ end }}
+  </style>
 
   <script async src="https://www.googletagmanager.com/gtag/js?id={{ .Site.Config.Services.GoogleAnalytics.ID }}"></script>
   <script src="{{ $js.RelPermalink }}" defer></script>

@@ -1,6 +1,5 @@
 {{ with (templates.Defer (dict "key" "global-css")) }}
   {{- $css := partial "style.html" . }}
-{{ end }}
 /*
   Strict-Transport-Security: max-age=31536000; includeSubDomains
   X-Frame-Options: DENY
@@ -11,3 +10,5 @@
   Content-Security-Policy: default-src 'none'; form-action 'none'; frame-ancestors 'none'; report-uri https://7f09f54d0df988f016b704ac11797c45.report-uri.com/r/d/csp/enforce; connect-src 'self' www.google-analytics.com; require-trusted-types-for 'script'; script-src-elem 'self' www.googletagmanager.com; style-src-elem 'self' '{{ $css.Data.Integrity }}'; img-src 'self' www.plantuml.com
   Report-To: {"group":"default","max_age":31536000,"endpoints":[{"url":"https://7f09f54d0df988f016b704ac11797c45.report-uri.com/a/d/g"}],"include_subdomains":true}
   NEL: {"report_to":"default","max_age":31536000,"include_subdomains":true}
+
+{{ end }}
