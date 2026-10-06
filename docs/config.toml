@@ -1,13 +1,16 @@
 baseURL = 'https://container-minecraft-app.pages.dev/'
-languageCode = 'en-us'
+locale= 'en-us'
 title = 'Container Minecraft App'
 paginate = 10
 disableKinds = ['taxonomy', 'term']
 enableRobotsTXT = true
-googleAnalytics = 'G-1DRW60QS2W'
 
-[author]
-name = "Michael Shogren"
+[services]
+  [services.googleAnalytics]
+    id = 'G-1DRW60QS2W'
+
+[params.author]
+name = 'Michael Shogren'
 
 [build]
   writeStats = true

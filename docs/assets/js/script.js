@@ -4,7 +4,7 @@ if (!doNotTrack) {
 	window.dataLayer = window.dataLayer || [];
 	function gtag(){dataLayer.push(arguments);}
 	gtag('js', new Date());
-	gtag('config', '{{ .Site.GoogleAnalytics }}', { 'anonymize_ip': false });
+	gtag('config', '{{ .Site.Config.Services.GoogleAnalytics.ID }}', { 'anonymize_ip': false });
 }
 
 const toggle = document.getElementById('toggle');
