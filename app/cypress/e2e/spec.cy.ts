@@ -14,12 +14,10 @@ describe('server add', () => {
   const stoppedText = 'Unavailable';
 
   const cleanup = (name: string) => {
-    if (Cypress.expose('kubernetes')) {
-      cy.exec(`kubectl delete deployment ${name}`);
-    } else {
-      cy.exec(`docker rm ${name}`);
-      cy.exec(`docker volume rm ${name}`);
-    }
+    cy.task('cleanupServer', {
+      name,
+      kubernetes: Boolean(Cypress.expose('kubernetes')),
+    });
   };
 
   it('opens', () => {
