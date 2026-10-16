@@ -174,7 +174,7 @@ jobs:
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
           tags: |
-            type=semver,pattern={{version}},value=${{ steps.semantic.outputs.new_release_tag }}
+            type=semver,pattern={{version}},value=${{ steps.semantic.outputs.new_release_git_tag }}
 
       - name: Build and push Docker image
         id: package
