@@ -2,17 +2,17 @@
  * @type {import('semantic-release').GlobalConfig}
  */
 export default {
-  branches: ["master"],
+  branches: ['master'],
   plugins: [
-    "@semantic-release/commit-analyzer",
+    '@semantic-release/commit-analyzer',
     {
-      preset: "conventionalcommits",
+      preset: 'conventionalcommits',
       releaseRules: [
         { type: 'feat', section: 'Features' },
         { type: 'fix', section: 'Bug Fixes' },
         { type: 'perf', section: 'Performance' },
         { type: 'revert', section: 'Reverts' },
-        { type: 'chore', section: 'Chores' },
+        { type: 'chore', section: 'Chores', release: 'patch' },
         { type: 'build', section: 'Build System', hidden: true },
         { type: 'ci', section: 'Continuous Integration', hidden: true },
         { type: 'refactor', section: 'Code Refactoring', hidden: true },
@@ -24,6 +24,6 @@ export default {
         { type: 'release', section: 'Releases', hidden: true },
       ], 
     },
-    "@semantic-release/release-notes-generator",
+    '@semantic-release/release-notes-generator',
   ]  
 };
