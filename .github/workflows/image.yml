@@ -154,16 +154,6 @@ jobs:
           start: docker run -p 8000:80 -e CURSEFORGE_API_KEY -v /var/run/docker.sock:/var/run/docker.sock containerminecraftapp:test
           browser: chrome
 
-      - name: Conventional Changelog Action
-        id: changelog
-        if: github.event_name == 'push'
-        uses: TriPSs/conventional-changelog-action@84dadaf2c367cb52af02737cd9c7e888807219e7 # v6
-        with:
-          github-token: ${{ secrets.github_token }}
-          output-file: "false"
-          skip-commit: "true"
-          config-file-path: "./changelog.config.js"
-          
       - name: Semantic Release
         id: semantic
         if: github.event_name == 'push'
