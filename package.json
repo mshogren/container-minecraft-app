@@ -1,6 +1,7 @@
 {
   "name": "container-minecraft-app",
   "version": "0.0.0",
+  "type": "module",
   "description": "An app to control containerized instances of Minecraft servers",
   "directories": {
     "doc": "docs"
