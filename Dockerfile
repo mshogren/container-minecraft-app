@@ -18,7 +18,7 @@ COPY api/uv.lock .
 RUN uv sync --locked --no-dev
 
 
-FROM node:24 AS node-deps
+FROM node:26 AS node-deps
 
 WORKDIR /app
 COPY app/package*.json ./
