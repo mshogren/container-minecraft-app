@@ -7,6 +7,6 @@ The initial idea
 ### Development ###
 
 Requirements
-* A working node/npm environment
-* Python 3.11+
-* Hugo to generate website documentation
+* A working node 26+ environment
+* Python 3.15+
+* Hugo 0.166+ to generate website documentation
