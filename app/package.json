@@ -52,7 +52,7 @@
     "typescript": "6.0.3",
     "typescript-eslint": "8.72.1",
     "vite": "8.3.6",
-    "vite-plugin-checker": "0.14.5",
+    "vite-plugin-checker": "1.0.0",
     "vite-plugin-singlefile": "2.3.4",
     "vitest": "4.1.12",
     "wonka": "6.3.6"
